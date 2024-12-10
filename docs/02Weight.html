@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.6.32">
+<meta name="generator" content="quarto-1.6.39">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>1&nbsp; Balanced Comparison – バランス後の母平均差の推定 (ver 0.0)</title>
+<title>2&nbsp; Weight – バランス後の母平均差の推定 (ver 0.0.1)</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,27 +20,7 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for citations */
-div.csl-bib-body { }
-div.csl-entry {
-  clear: both;
-  margin-bottom: 0em;
-}
-.hanging-indent div.csl-entry {
-  margin-left:2em;
-  text-indent:-2em;
-}
-div.csl-left-margin {
-  min-width:2em;
-  float:left;
-}
-div.csl-right-inline {
-  margin-left:2em;
-  padding-left:1em;
-}
-div.csl-indent {
-  margin-left: 2em;
-}</style>
+</style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -50,17 +30,17 @@ div.csl-indent {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./BalanceWeight.html" rel="next">
-<link href="./index.html" rel="prev">
+<link href="./03BalanceWeight.html" rel="next">
+<link href="./01Intro.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-2486e1f0a3ee9ee1fc393803a1361cdb.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-e26003cea8cd680ca0c55a263523d882.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-ed6da6eef3892af8a4b5ed59bfb951f5.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-626149efe8f5d16e1d391ba177679bf0.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -130,7 +110,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./Intro.html"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Balanced Comparison</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./02Weight.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Weight</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -145,7 +125,7 @@ window.Quarto = {
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
-      <a href="./">バランス後の母平均差の推定 (ver 0.0)</a> 
+      <a href="./">バランス後の母平均差の推定 (ver 0.0.1)</a> 
     </div>
       </div>
         <div class="mt-2 flex-shrink-0 align-items-center">
@@ -163,37 +143,31 @@ window.Quarto = {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./Intro.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Balanced Comparison</span></span></a>
+  <a href="./01Intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">バランス後の比較</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./BalanceWeight.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Balancing Weight</span></span></a>
+  <a href="./02Weight.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Weight</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./Moment.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">特徴のバランス</span></span></a>
+  <a href="./03BalanceWeight.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Balancing Weight</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./IPW.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Inverse Probability Weight</span></span></a>
+  <a href="./04OLS.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">OLSによる特徴のバランス</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./Argumentation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Augmentation</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./Reference.html" class="sidebar-item-text sidebar-link">
+  <a href="./Referemce.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Reference</span></a>
   </div>
 </li>
@@ -207,16 +181,9 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#実例" id="toc-実例" class="nav-link active" data-scroll-target="#実例"><span class="header-section-number">1.1</span> 実例</a>
-  <ul class="collapse">
-  <li><a href="#不動産市場の年次比較" id="toc-不動産市場の年次比較" class="nav-link" data-scroll-target="#不動産市場の年次比較"><span class="header-section-number">1.1.1</span> 不動産市場の年次比較</a></li>
-  <li><a href="#合計特殊出生率" id="toc-合計特殊出生率" class="nav-link" data-scroll-target="#合計特殊出生率"><span class="header-section-number">1.1.2</span> 合計特殊出生率</a></li>
-  <li><a href="#既存店ベースの比較" id="toc-既存店ベースの比較" class="nav-link" data-scroll-target="#既存店ベースの比較"><span class="header-section-number">1.1.3</span> 既存店ベースの比較</a></li>
-  </ul></li>
-  <li><a href="#推定対象" id="toc-推定対象" class="nav-link" data-scroll-target="#推定対象"><span class="header-section-number">1.2</span> 推定対象</a>
-  <ul class="collapse">
-  <li><a href="#バランス後の平均値" id="toc-バランス後の平均値" class="nav-link" data-scroll-target="#バランス後の平均値"><span class="header-section-number">1.2.1</span> バランス後の平均値</a></li>
-  </ul></li>
+  <li><a href="#データ上の平均値" id="toc-データ上の平均値" class="nav-link active" data-scroll-target="#データ上の平均値"><span class="header-section-number">2.1</span> データ上の平均値</a></li>
+  <li><a href="#ターゲット上の平均値" id="toc-ターゲット上の平均値" class="nav-link" data-scroll-target="#ターゲット上の平均値"><span class="header-section-number">2.2</span> ターゲット上の平均値</a></li>
+  <li><a href="#weighte-mean" id="toc-weighte-mean" class="nav-link" data-scroll-target="#weighte-mean"><span class="header-section-number">2.3</span> Weighte mean</a></li>
   </ul>
 </nav>
     </div>
@@ -225,7 +192,7 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span id="sec-Intro" class="quarto-section-identifier"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Balanced Comparison</span></span></h1>
+<h1 class="title"><span id="sec-BalanceWeight" class="quarto-section-identifier"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Weight</span></span></h1>
 </div>
 
 
@@ -242,70 +209,31 @@ window.Quarto = {
 </header>
 
 
-<p>バランス後の比較では、<span class="math inline">\(D\)</span>間での<span class="math inline">\(X\)</span>についての<strong>格差が解消された場合</strong>の、<span class="math inline">\(Y\)</span>についての差の推定を目指します。 このような比較は、因果効果や格差の推定の肝となります。 詳細な入門としては、<a href="https://hdsr.mitpress.mit.edu/pub/1ybwbmlw/release/2"><span class="citation" data-cites="Chattopadhyay2024Causation">Chattopadhyay and Zubizarreta (<span>2024</span>)</span></a> などを参考にしてください。</p>
-<section id="実例" class="level2" data-number="1.1">
-<h2 data-number="1.1" class="anchored" data-anchor-id="実例"><span class="header-section-number">1.1</span> 実例</h2>
-<section id="不動産市場の年次比較" class="level3" data-number="1.1.1">
-<h3 data-number="1.1.1" class="anchored" data-anchor-id="不動産市場の年次比較"><span class="header-section-number">1.1.1</span> 不動産市場の年次比較</h3>
-<p>例えば、2022年と2021年の東京２３区の中古マンション市場における、取引価格と立地(中心6区かそれ以外か)について平均的な差は以下の通りです。</p>
+<p>Balancing Weightsを紹介する準備として、より一般的な概念であるWeightsを紹介します。 Weightsは、データ上の事例の分布を、統計的な処理として変化させるために用いられます。</p>
+<p>以下最も典型的な応用である、データのサンプリングの偏りへの対応、を例としてWeightを紹介します。</p>
+<section id="データ上の平均値" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="データ上の平均値"><span class="header-section-number">2.1</span> データ上の平均値</h2>
+<p>今、ある調査会社が調査員を千代田区、文京区、板橋区に派遣し、中古マンションの取引事例を収集したとします。 各調査員は、全く同じ数の事例を収集します。</p>
+<p>以下では、立地(District)ごとに、平均取引価格とデータ全体に対する事例数の割合をまとめています。</p>
 <div class="cell">
 <div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="Intro_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-<p>2022年においては、平均取引価格が2021年に比べて上昇していますが、同時に中心６区の物件割合も増加しています。 一般に中心６区の物件の方が取引価格が高い傾向が予想されるので、その分取引価格の上昇が”底上げ”されている可能性があります。 <strong>もし</strong>中心6区の物件割合が不変であった場合、平均取引価格にどのような差が残るでしょうか？</p>
-<p>このような問いに対して、バランス後の比較分析は回答できます。</p>
-</section>
-<section id="合計特殊出生率" class="level3" data-number="1.1.2">
-<h3 data-number="1.1.2" class="anchored" data-anchor-id="合計特殊出生率"><span class="header-section-number">1.1.2</span> 合計特殊出生率</h3>
-<p>合計特殊出生率の国家間/時代間比較は、バランス後の比較の代表例です。 出生数の動向を把握する上で、新生児数を年次や国家間比較は、有益だとみなされてきました。 <a href="https://ja.wikipedia.org/wiki/%E5%90%88%E8%A8%88%E7%89%B9%E6%AE%8A%E5%87%BA%E7%94%9F%E7%8E%87#:~:text=%E5%90%88%E8%A8%88%E7%89%B9%E6%AE%8A%E5%87%BA%E7%94%9F%E7%8E%87%EF%BC%88%E3%81%94%E3%81%86%E3%81%91%E3%81%84,%E4%BA%BA%E5%8F%A3%E3%81%8C%E8%87%AA%E7%84%B6%E6%B8%9B%E3%81%99%E3%82%8B%E3%80%82">合計特殊出生率</a> は、成人の年齢構造の違いをバランスさせるために利用されている指標です。 単純な出生率（一年間に生まれた子供の数/女性の数）は、成人の年齢構造の影響を強く受ける可能性があります。 比較的高齢の成人の比率が高まれば、出生率は低下することが予想されるからです。 対して合計特殊出生率は、「仮に年齢構造が同じであった場合」の出生率を、以下の方法で推定しています <span class="math display">\[\frac{15歳の女性が産んだ子供の数}{15歳の女性の数} +..+ \frac{49歳の女性が産んだ子供の数}{49歳の女性の数}\]</span></p>
-<p>シンプルな枠組みであり、大規模なデータが活用可能な状況では、有効だと考えられます。 一方で、年齢以外の属性(教育歴、居住地等々)もバランスさせる場合、同じ属性を持つ事例数が少なくなり、適用が難しくなります。</p>
-</section>
-<section id="既存店ベースの比較" class="level3" data-number="1.1.3">
-<h3 data-number="1.1.3" class="anchored" data-anchor-id="既存店ベースの比較"><span class="header-section-number">1.1.3</span> 既存店ベースの比較</h3>
-<p>バランス後の比較は、企業の経営戦略を考える上でも用いられます。 小売や飲食/宿泊業などでは、しばしば既存店に絞った上での、売上比較がなされます。 例えば、あるコンビニチェーンで、店舗あたりの平均売り上げが1000万円増大したとします。 同時に去年から今年にかけて、新規出店も大きく増加したとします。 新規店の方が売上が高くなる傾向がある場合、新規店割合の違いが、平均売上の上昇をもたらした可能性があります。</p>
-<p>既存店割合をバランスさせるシンプルな方法として、既存店のみに絞った平均売上を比較がよく行われます。 合計特殊出生率と同様に、新規店比率のみをバランスさせるのであれば、非常に実践的な方法です。 しかしながら他の属性、例えば客層の変化などもバランスさせたい場合は、事例数が不足する可能性が高くなります。</p>
-</section>
-</section>
-<section id="推定対象" class="level2" data-number="1.2">
-<h2 data-number="1.2" class="anchored" data-anchor-id="推定対象"><span class="header-section-number">1.2</span> 推定対象</h2>
-<section id="バランス後の平均値" class="level3" data-number="1.2.1">
-<h3 data-number="1.2.1" class="anchored" data-anchor-id="バランス後の平均値"><span class="header-section-number">1.2.1</span> バランス後の平均値</h3>
-<p>以上の推定対象は、一般に以下のように定義できます。</p>
-<p>グループ <span class="math inline">\(d\)</span> における <span class="math inline">\(Y\)</span> の平均値は、一般に以下のように書き換えることができます。 <span class="math display">\[(d)におけるYの平均値\]</span> <span class="math display">\[=\Biggr\{(x\ \&amp;\ d)におけるYの平均値\times (d)における(x)の割合\Biggr\}\]</span> <span class="math display">\[のxについての総和\]</span></p>
-<p><span class="math inline">\(D\)</span> 間での平均差を生み出す要因は、以下に分解できます。</p>
-<ul>
-<li><p><span class="math inline">\(D\)</span> の間での<span class="math inline">\(Y\)</span>の平均値の違い</p></li>
-<li><p><span class="math inline">\(D\)</span> の間での<span class="math inline">\(X\)</span> の分布の違い</p></li>
-</ul>
-<p>バランス後の比較における推定対象は、<span class="math inline">\(X\)</span> の分布の違いを排除したバランス後の平均値の差として定義します。 <span class="math inline">\(d\)</span>のバランス後の平均値は、<span class="math display">\[(d)におけるYのバランス後平均値\]</span> <span class="math display">\[=\Biggr\{(x\ \&amp;\ d)におけるYの平均値\times (x)へのウェイト\Biggr\}\]</span> <span class="math display">\[のxについての総和\]</span> バランス後の平均値の差は、<span class="math inline">\(X\)</span> 内での平均差の<span class="math inline">\((x)へのウェイト\)</span>を用いた集計値として書き換えることができます: <span class="math display">\[\Biggr\{\Bigr[(x\ \&amp;\ D=1)におけるYの平均値-(x\ \&amp;\ D=0)におけるYの平均値\Bigr]\]</span> <span class="math display">\[\times  (x)へのウェイト\Biggr\}のxについての総和\]</span></p>
-<p><span class="math inline">\((X=x)へのウェイト\)</span>は、原理的には研究者が設定できます。 以下、最も代表的なウェイトである、母集団全体での<span class="math inline">\(X=x\)</span>の割合をウェイトとして、バランス後の平均値の推定を目指します。 因果推論においては、母集団全体での割合を用いた集計値を平均効果と呼んでおります。</p>
-<section id="実例-1" class="level4" data-number="1.2.1.1">
-<h4 data-number="1.2.1.1" class="anchored" data-anchor-id="実例-1"><span class="header-section-number">1.2.1.1</span> 実例</h4>
-<p>例えば、立地と取引年ごとの平均取引価格は以下です。</p>
-<div class="cell">
-<div class="cell-output-display">
-<div id="eawhdzhxcf" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#eawhdzhxcf table {
+<div id="ijleizzmnb" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#ijleizzmnb table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#eawhdzhxcf thead, #eawhdzhxcf tbody, #eawhdzhxcf tfoot, #eawhdzhxcf tr, #eawhdzhxcf td, #eawhdzhxcf th {
+#ijleizzmnb thead, #ijleizzmnb tbody, #ijleizzmnb tfoot, #ijleizzmnb tr, #ijleizzmnb td, #ijleizzmnb th {
   border-style: none;
 }
 
-#eawhdzhxcf p {
+#ijleizzmnb p {
   margin: 0;
   padding: 0;
 }
 
-#eawhdzhxcf .gt_table {
+#ijleizzmnb .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -331,12 +259,12 @@ window.Quarto = {
   border-left-color: #D3D3D3;
 }
 
-#eawhdzhxcf .gt_caption {
+#ijleizzmnb .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#eawhdzhxcf .gt_title {
+#ijleizzmnb .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -348,7 +276,7 @@ window.Quarto = {
   border-bottom-width: 0;
 }
 
-#eawhdzhxcf .gt_subtitle {
+#ijleizzmnb .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -360,7 +288,7 @@ window.Quarto = {
   border-top-width: 0;
 }
 
-#eawhdzhxcf .gt_heading {
+#ijleizzmnb .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -372,13 +300,13 @@ window.Quarto = {
   border-right-color: #D3D3D3;
 }
 
-#eawhdzhxcf .gt_bottom_border {
+#ijleizzmnb .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#eawhdzhxcf .gt_col_headings {
+#ijleizzmnb .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -393,7 +321,7 @@ window.Quarto = {
   border-right-color: #D3D3D3;
 }
 
-#eawhdzhxcf .gt_col_heading {
+#ijleizzmnb .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -413,7 +341,7 @@ window.Quarto = {
   overflow-x: hidden;
 }
 
-#eawhdzhxcf .gt_column_spanner_outer {
+#ijleizzmnb .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -425,15 +353,15 @@ window.Quarto = {
   padding-right: 4px;
 }
 
-#eawhdzhxcf .gt_column_spanner_outer:first-child {
+#ijleizzmnb .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#eawhdzhxcf .gt_column_spanner_outer:last-child {
+#ijleizzmnb .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#eawhdzhxcf .gt_column_spanner {
+#ijleizzmnb .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -445,11 +373,11 @@ window.Quarto = {
   width: 100%;
 }
 
-#eawhdzhxcf .gt_spanner_row {
+#ijleizzmnb .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#eawhdzhxcf .gt_group_heading {
+#ijleizzmnb .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -475,7 +403,7 @@ window.Quarto = {
   text-align: left;
 }
 
-#eawhdzhxcf .gt_empty_group_heading {
+#ijleizzmnb .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -490,15 +418,15 @@ window.Quarto = {
   vertical-align: middle;
 }
 
-#eawhdzhxcf .gt_from_md > :first-child {
+#ijleizzmnb .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#eawhdzhxcf .gt_from_md > :last-child {
+#ijleizzmnb .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#eawhdzhxcf .gt_row {
+#ijleizzmnb .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -517,7 +445,7 @@ window.Quarto = {
   overflow-x: hidden;
 }
 
-#eawhdzhxcf .gt_stub {
+#ijleizzmnb .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -530,7 +458,7 @@ window.Quarto = {
   padding-right: 5px;
 }
 
-#eawhdzhxcf .gt_stub_row_group {
+#ijleizzmnb .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -544,15 +472,15 @@ window.Quarto = {
   vertical-align: top;
 }
 
-#eawhdzhxcf .gt_row_group_first td {
+#ijleizzmnb .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#eawhdzhxcf .gt_row_group_first th {
+#ijleizzmnb .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#eawhdzhxcf .gt_summary_row {
+#ijleizzmnb .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -562,16 +490,16 @@ window.Quarto = {
   padding-right: 5px;
 }
 
-#eawhdzhxcf .gt_first_summary_row {
+#ijleizzmnb .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#eawhdzhxcf .gt_first_summary_row.thick {
+#ijleizzmnb .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#eawhdzhxcf .gt_last_summary_row {
+#ijleizzmnb .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -581,7 +509,7 @@ window.Quarto = {
   border-bottom-color: #D3D3D3;
 }
 
-#eawhdzhxcf .gt_grand_summary_row {
+#ijleizzmnb .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -591,7 +519,7 @@ window.Quarto = {
   padding-right: 5px;
 }
 
-#eawhdzhxcf .gt_first_grand_summary_row {
+#ijleizzmnb .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -601,7 +529,7 @@ window.Quarto = {
   border-top-color: #D3D3D3;
 }
 
-#eawhdzhxcf .gt_last_grand_summary_row_top {
+#ijleizzmnb .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -611,11 +539,11 @@ window.Quarto = {
   border-bottom-color: #D3D3D3;
 }
 
-#eawhdzhxcf .gt_striped {
+#ijleizzmnb .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#eawhdzhxcf .gt_table_body {
+#ijleizzmnb .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -624,7 +552,7 @@ window.Quarto = {
   border-bottom-color: #D3D3D3;
 }
 
-#eawhdzhxcf .gt_footnotes {
+#ijleizzmnb .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -638,7 +566,7 @@ window.Quarto = {
   border-right-color: #D3D3D3;
 }
 
-#eawhdzhxcf .gt_footnote {
+#ijleizzmnb .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -647,7 +575,7 @@ window.Quarto = {
   padding-right: 5px;
 }
 
-#eawhdzhxcf .gt_sourcenotes {
+#ijleizzmnb .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -661,7 +589,7 @@ window.Quarto = {
   border-right-color: #D3D3D3;
 }
 
-#eawhdzhxcf .gt_sourcenote {
+#ijleizzmnb .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -669,72 +597,624 @@ window.Quarto = {
   padding-right: 5px;
 }
 
-#eawhdzhxcf .gt_left {
+#ijleizzmnb .gt_left {
   text-align: left;
 }
 
-#eawhdzhxcf .gt_center {
+#ijleizzmnb .gt_center {
   text-align: center;
 }
 
-#eawhdzhxcf .gt_right {
+#ijleizzmnb .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#eawhdzhxcf .gt_font_normal {
+#ijleizzmnb .gt_font_normal {
   font-weight: normal;
 }
 
-#eawhdzhxcf .gt_font_bold {
+#ijleizzmnb .gt_font_bold {
   font-weight: bold;
 }
 
-#eawhdzhxcf .gt_font_italic {
+#ijleizzmnb .gt_font_italic {
   font-style: italic;
 }
 
-#eawhdzhxcf .gt_super {
+#ijleizzmnb .gt_super {
   font-size: 65%;
 }
 
-#eawhdzhxcf .gt_footnote_marks {
+#ijleizzmnb .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#eawhdzhxcf .gt_asterisk {
+#ijleizzmnb .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#eawhdzhxcf .gt_indent_1 {
+#ijleizzmnb .gt_indent_1 {
   text-indent: 5px;
 }
 
-#eawhdzhxcf .gt_indent_2 {
+#ijleizzmnb .gt_indent_2 {
   text-indent: 10px;
 }
 
-#eawhdzhxcf .gt_indent_3 {
+#ijleizzmnb .gt_indent_3 {
   text-indent: 15px;
 }
 
-#eawhdzhxcf .gt_indent_4 {
+#ijleizzmnb .gt_indent_4 {
   text-indent: 20px;
 }
 
-#eawhdzhxcf .gt_indent_5 {
+#ijleizzmnb .gt_indent_5 {
   text-indent: 25px;
 }
 
-#eawhdzhxcf .katex-display {
+#ijleizzmnb .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#eawhdzhxcf div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#ijleizzmnb div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+  height: 0px !important;
+}
+</style>
+
+<table class="gt_table caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+<thead>
+<tr class="gt_col_headings header">
+<th id="a事例の割合" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">事例の割合</th>
+<th id="a平均価格" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">平均価格</th>
+<th id="District" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col">District</th>
+</tr>
+</thead>
+<tbody class="gt_table_body">
+<tr class="odd">
+<td class="gt_row gt_right" headers="事例の割合">0.333</td>
+<td class="gt_row gt_right" headers="平均価格">66.5</td>
+<td class="gt_row gt_left" headers="District">千代田区</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_right" headers="事例の割合">0.333</td>
+<td class="gt_row gt_right" headers="平均価格">47.3</td>
+<td class="gt_row gt_left" headers="District">文京区</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_right" headers="事例の割合">0.333</td>
+<td class="gt_row gt_right" headers="平均価格">29.5</td>
+<td class="gt_row gt_left" headers="District">板橋区</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<p>繰り返し期待値の法則を用いると、この情報だけからデータ全体の平均取引価格は計算できます。</p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+繰り返し期待値の法則
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li><p>平均値を計算したい変数<span class="math inline">\(Y\)</span>と他の変数<span class="math inline">\(X\)</span>がデータから観察できる</p></li>
+<li><p><span class="math inline">\(X\)</span>の値は、 <span class="math inline">\(x_1,..,x_L\)</span></p></li>
+<li><p><span class="math inline">\(Yの平均値\)</span>は</p></li>
+</ul>
+<p><span class="math display">\[=(X=x_1)を満たす事例のYの平均値\times (X=x_1)を満たす事例の割合\]</span></p>
+<p><span class="math display">\[+..\]</span></p>
+<p><span class="math display">\[+(X=x_L)を満たす事例のYの平均値\times (X=x_L)を満たす事例の割合\]</span></p>
+</div>
+</div>
+<p>繰り返し期待値の法則を、上記のデータに適用すると以下のように計算できます。</p>
+<ul>
+<li><span class="math inline">\(平均取引価格\)</span>は</li>
+</ul>
+<p><span class="math display">\[=\underbrace{66.5}_{千代田区の事例の平均取引価格}\times \underbrace{0.333}_{千代田区の事例の割合}\]</span></p>
+<p><span class="math display">\[+\underbrace{47.3}_{文京区の事例の平均取引価格}\times \underbrace{0.333}_{文京区の事例の割合}\]</span></p>
+<p><span class="math display">\[+\underbrace{29.5}_{板橋区の事例の平均取引価格}\times \underbrace{0.333}_{板橋区の事例の割合}\]</span></p>
+<p><span class="math display">\[=47.8\]</span></p>
+<p>繰り返し期待値の法則は、単なる計算方法以上の含意を持っています。 データ上の平均値は、<span class="math inline">\(X\)</span>についてのサブグループ内での平均値とサブグループの割合、によって決定されます。 もしサブグループの割合が研究関心から乖離している場合、サブグループ内での平均値が妥当な値であったとしても、ミスリードな平均値が計算されてしまいます。</p>
+</section>
+<section id="ターゲット上の平均値" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="ターゲット上の平均値"><span class="header-section-number">2.2</span> ターゲット上の平均値</h2>
+<p>今研究関心は、「もし実際の取引履歴をすべて収集した事例を用いて計算された平均取引価格」、であるとします。 このような平均値を計算したい仮想的な事例集をターゲットと呼びます。</p>
+<p>今、実際(ターゲット)の取引割合は、千代田区が0.161、文京区が0.33、板橋区が0.509であることが判明しているとします。 もしデータ上の各区の取引割合がターゲットの取引割合であった場合、平均値はどのように変化するでしょうか？ このような平均値を以後、調整された平均値と呼びます。</p>
+<p><span class="math inline">\(調整された平均取引価格\)</span>は</p>
+<p><span class="math display">\[=\underbrace{66.5}_{千代田区の事例の平均取引価格}\times \underbrace{0.161}_{千代田区の事例の割合}\]</span></p>
+<p><span class="math display">\[+\underbrace{47.3}_{文京区の事例の平均取引価格}\times \underbrace{0.33}_{文京区の事例の割合}\]</span></p>
+<p><span class="math display">\[+\underbrace{29.5}_{板橋区の事例の平均取引価格}\times \underbrace{0.509}_{板橋区の事例の割合}\]</span></p>
+<p><span class="math display">\[=41.3\]</span></p>
+<p>データ上の平均値は47.8であったので、過大であったことがわかります。 これは、平均取引価格が高い傾向にある千代田区の物件割合が、現実の取引割合(0.161)よりも、データ上の割合(0.333)が過大であることに起因します。</p>
+</section>
+<section id="weighte-mean" class="level2" data-number="2.3">
+<h2 data-number="2.3" class="anchored" data-anchor-id="weighte-mean"><span class="header-section-number">2.3</span> Weighte mean</h2>
+<p>このような調整を行うための有力な方法は、荷重平均値(Weighted mean)を計算することです。 一般にWeighted meanは以下のように定義されます。</p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Weighted mean
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>調整された平均値</li>
+</ul>
+<p><span class="math display">\[=(\omega\times Y)の平均値\]</span></p>
+<ul>
+<li><span class="math inline">\(\omega=\)</span> Weight <span class="math inline">\((\omega の平均値 = 1)\)</span></li>
+</ul>
+</div>
+</div>
+<p>Weightは各事例の<span class="math inline">\(Y\)</span>の値が、最終的な平均値に反映される度合いをコントロールします。 例えば、もし<span class="math inline">\(\omega=0\)</span>であれば、その事例は<span class="math inline">\(Y\)</span>の平均値の計算に一切反映されません。</p>
+<p>Weightは、データとターゲットにおけるDistrictの分布を揃えるように設定されます。 すなわち</p>
+<p><span class="math display">\[\omega\times 事例割合=ターゲットとなる割合\]</span></p>
+<p>を達成するように<span class="math inline">\(\omega\)</span>を算出します。 両辺を事例割合で割ると、</p>
+<p><span class="math display">\[\omega=\frac{ターゲットとなる割合}{事例割合}\]</span> となります。 すなわちターゲットよりも過大に収集されているグループについては小さめに、ターゲットよりも過小なグループは大きめに反映されます。</p>
+<p>上記の例に適用すると、以下となります。</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="yxxqxaifbb" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#yxxqxaifbb table {
+  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#yxxqxaifbb thead, #yxxqxaifbb tbody, #yxxqxaifbb tfoot, #yxxqxaifbb tr, #yxxqxaifbb td, #yxxqxaifbb th {
+  border-style: none;
+}
+
+#yxxqxaifbb p {
+  margin: 0;
+  padding: 0;
+}
+
+#yxxqxaifbb .gt_table {
+  display: table;
+  border-collapse: collapse;
+  line-height: normal;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#yxxqxaifbb .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#yxxqxaifbb .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#yxxqxaifbb .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 3px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#yxxqxaifbb .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#yxxqxaifbb .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#yxxqxaifbb .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#yxxqxaifbb .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#yxxqxaifbb .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#yxxqxaifbb .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#yxxqxaifbb .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#yxxqxaifbb .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#yxxqxaifbb .gt_spanner_row {
+  border-bottom-style: hidden;
+}
+
+#yxxqxaifbb .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  text-align: left;
+}
+
+#yxxqxaifbb .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#yxxqxaifbb .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#yxxqxaifbb .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#yxxqxaifbb .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#yxxqxaifbb .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#yxxqxaifbb .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#yxxqxaifbb .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+#yxxqxaifbb .gt_row_group_first th {
+  border-top-width: 2px;
+}
+
+#yxxqxaifbb .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#yxxqxaifbb .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+#yxxqxaifbb .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#yxxqxaifbb .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#yxxqxaifbb .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#yxxqxaifbb .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#yxxqxaifbb .gt_last_grand_summary_row_top {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: double;
+  border-bottom-width: 6px;
+  border-bottom-color: #D3D3D3;
+}
+
+#yxxqxaifbb .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#yxxqxaifbb .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#yxxqxaifbb .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#yxxqxaifbb .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#yxxqxaifbb .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#yxxqxaifbb .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#yxxqxaifbb .gt_left {
+  text-align: left;
+}
+
+#yxxqxaifbb .gt_center {
+  text-align: center;
+}
+
+#yxxqxaifbb .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#yxxqxaifbb .gt_font_normal {
+  font-weight: normal;
+}
+
+#yxxqxaifbb .gt_font_bold {
+  font-weight: bold;
+}
+
+#yxxqxaifbb .gt_font_italic {
+  font-style: italic;
+}
+
+#yxxqxaifbb .gt_super {
+  font-size: 65%;
+}
+
+#yxxqxaifbb .gt_footnote_marks {
+  font-size: 75%;
+  vertical-align: 0.4em;
+  position: initial;
+}
+
+#yxxqxaifbb .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#yxxqxaifbb .gt_indent_1 {
+  text-indent: 5px;
+}
+
+#yxxqxaifbb .gt_indent_2 {
+  text-indent: 10px;
+}
+
+#yxxqxaifbb .gt_indent_3 {
+  text-indent: 15px;
+}
+
+#yxxqxaifbb .gt_indent_4 {
+  text-indent: 20px;
+}
+
+#yxxqxaifbb .gt_indent_5 {
+  text-indent: 25px;
+}
+
+#yxxqxaifbb .katex-display {
+  display: inline-flex !important;
+  margin-bottom: 0.75em !important;
+}
+
+#yxxqxaifbb div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -743,35 +1223,33 @@ window.Quarto = {
 <thead>
 <tr class="gt_col_headings header">
 <th id="a平均価格" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">平均価格</th>
-<th id="CBD" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">CBD</th>
-<th id="TradeYear" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">TradeYear</th>
-<th id="a事例割合" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">事例割合</th>
+<th id="District" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col">District</th>
+<th id="aターゲットとなる割合" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">ターゲットとなる割合</th>
+<th id="a事例の割合" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">事例の割合</th>
+<th id="Weight" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Weight</th>
 </tr>
 </thead>
 <tbody class="gt_table_body">
 <tr class="odd">
-<td class="gt_row gt_right" headers="平均価格">37.7</td>
-<td class="gt_row gt_right" headers="CBD">0</td>
-<td class="gt_row gt_right" headers="TradeYear">2021</td>
-<td class="gt_row gt_right" headers="事例割合">0.784</td>
+<td class="gt_row gt_right" headers="平均価格">66.5</td>
+<td class="gt_row gt_left" headers="District">千代田区</td>
+<td class="gt_row gt_right" headers="ターゲットとなる割合">0.161</td>
+<td class="gt_row gt_right" headers="事例の割合">0.333</td>
+<td class="gt_row gt_right" headers="Weight">0.483</td>
 </tr>
 <tr class="even">
-<td class="gt_row gt_right" headers="平均価格">60.5</td>
-<td class="gt_row gt_right" headers="CBD">1</td>
-<td class="gt_row gt_right" headers="TradeYear">2021</td>
-<td class="gt_row gt_right" headers="事例割合">0.216</td>
+<td class="gt_row gt_right" headers="平均価格">47.3</td>
+<td class="gt_row gt_left" headers="District">文京区</td>
+<td class="gt_row gt_right" headers="ターゲットとなる割合">0.330</td>
+<td class="gt_row gt_right" headers="事例の割合">0.333</td>
+<td class="gt_row gt_right" headers="Weight">0.991</td>
 </tr>
 <tr class="odd">
-<td class="gt_row gt_right" headers="平均価格" style="background-color: #ADD8E6">39.2</td>
-<td class="gt_row gt_right" headers="CBD" style="background-color: #ADD8E6">0</td>
-<td class="gt_row gt_right" headers="TradeYear" style="background-color: #ADD8E6">2022</td>
-<td class="gt_row gt_right" headers="事例割合" style="background-color: #ADD8E6">0.779</td>
-</tr>
-<tr class="even">
-<td class="gt_row gt_right" headers="平均価格" style="background-color: #ADD8E6">64.8</td>
-<td class="gt_row gt_right" headers="CBD" style="background-color: #ADD8E6">1</td>
-<td class="gt_row gt_right" headers="TradeYear" style="background-color: #ADD8E6">2022</td>
-<td class="gt_row gt_right" headers="事例割合" style="background-color: #ADD8E6">0.221</td>
+<td class="gt_row gt_right" headers="平均価格">29.5</td>
+<td class="gt_row gt_left" headers="District">板橋区</td>
+<td class="gt_row gt_right" headers="ターゲットとなる割合">0.509</td>
+<td class="gt_row gt_right" headers="事例の割合">0.333</td>
+<td class="gt_row gt_right" headers="Weight">1.529</td>
 </tr>
 </tbody>
 </table>
@@ -779,16 +1257,8 @@ window.Quarto = {
 </div>
 </div>
 </div>
-<p>2022/2021年の平均取引価格差は、データ全体では2.2 ですが、<span class="math inline">\(CBD=1\)</span> では <span class="math inline">\(64.8 - 60.5 =\)</span> 4.3、<span class="math inline">\(CBD=0\)</span> では <span class="math inline">\(39.2 - 37.7=\)</span> 1.4 となります。 よって立地をバランスさせた後の平均差は4.3 と 1.4 の”平均値”となります。 例えばデータ上での立地の割合、 CBD=1について0.22、CBD=0について0.78、をウェイトとして用いるのであれば 2 がバランス後の平均差となります。</p>
 
 
-<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
-<div id="ref-Chattopadhyay2024Causation" class="csl-entry" role="listitem">
-Chattopadhyay, Ambarish, and José R. Zubizarreta. 2024. <span>“<span>Causation</span>, <span>Comparison</span>, and <span>Regression</span>.”</span> <em>Harvard Data Science Review</em> 6 (1).
-</div>
-</div>
-</section>
-</section>
 </section>
 
 </main> <!-- /main -->
@@ -874,8 +1344,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   });
   clipboard.on('success', onCopySuccess);
   if (window.document.getElementById('quarto-embedded-source-code-modal')) {
-    // For code content inside modals, clipBoardJS needs to be initialized with a container option
-    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
     const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
       text: getTextToCopy,
       container: window.document.getElementById('quarto-embedded-source-code-modal')
@@ -986,7 +1454,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       if (window.Quarto?.typesetMath) {
         window.Quarto.typesetMath(note);
       }
-      // TODO in 1.5, we should make sure this works without a callout special case
       if (note.classList.contains("callout")) {
         return note.outerHTML;
       } else {
@@ -1214,13 +1681,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./index.html" class="pagination-link" aria-label="Preface">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Preface</span>
+      <a href="./01Intro.html" class="pagination-link" aria-label="バランス後の比較">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">バランス後の比較</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./BalanceWeight.html" class="pagination-link" aria-label="Balancing Weight">
-        <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Balancing Weight</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./03BalanceWeight.html" class="pagination-link" aria-label="Balancing Weight">
+        <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Balancing Weight</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

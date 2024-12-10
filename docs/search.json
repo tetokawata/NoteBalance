@@ -2,239 +2,199 @@
   {
     "objectID": "index.html",
     "href": "index.html",
-    "title": "バランス後の母平均差の推定 (ver 0.0)",
+    "title": "バランス後の母平均差の推定 (ver 0.0.1)",
     "section": "",
-    "text": "Preface\n比較分析 (グループ間での違いを比較する)の方法を紹介します。 比較分析は、社会/市場を理解するための方法として、中核的な位置を占めています。 例えば、ある職業訓練プログラムが就業確率や就業後賃金に与える因果的効果を推定するためには、職業訓練プログラムへの参加者と非参加者の間で見られる就業状態や賃金の比較分析が求められます。 「男女」間賃金格差を推定するためには、「男性」と「女性」の間で賃金を比較を行います。\nあるグループ間で、変数 の平均値 (“条件つき”平均)を推定する方法を紹介します。 Rの実例では、 中古マンションの取引データを用いて、物件の属性 (部屋の広さ、駅からの距離など)ごとに、平均取引価格 を推定します。\n平均の推定値は、さまざまな実務で活用されています。 中でも「 の値を予測」という課題においては、代表的な予測値となっています。\n伝統的には、OLSが母平均の推定方法として用いられてきました。 近年では、OLSは母平均の仮想的な線型モデル(“補助線”)を推定する手法として、解釈できることが強調されています (Angrist and Pischke 2009; Aronow and Miller 2019) 。 モデルの定式に誤りがあったとしても、推定結果は常に”解釈”できることがその理由です。\nまた近年では、機械学習の手法も積極的に活用されています。 本ノートでは、OLSが”研究者が設定した平均値のシンプルなモデル”を推定する方法として優れていることを強調します。 もしより複雑なモデルを推定したい場合は、OLSはその有効性を失います。 このような”複雑なモデル”を推定する優れた方法として、LASSOを紹介します1。\n最後に平均値の特徴を捉えることに成功した予測モデルは、予測においても有効であることを論じます。\n\n(Imbens 2015; Chattopadhyay and Zubizarreta 2023)\n(Ben-Michael et al. 2021; Bruns-Smith et al. 2023; Chattopadhyay, Hase, and Zubizarreta 2020)\n(Van Der Laan and Rubin 2006; Chernozhukov et al. 2018, 2022)\n\n\n\n\n\nBen-Michael, Eli, Avi Feller, David A Hirshberg, and José R Zubizarreta. 2021. “The Balancing Act in Causal Inference.” arXiv Preprint arXiv:2110.14831.\n\n\nBruns-Smith, David, Oliver Dukes, Avi Feller, and Elizabeth L Ogburn. 2023. “Augmented Balancing Weights as Linear Regression.” arXiv Preprint arXiv:2304.14545.\n\n\nChattopadhyay, Ambarish, Christopher H Hase, and José R Zubizarreta. 2020. “Balancing Vs Modeling Approaches to Weighting in Practice.” Statistics in Medicine 39 (24): 3227–54.\n\n\nChattopadhyay, Ambarish, and José R Zubizarreta. 2023. “On the Implied Weights of Linear Regression for Causal Inference.” Biometrika 110 (3): 615–29.\n\n\nChernozhukov, Victor, Denis Chetverikov, Mert Demirer, Esther Duflo, Christian Hansen, Whitney Newey, and James Robins. 2018. “Double/debiased machine learning for treatment and structural parameters.” The Econometrics Journal 21 (1): C1–68. https://doi.org/10.1111/ectj.12097.\n\n\nChernozhukov, Victor, Juan Carlos Escanciano, Hidehiko Ichimura, Whitney K Newey, and James M Robins. 2022. “Locally Robust Semiparametric Estimation.” Econometrica 90 (4): 1501–35.\n\n\nImbens, Guido W. 2015. “Matching Methods in Practice: Three Examples.” Journal of Human Resources 50 (2): 373–419.\n\n\nVan Der Laan, Mark J, and Daniel Rubin. 2006. “Targeted Maximum Likelihood Learning.” The International Journal of Biostatistics 2 (1).",
+    "text": "Preface\n比較分析の方法を、Rでの実装とともに紹介します。\n比較分析は、社会における特定の「グループ間の違い」を明らかにすることを目標とします。 本ノートでは、データ上のある変数 \\(D\\) 間での、別の変数 \\(Y\\) の平均値の差を推定する方法を紹介します。\n比較分析は、社会/市場を理解するための方法として、中核的な位置を占めています。 例えば、ある職業訓練プログラムが就業確率や就業後賃金に与える因果的効果を推定するためには、職業訓練プログラムへの参加者と非参加者の間で見られる就業状態や賃金の比較分析が求められます。 「世代間」格差の移転を推定するためには、両親の経済/社会状態間で、子供の賃金を比較を行います。\n社会/市場分析における多くの比較研究では、「背景属性」のバランスが求められます。 例えば2022年と2023年の中古マンション市場の取引価格を比較したいとします。 最も単純な比較方法は、平均取引価格を2023年と2022年で単純比較することですが、物件の他の特徴(部屋の広さ、駅からの距離など)も同時に変化していることが予想されます。 本ノートでは、「もし物件の他の特徴が変化しなかったときの」2023年と2022年で平均取引価格がどの程度変化額を推定する方法を紹介します。\n詳細な入門としては、Chattopadhyay and Zubizarreta (2024) などを参考にしてください。\n\n\n\n\nChattopadhyay, Ambarish, and José R. Zubizarreta. 2024. “Causation, Comparison, and Regression.” Harvard Data Science Review 6 (1).",
     "crumbs": [
       "Preface"
     ]
   },
   {
-    "objectID": "Intro.html",
-    "href": "Intro.html",
-    "title": "1  Balanced Comparison",
+    "objectID": "01Intro.html",
+    "href": "01Intro.html",
+    "title": "1  バランス後の比較",
     "section": "",
-    "text": "1.1 実例\nバランス後の比較では、\\(D\\)間での\\(X\\)についての格差が解消された場合の、\\(Y\\)についての差の推定を目指します。 このような比較は、因果効果や格差の推定の肝となります。 詳細な入門としては、Chattopadhyay and Zubizarreta (2024) などを参考にしてください。",
+    "text": "1.1 不動産市場の年次比較\nバランス後の比較 (Balanced Comparison) では、ある属性\\(D\\)の間での\\(Y\\)についての差を、\\(X\\)については差が解消し、推定します。 このような比較は、因果効果や格差の推定の肝となります。\nまず実例から紹介します。\n2022年と2021年の東京23区の中古マンション市場における、取引価格と立地(中心6区(CBD; 港区、中央区、文京区、千代田区、渋谷区、新宿区)かそれ以外か)について平均的な差は以下の通りです。\n2022年の平均取引価格は、2021年に比べて上昇し、同時にCBDの物件割合も増加しています。 一般にCBDに立地する物件の方が、高い取引価格が予想されます。 このため立地によって、取引価格の上昇が”底上げ”されている可能性があります。\nもし中心6区の物件割合が不変であった場合、平均取引価格にどのような差が残るでしょうか？ このような問いに対して、バランス後の比較分析は回答できます。",
     "crumbs": [
-      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Balanced Comparison</span>"
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>バランス後の比較</span>"
     ]
   },
   {
-    "objectID": "Intro.html#実例",
-    "href": "Intro.html#実例",
-    "title": "1  Balanced Comparison",
+    "objectID": "01Intro.html#不動産市場の年次比較",
+    "href": "01Intro.html#不動産市場の年次比較",
+    "title": "1  バランス後の比較",
     "section": "",
-    "text": "1.1.1 不動産市場の年次比較\n例えば、2022年と2021年の東京２３区の中古マンション市場における、取引価格と立地(中心6区かそれ以外か)について平均的な差は以下の通りです。\n\n\n\n\n\n\n\n\n\n2022年においては、平均取引価格が2021年に比べて上昇していますが、同時に中心６区の物件割合も増加しています。 一般に中心６区の物件の方が取引価格が高い傾向が予想されるので、その分取引価格の上昇が”底上げ”されている可能性があります。 もし中心6区の物件割合が不変であった場合、平均取引価格にどのような差が残るでしょうか？\nこのような問いに対して、バランス後の比較分析は回答できます。\n\n\n1.1.2 合計特殊出生率\n合計特殊出生率の国家間/時代間比較は、バランス後の比較の代表例です。 出生数の動向を把握する上で、新生児数を年次や国家間比較は、有益だとみなされてきました。 合計特殊出生率 は、成人の年齢構造の違いをバランスさせるために利用されている指標です。 単純な出生率（一年間に生まれた子供の数/女性の数）は、成人の年齢構造の影響を強く受ける可能性があります。 比較的高齢の成人の比率が高まれば、出生率は低下することが予想されるからです。 対して合計特殊出生率は、「仮に年齢構造が同じであった場合」の出生率を、以下の方法で推定しています \\[\\frac{15歳の女性が産んだ子供の数}{15歳の女性の数} +..+ \\frac{49歳の女性が産んだ子供の数}{49歳の女性の数}\\]\nシンプルな枠組みであり、大規模なデータが活用可能な状況では、有効だと考えられます。 一方で、年齢以外の属性(教育歴、居住地等々)もバランスさせる場合、同じ属性を持つ事例数が少なくなり、適用が難しくなります。\n\n\n1.1.3 既存店ベースの比較\nバランス後の比較は、企業の経営戦略を考える上でも用いられます。 小売や飲食/宿泊業などでは、しばしば既存店に絞った上での、売上比較がなされます。 例えば、あるコンビニチェーンで、店舗あたりの平均売り上げが1000万円増大したとします。 同時に去年から今年にかけて、新規出店も大きく増加したとします。 新規店の方が売上が高くなる傾向がある場合、新規店割合の違いが、平均売上の上昇をもたらした可能性があります。\n既存店割合をバランスさせるシンプルな方法として、既存店のみに絞った平均売上を比較がよく行われます。 合計特殊出生率と同様に、新規店比率のみをバランスさせるのであれば、非常に実践的な方法です。 しかしながら他の属性、例えば客層の変化などもバランスさせたい場合は、事例数が不足する可能性が高くなります。",
+    "text": "1.1.1 実例\n以下では実際のデータを用いて、取引年と立地(CBD であれば1、それ以外であれば0)ごとに、平均取引価格を示しています。 また各取引年における取引事例の立地割合も算出しています。\n\n\n\n\n\n\n\n\n平均価格\nCBD\n取引年\n事例割合\n\n\n\n\n37.748\n0\n2021\n0.784\n\n\n60.474\n1\n2021\n0.216\n\n\n39.150\n0\n2022\n0.779\n\n\n64.814\n1\n2022\n0.221\n\n\n\n\n\n\n\n繰り返し期待値の法則を用いると2022年と2021年の平均取引価格の差を算出できます。\n\n\n\n\n\n\n繰り返し期待値の法則\n\n\n\n\\[Yの平均値 = [X=1] 内での Y の平均値\\times [X=1]の割合\\]\n\\[+ [X=2] 内での Y の平均値\\times [X=2]の割合\\]\n\\[+...\\]\n\n\n実際に適用すると2022年、2021年の平均取引価格は、以下のように計算できます。\n\\[2022年の平均価格 = 64.814\\times0.221 + 39.150\\times 0.779=44.810\\]\n\\[2021年の平均価格 = 60.474\\times0.216 + 37.748\\times 0.784=42.658\\]\n2022年と2021の平均差を計算すると、2022年の平均取引価格の方が、2.153ほど高くなっていることが確認できます。\n繰り返し期待値の法則自体は、非常にシンプルな計算ルールです。 しかしながら、「\\(X\\)のバランス」の意義を明確にします。 計算上、平均価格の違いは、同じ立地内での平均取引価格の違いと立地ごとの事例割合の違いによって生じます。 2022年の平均取引価格は、CBDでも意外でも、2021年よりも高くなっています。 同時に、CBDの物件が取引されている割合は21.6 \\(\\%\\) から 22.1 \\(\\%\\) に上昇しています。\nバランス後の比較分析では、「もし 取引されている物件に占めるCBDの割合が、変化しなかった場合」の 平均取引価格の変化を推定します。",
     "crumbs": [
-      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Balanced Comparison</span>"
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>バランス後の比較</span>"
     ]
   },
   {
-    "objectID": "Intro.html#推定対象",
-    "href": "Intro.html#推定対象",
-    "title": "1  Balanced Comparison",
-    "section": "1.2 推定対象",
-    "text": "1.2 推定対象\n\n1.2.1 バランス後の平均値\n以上の推定対象は、一般に以下のように定義できます。\nグループ \\(d\\) における \\(Y\\) の平均値は、一般に以下のように書き換えることができます。 \\[(d)におけるYの平均値\\] \\[=\\Biggr\\{(x\\ \\&\\ d)におけるYの平均値\\times (d)における(x)の割合\\Biggr\\}\\] \\[のxについての総和\\]\n\\(D\\) 間での平均差を生み出す要因は、以下に分解できます。\n\n\\(D\\) の間での\\(Y\\)の平均値の違い\n\\(D\\) の間での\\(X\\) の分布の違い\n\nバランス後の比較における推定対象は、\\(X\\) の分布の違いを排除したバランス後の平均値の差として定義します。 \\(d\\)のバランス後の平均値は、\\[(d)におけるYのバランス後平均値\\] \\[=\\Biggr\\{(x\\ \\&\\ d)におけるYの平均値\\times (x)へのウェイト\\Biggr\\}\\] \\[のxについての総和\\] バランス後の平均値の差は、\\(X\\) 内での平均差の\\((x)へのウェイト\\)を用いた集計値として書き換えることができます: \\[\\Biggr\\{\\Bigr[(x\\ \\&\\ D=1)におけるYの平均値-(x\\ \\&\\ D=0)におけるYの平均値\\Bigr]\\] \\[\\times  (x)へのウェイト\\Biggr\\}のxについての総和\\]\n\\((X=x)へのウェイト\\)は、原理的には研究者が設定できます。 以下、最も代表的なウェイトである、母集団全体での\\(X=x\\)の割合をウェイトとして、バランス後の平均値の推定を目指します。 因果推論においては、母集団全体での割合を用いた集計値を平均効果と呼んでおります。\n\n1.2.1.1 実例\n例えば、立地と取引年ごとの平均取引価格は以下です。\n\n\n\n\n\n\n\n\n平均価格\nCBD\nTradeYear\n事例割合\n\n\n\n\n37.7\n0\n2021\n0.784\n\n\n60.5\n1\n2021\n0.216\n\n\n39.2\n0\n2022\n0.779\n\n\n64.8\n1\n2022\n0.221\n\n\n\n\n\n\n\n2022/2021年の平均取引価格差は、データ全体では2.2 ですが、\\(CBD=1\\) では \\(64.8 - 60.5 =\\) 4.3、\\(CBD=0\\) では \\(39.2 - 37.7=\\) 1.4 となります。 よって立地をバランスさせた後の平均差は4.3 と 1.4 の”平均値”となります。 例えばデータ上での立地の割合、 CBD=1について0.22、CBD=0について0.78、をウェイトとして用いるのであれば 2 がバランス後の平均差となります。\n\n\n\n\nChattopadhyay, Ambarish, and José R. Zubizarreta. 2024. “Causation, Comparison, and Regression.” Harvard Data Science Review 6 (1).",
+    "objectID": "01Intro.html#バランス後の平均差",
+    "href": "01Intro.html#バランス後の平均差",
+    "title": "1  バランス後の比較",
+    "section": "1.2 バランス後の平均差",
+    "text": "1.2 バランス後の平均差\n本ノートにおいて、バランス後の比較分析の一つであり、バランス後の平均差を推定します。 バランス後の平均差は、バランス後の平均値の差として定義します。\n\n\n\n\n\n\nバランス後の平均値\n\n\n\n\\[Yの平均値 = [X=1] 内での Y の平均値\\times [X=1]のターゲットとなる割合\\]\n\\[+ [X=2] 内での Y の平均値\\times [X=2]のターゲットとなる割合\\]\n\\[+..\\]\n\nターゲットとなる割合は研究者が定める。\n\n\n\n\n1.2.1 実例\n以下の例では、すべてのSizeが同じ割合になるように、ターゲットを設定します。\n\n\n\n\n\n\n\n\n平均価格\nCBD\n取引年\n事例割合\nターゲット\n\n\n\n\n37.748\n0\n2021\n0.784\n0.500\n\n\n60.474\n1\n2021\n0.216\n0.500\n\n\n39.150\n0\n2022\n0.779\n0.500\n\n\n64.814\n1\n2022\n0.221\n0.500\n\n\n\n\n\n\n\n\\[2022年のバランス後の平均価格 = 64.814\\times0.5 + 39.150\\times 0.5=51.982\\]\n\\[2021年のバランス後の平均価格 = 60.474\\times0.5 + 37.748\\times 0.5=49.111\\] バランス後の平均差は、2.871であり、バランス前に比べて拡大しました。\n\n\n1.2.2 Overlapの仮定\nバランス後の平均差が計算できる前提条件は、Overlapの仮定が成り立っていることです。 これは、ターゲットが正の値となる(\\(0\\)ではない)\\(X\\)について、すべての\\(D\\)の値について平均値が計算できることを要求します。\n\n\n\n\n\n\nOverlapの仮定\n\n\n\n\nターゲットが正の値を取る全ての\\(X\\)の組み合わせについて、\\(D=1\\)の事例も\\(D=0\\)の事例も、母集団上には両方存在する: \\[1 &gt; E[D|X] &gt;0\\] ただし \\(E[D|X]\\) は\\(D\\)の母平均(\\(D=1\\)の割合)\n\n\n\nOverlapが成り立っていない場合、\\(D=1\\) または \\(D=0\\) しか存在しない\\(X\\)の組み合わせが存在することになります。 結果、バランス後の比較は根本的に不可能です。 例えば、教育経験\\((=X)\\)をバランスさせた男女間\\((=D)\\)での賃金格差を推定したいとします。 ここで関心となる母集団は、男女間での教育経験の分断が極めて大きく、大学卒以上の女性は存在しないとします。 この場合、大学卒の女性割合は\\(0\\)であり、どのようなBalancing weight \\(\\omega(大学卒)\\) を用いたとしても、男性/女性の大学卒比率を揃えることは不可能です。 言い換えるならば、大学卒の女性が存在しないため、大学卒内で男女間の賃金を比較できないため、バランス後の比較は不可能です。",
     "crumbs": [
-      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Balanced Comparison</span>"
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>バランス後の比較</span>"
     ]
   },
   {
-    "objectID": "BalanceWeight.html",
-    "href": "BalanceWeight.html",
-    "title": "2  Balancing Weight",
+    "objectID": "01Intro.html#他の実例",
+    "href": "01Intro.html#他の実例",
+    "title": "1  バランス後の比較",
+    "section": "1.3 他の実例",
+    "text": "1.3 他の実例\n\n1.3.1 合計特殊出生率\nバランス後の比較分析は、社会/政策分析において幅広く利用されています。 代表例は、合計特殊出生率の国家間/時代間比較です。\n出生数の動向を把握する上で、新生児数を年次や国家間比較は、有益だとみなされてきました。 合計特殊出生率 は、成人の年齢構造の違いをバランスさせるために利用されている指標です。 単純な出生率（一年間に生まれた子供の数/女性の数）は、成人の年齢構造の影響を強く受ける可能性があります。 社会において高齢者の比率が高まれば、出生率は低下することが予想されるからです。 対して合計特殊出生率は、「仮に年齢構造が同じであった場合」の出生率を、以下の方法で推定しています \\[\\frac{15歳の女性が産んだ子供の数}{15歳の女性の数} +..+ \\frac{49歳の女性が産んだ子供の数}{49歳の女性の数}\\]\n\n\n1.3.2 既存店ベースの比較\nバランス後の比較は、企業の経営戦略を考える上でも用いられます。\n小売や飲食/宿泊業などでは、しばしば既存店に絞った上での、売上比較がなされます。 例えば、あるコンビニチェーンで、店舗あたりの平均売り上げが1000万円増大したとします。 同時に去年から今年にかけて、新規出店も大きく増加したとします。 新規店の方が売上が高くなる傾向がある場合、新規店割合の違いが、平均売上の上昇をもたらした可能性があります。\n既存店割合をバランスさせるシンプルな方法として、既存店のみに絞った平均売上を比較がよく行われます。 このような分析では、すべての年について、既存店比率は100\\(\\%\\)となり、完全なバランスが達成されます。",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>バランス後の比較</span>"
+    ]
+  },
+  {
+    "objectID": "01Intro.html#応用上の課題",
+    "href": "01Intro.html#応用上の課題",
+    "title": "1  バランス後の比較",
+    "section": "1.4 応用上の課題",
+    "text": "1.4 応用上の課題\nバランス後の比較は、シンプルな枠組みです。 上記の例の通り、大規模なデータを用いて、少ない\\(X\\)をバランスさせるのであれば、単純な計算でバランスできます。\nしかしながら、多くの応用では複数の\\(X\\)を同時にバランスさせることが求められます。 このような応用では、同じ属性を持つ事例数が少なくなり、実際の計算は困難になります。\n多くの応用で活用できる、より実践的な推定方法が求められます。",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>バランス後の比較</span>"
+    ]
+  },
+  {
+    "objectID": "02Weight.html",
+    "href": "02Weight.html",
+    "title": "2  Weight",
     "section": "",
-    "text": "2.1 仮定: Overlap\nバランス後の平均値は、Balancing weightを用いた加重平均としても計算できます。 バランス後の平均値を以下のように書き換えられることで、Balancing weight \\(\\omega(x)\\) は定義できます。\nバランス後の平均値 \\[(d)におけるYのバランス後平均値=\\Biggr\\{(x\\ \\&\\ d)におけるYの平均値\\] \\[\\times \\underbrace{\\frac{xへのウェイト}{dにおけるxの割合}}_{\\equiv\\omega(d,x)}\\times (d)における(x)の割合\\Biggr\\}\\] \\[のxについての総和\\]\nバランス後の平均値は、\\(D_i=d\\)を満たす事例についての加重平均としても算出できます。 \\[\\frac{D=1の事例についての\\omega(d)\\times Yの総和}{D=1を満たす事例数}\\] ただし\\(N\\)は全体の事例数、\\(I(D_i=d)\\)は事例\\(i\\)の\\(D\\)の値が\\(d\\)であれば1、それ以外であれば0となる変数です。よって\\(D_i=d\\)を満たす事例について、Balancing weightsを掛けたものの総和を計算し、\\(D_i=d\\)を満たす事例数で割ることで計算できます。\n例えば、\\((X=x)へのウェイト\\)としてCBD=1が0.22、CBD=0が0.78を用いるのであれば、Balancing Weightは以下のように算出できます。\n母集団全体での\\(X=x\\)の割合をウェイトとした、バランス後の平均値を推定対象とするためには、母集団に対して以下を推定する必要があります。\nPositivityが成り立っていない場合、\\(D=1\\) または \\(D=0\\) しか存在しない\\(X\\)の組み合わせが存在することになります。 結果、バランス後の比較は根本的に不可能です。 例えば、教育経験\\((=X)\\)をバランスさせた男女間\\((=D)\\)での賃金格差を推定したいとします。 ここで関心となる母集団は、男女間での教育経験の分断が極めて大きく、大学卒以上の女性は存在しないとします。 この場合、大学卒の女性割合は\\(0\\)であり、どのようなBalancing weight \\(\\omega(大学卒)\\) を用いたとしても、男性/女性の大学卒比率を揃えることは不可能です。 言い換えるならば、大学卒の女性が存在しないため、大学卒内で男女間の賃金を比較できないため、バランス後の比較は不可能です。\n@(有限標本ではOK?)\n((では?)、Positivityの不成立についての対処を論じます)",
+    "text": "2.1 データ上の平均値\nBalancing Weightsを紹介する準備として、より一般的な概念であるWeightsを紹介します。 Weightsは、データ上の事例の分布を、統計的な処理として変化させるために用いられます。\n以下最も典型的な応用である、データのサンプリングの偏りへの対応、を例としてWeightを紹介します。\n今、ある調査会社が調査員を千代田区、文京区、板橋区に派遣し、中古マンションの取引事例を収集したとします。 各調査員は、全く同じ数の事例を収集します。\n以下では、立地(District)ごとに、平均取引価格とデータ全体に対する事例数の割合をまとめています。\n事例の割合\n平均価格\nDistrict\n\n\n\n\n0.333\n66.5\n千代田区\n\n\n0.333\n47.3\n文京区\n\n\n0.333\n29.5\n板橋区\n繰り返し期待値の法則を用いると、この情報だけからデータ全体の平均取引価格は計算できます。\n繰り返し期待値の法則を、上記のデータに適用すると以下のように計算できます。\n\\[=\\underbrace{66.5}_{千代田区の事例の平均取引価格}\\times \\underbrace{0.333}_{千代田区の事例の割合}\\]\n\\[+\\underbrace{47.3}_{文京区の事例の平均取引価格}\\times \\underbrace{0.333}_{文京区の事例の割合}\\]\n\\[+\\underbrace{29.5}_{板橋区の事例の平均取引価格}\\times \\underbrace{0.333}_{板橋区の事例の割合}\\]\n\\[=47.8\\]\n繰り返し期待値の法則は、単なる計算方法以上の含意を持っています。 データ上の平均値は、\\(X\\)についてのサブグループ内での平均値とサブグループの割合、によって決定されます。 もしサブグループの割合が研究関心から乖離している場合、サブグループ内での平均値が妥当な値であったとしても、ミスリードな平均値が計算されてしまいます。",
     "crumbs": [
-      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Balancing Weight</span>"
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Weight</span>"
     ]
   },
   {
-    "objectID": "BalanceWeight.html#仮定-overlap",
-    "href": "BalanceWeight.html#仮定-overlap",
-    "title": "2  Balancing Weight",
+    "objectID": "02Weight.html#データ上の平均値",
+    "href": "02Weight.html#データ上の平均値",
+    "title": "2  Weight",
     "section": "",
-    "text": "Overlapの仮定\n\n\n\n\n全ての\\(X\\)の組み合わせについて、\\(D=1\\)の事例も\\(D=0\\)の事例も、母集団上には両方存在する: \\[1 &gt; E[D|X] &gt;0\\] ただし \\(E[D|X]\\) は\\(D\\)の母平均(\\(D=1\\)の割合)",
+    "text": "繰り返し期待値の法則\n\n\n\n\n平均値を計算したい変数\\(Y\\)と他の変数\\(X\\)がデータから観察できる\n\\(X\\)の値は、 \\(x_1,..,x_L\\)\n\\(Yの平均値\\)は\n\n\\[=(X=x_1)を満たす事例のYの平均値\\times (X=x_1)を満たす事例の割合\\]\n\\[+..\\]\n\\[+(X=x_L)を満たす事例のYの平均値\\times (X=x_L)を満たす事例の割合\\]\n\n\n\n\n\\(平均取引価格\\)は",
     "crumbs": [
-      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Balancing Weight</span>"
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Weight</span>"
     ]
   },
   {
-    "objectID": "BalanceWeight.html#推定方法",
-    "href": "BalanceWeight.html#推定方法",
-    "title": "2  Balancing Weight",
-    "section": "2.2 推定方法",
-    "text": "2.2 推定方法\n\\(X\\)の組み合わせの種類に比べて、十分な事例数が存在するのであれば、Balancing weightは、データ上での\\(X\\)の割合を用いて計算できます。 この方法はExact MatchingやStratified Estimation (Wager 2024) として知られる方法による推定結果と完全に一致します。 例えばExact Matchingは、MatchIt package (Stuart et al. 2011) などを利用して実装できます。\nExact matchingやStratified Estimationは、非常に直感的な推定方法ですが、\\(X\\) の組み合わせが増えると、実行不可能です。 例えば\\(X\\)に、両親の年収や資産などの連続変数が含まれている場合は、\\(X\\)の組み合わせが非常に大きくなり、Balancing weightsを計算することは事実上不可能となります。\nこの問題を解決するために、次節以降で紹介する、OLSや傾向スコアの逆数(Inverse probability weights)の活用が有用です。",
+    "objectID": "02Weight.html#ターゲット上の平均値",
+    "href": "02Weight.html#ターゲット上の平均値",
+    "title": "2  Weight",
+    "section": "2.2 ターゲット上の平均値",
+    "text": "2.2 ターゲット上の平均値\n今研究関心は、「もし実際の取引履歴をすべて収集した事例を用いて計算された平均取引価格」、であるとします。 このような平均値を計算したい仮想的な事例集をターゲットと呼びます。\n今、実際(ターゲット)の取引割合は、千代田区が0.161、文京区が0.33、板橋区が0.509であることが判明しているとします。 もしデータ上の各区の取引割合がターゲットの取引割合であった場合、平均値はどのように変化するでしょうか？ このような平均値を以後、調整された平均値と呼びます。\n\\(調整された平均取引価格\\)は\n\\[=\\underbrace{66.5}_{千代田区の事例の平均取引価格}\\times \\underbrace{0.161}_{千代田区の事例の割合}\\]\n\\[+\\underbrace{47.3}_{文京区の事例の平均取引価格}\\times \\underbrace{0.33}_{文京区の事例の割合}\\]\n\\[+\\underbrace{29.5}_{板橋区の事例の平均取引価格}\\times \\underbrace{0.509}_{板橋区の事例の割合}\\]\n\\[=41.3\\]\nデータ上の平均値は47.8であったので、過大であったことがわかります。 これは、平均取引価格が高い傾向にある千代田区の物件割合が、現実の取引割合(0.161)よりも、データ上の割合(0.333)が過大であることに起因します。",
     "crumbs": [
-      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Balancing Weight</span>"
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Weight</span>"
     ]
   },
   {
-    "objectID": "BalanceWeight.html#rによる実践例",
-    "href": "BalanceWeight.html#rによる実践例",
-    "title": "2  Balancing Weight",
-    "section": "2.3 Rによる実践例",
-    "text": "2.3 Rによる実践例\n\n以下のパッケージを使用\n\nreadr (tidyverseに同梱): データの読み込み\nmatchit: Exact matchingを含む多様なMatchingを実装\n\nmannual\n\n\n\n\n2.3.1 準備\nデータを取得します。 \\(D\\) として、中心6区かそれ以外で、1/0となる変数を定義します。 シンプルな比較分析について信頼区間は、データ分割は不要です。\n\nData = readr::read_csv(\"Public.csv\") # データ読み込み\n\nData = mutate(\n  Data,\n  D = if_else(\n    LargeDistrict == \"中心6区\",1,0\n  )\n)\n\n\n\n2.3.2 Balanced Weight\nMatchItパッケージ内のmatchti関数を用いて、Balanced weightsを計算します。 例えば立地別の平均取引価格とその信頼区間は、以下で計算できます。\n\nMatch = MatchIt::matchit(\n  D ~ Size + Tenure + StationDistance, # D ~ Xを指定\n  Data, # 用いるデータの指定\n  method = \"exact\", # Balanced weightを計算するために、exact matchingを実行\n  target = \"ATE\" # サンプル全体のXの分布をターゲット\n  )\n\nDataWeight = MatchIt::match.data(\n  Match, \n  drop.unmatched = FALSE # Balance weightが計算できない事例も含む\n  ) # Balance weightを含んだデータを生成 \n\nMatch # Balance weightの特徴を表示\n\nA matchit object\n - method: Exact matching\n - number of obs.: 6378 (original), 1702 (matched)\n - target estimand: ATT\n - covariates: Size, Tenure, StationDistance\n\n\nnumber of obs.において、元々の事例数 (6378) と balanced weightを計算できた事例数 (1702) を表示しています。 事例が大きく減少しており、balanced weightを計算できない事例が多かったことを示しています。 この理由は、Size, Tenure, StationDistanceが完全に一致する事例が、\\(D=1\\) または \\(D=0\\) のどちらかしか存在しない場合が多いためです。\nBalanced weightが算出できた事例について、バランス後の平均差を計算すると以下となります。\n\nlm(Price ~ D,\n   DataWeight,\n   weights = weights # Balancing weightsを使用\n   )\n\n\nCall:\nlm(formula = Price ~ D, data = DataWeight, weights = weights)\n\nCoefficients:\n(Intercept)            D  \n      36.05        12.55  \n\n\n単純比較の結果は以下であり、大きく異なることが確認できます。\n\nlm(Price ~ D,\n   DataWeight)\n\n\nCall:\nlm(formula = Price ~ D, data = DataWeight)\n\nCoefficients:\n(Intercept)            D  \n      38.04        20.94  \n\n\nただし今回のように、多くの事例が分析から除外されてしまった場合、単純比較とバランス後の平均差が乖離する理由は不明瞭です。 \\(X\\)をバランスさせることで平均差が変化した可能性がありますが、分析事例の限定も値を変化させます。 このため次節以降の方法を用いて、極力分析事例を除外しない方法を用いることが望ましいです。\n\n\n\n\nStuart, Elizabeth A, Gary King, Kosuke Imai, and Daniel Ho. 2011. “MatchIt: Nonparametric Preprocessing for Parametric Causal Inference.” Journal of Statistical Software.\n\n\nWager, Stefan. 2024. “Causal Inference: A Statistical Learning Approach.” preparation.",
+    "objectID": "02Weight.html#weighte-mean",
+    "href": "02Weight.html#weighte-mean",
+    "title": "2  Weight",
+    "section": "2.3 Weighte mean",
+    "text": "2.3 Weighte mean\nこのような調整を行うための有力な方法は、荷重平均値(Weighted mean)を計算することです。 一般にWeighted meanは以下のように定義されます。\n\n\n\n\n\n\nWeighted mean\n\n\n\n\n調整された平均値\n\n\\[=(\\omega\\times Y)の平均値\\]\n\n\\(\\omega=\\) Weight \\((\\omega の平均値 = 1)\\)\n\n\n\nWeightは各事例の\\(Y\\)の値が、最終的な平均値に反映される度合いをコントロールします。 例えば、もし\\(\\omega=0\\)であれば、その事例は\\(Y\\)の平均値の計算に一切反映されません。\nWeightは、データとターゲットにおけるDistrictの分布を揃えるように設定されます。 すなわち\n\\[\\omega\\times 事例割合=ターゲットとなる割合\\]\nを達成するように\\(\\omega\\)を算出します。 両辺を事例割合で割ると、\n\\[\\omega=\\frac{ターゲットとなる割合}{事例割合}\\] となります。 すなわちターゲットよりも過大に収集されているグループについては小さめに、ターゲットよりも過小なグループは大きめに反映されます。\n上記の例に適用すると、以下となります。\n\n\n\n\n\n\n\n\n平均価格\nDistrict\nターゲットとなる割合\n事例の割合\nWeight\n\n\n\n\n66.5\n千代田区\n0.161\n0.333\n0.483\n\n\n47.3\n文京区\n0.330\n0.333\n0.991\n\n\n29.5\n板橋区\n0.509\n0.333\n1.529",
     "crumbs": [
-      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Balancing Weight</span>"
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Weight</span>"
     ]
   },
   {
-    "objectID": "Moment.html",
-    "href": "Moment.html",
-    "title": "3  特徴のバランス",
+    "objectID": "03BalanceWeight.html",
+    "href": "03BalanceWeight.html",
+    "title": "3  Balancing Weight",
     "section": "",
-    "text": "3.1 OLS\n\\(X\\) の組み合わせが多く、Balancing weightsを計算することが困難な場合、\\(X\\)の分布を近似的にバランスさせることが有力です。 このような方法は大きく、balancing approachとmodelling approach に大別できます (Chattopadhyay, Hase, and Zubizarreta 2020)。 本節ではbalancing approachの代表例である、分布を特徴づける代表的な値である平均値や分散などをバランスさせるアプローチを紹介します。\n近年の研究により、線型モデルのOLS推定は、Moment Balanceを達成することが確認されています (Imbens 2015; Chattopadhyay and Zubizarreta 2023)。 Chattopadhyay and Zubizarreta (2023) は、以下を証明しました。\n?eq-balance は、\\(X\\) の平均値を \\(D=\\{0,1\\}\\) 間で均質化していることを意味しています。 ?eq-normal は、ウェイトとして総和を1に基準化しています。 すなわちStep 1において、平均値をバランスさせるウェイトの中から、最も分散が小さいものを選んでいることを意味しています。 Step 2において、このウェイトを用いた平均差を計算しています。\nウェイトの分散は、最終的な推定結果の推定誤差に影響を与えます。 一般に、ウェイトの分散が小さいと、推定誤差が削減される傾向があります。 OLSは、平均値のバランスを達成するウェイトから分散が最小となるものを選ぶため、推定誤差が小さくなる傾向を持ちます。",
+    "text": "3.1 Balancing Weightの定義\nバランスを達成する実用的な手法は、数多く提案されています (Chattopadhyay, Hase, and Zubizarreta 2020; Bruns-Smith et al. 2023)。 このような手法を整理し、活用していくためには、Balancing weight という概念を導入することが有益です。\nBalancing weightは、\\(D\\)間での\\(X\\)の分布の乖離を調整するために導入され、以下のように定義されます。\n\\[D=1における事例割合\\times \\omega(x)\\]\n\\[= D=0における事例割合\\times \\omega(x)\\]\n\\[=ターゲット\\]\n事例割合をターゲットと一致させるために、\\(\\omega(x)\\) を活用します。 式を変形すると\n\\[\\omega(x)=\\frac{ターゲット}{事例割合}\\]\nとなり、ターゲットに比べて過大な事例割合が過大なグループに対しては低い、過小なグループに対しては大きなWeightを付与することが確認でいます。\n先のデータに適用すると、以下のようなBalancing Weightが計算されます。\n平均価格\nCBD\n取引年\n事例割合\nターゲット\nBalancing Weight\n\n\n\n\n37.748\n0\n2021\n0.784\n0.500\n0.638\n\n\n60.474\n1\n2021\n0.216\n0.500\n2.314\n\n\n39.150\n0\n2022\n0.779\n0.500\n0.641\n\n\n64.814\n1\n2022\n0.221\n0.500\n2.267\nBalancing weightsを用いると、バランス後の平均値は以下のように計算できます\n\\[2021年のバランス後の平均値 =2021年の(\\omega(X_i)\\times Y_i)の平均値\\]\n\\[2022年のバランス後の平均値 =2022年の(\\omega(X_i)\\times Y_i)の平均値\\]",
     "crumbs": [
-      "<span class='chapter-number'>3</span>  <span class='chapter-title'>特徴のバランス</span>"
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Balancing Weight</span>"
     ]
   },
   {
-    "objectID": "Moment.html#ols",
-    "href": "Moment.html#ols",
-    "title": "3  特徴のバランス",
+    "objectID": "03BalanceWeight.html#balancing-weightの定義",
+    "href": "03BalanceWeight.html#balancing-weightの定義",
+    "title": "3  Balancing Weight",
     "section": "",
-    "text": "OLSの性質\n\n\n\n\n\\(D=\\{0,1\\}\\)\n\n\n\n\n\n\n3.1.1 例\n部屋の広さ (Size) と 築年数 (Tenure) をバランスさせた後に、2022/2021年の平均取引価格差を推定します。 \\(Price\\sim D + Size + Tenure\\) をOLS回帰すると、以下のようなバランスが達成されます。\n\n\n\n\n\n\n\n\n\n赤点 (Unadjusted) は、バランス前の単純平均差を表します。 価格が大きく上昇していますが、取引物件の部屋の広さは狭くなり、築年数は古くなっています。 青点 (Adjusted)は、OLSによる暗黙のバランス後の差を示しています。 結果、SizeやTenureの平均値は完全にバランスしており、結果平均取引価格差も上昇しています。 Tenure2やSize2は、築年数や部屋の広さの二乗項(分散)、Tenure_Sizeは交差項(共分散)を示しており、これらについてはOLSを行ったとしてもバランスしていません。\n分散や共分散もバランスさせるためには、二乗項や交差項もモデルに導入したモデル \\(Price\\sim D + Size + Tenure + Size2 + Tenure2 + TenureSize\\) をOLS推定します。 結果、以下の図の通り、分散や共分散もBalanceします。\n\n\n\n\n\n\n\n\n\n\n\n3.1.2 Post selection\nOLSにおいては、分布の特徴をどこまでバランスさせるのかが問題となります。 事例数が十分あれば、3乗項などの高次項もバランスさせることは可能です。 しかしながら事例数が少ない場合、大量のモーメントをバランスさせると、推定誤差が大きくなってしまいます。\nこのような問題に対して、OLS推定を行う前に重要な変数のみを選択することが必要となります。 変数選択を行う方法としては、Chernozhukov, Hansen, and Spindler (2015) がPost Double Selectionというデータ主導の手法を提案しており、幅広く応用されています。 Angrist and Frandsen (2022) は、変数選択について、より入門的な紹介を行っています。\nPost Double Selecctionでは、\\(X\\)の中から、\\(Y\\) または \\(D\\) について予測モデルを推定した際に使用される変数のみを使用し、OLS推定を行います。 予測モデルは、LASSOにより推定されます。 ここで“または”であることに注意してください。 例えば\\(Y\\) の予測モデルからは排除された変数であったとしても、\\(D\\)の予測モデルに利用されているのであれば、OLS推定に採用されます。 このような”慎重な”変数選択によって、信頼区間の計算可能性などの統計的性質を保証しています。\n当該手法はhdm packageを用いて実装できます。\n\nY = Data$Price # Outcome\nD = Data$D # Treatment\nX = select(\n  Data,\n  Size,\n  Size2,\n  Tenure,\n  Tenure2,\n  Tenure_Size) # Control\n\nFit = hdm::rlassoEffect(\n  x = as.matrix(X),\n  d = D,\n  y = Y\n) # Fit post double selection\n\nsummary(Fit) # Show results\n\n[1] \"Estimates and significance testing of the effect of target variables\"\n   Estimate. Std. Error t value Pr(&gt;|t|)    \nd1    3.8506     0.3304   11.65   &lt;2e-16 ***\n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\n\n選択された変数は、以下のように表示できます。 部屋の広さと築年数の平均値のみが、選択されたことが確認できます。\n\nFit$selection.index # Show selected X\n\n       Size       Size2      Tenure     Tenure2 Tenure_Size \n       TRUE       FALSE        TRUE       FALSE       FALSE",
+    "text": "3.1.1 Targetの設定\n一般に、すべてのグループが同じ割合になるようなターゲットを設定すると、非常に極端な値を取るWeightが必要になります。 このような極端なWeightを用いて推定は、データに含まれるハズレ値の影響を受けやすくなります。 このため多くの応用では、より推定が容易かつ解釈が容易なターゲットが設定されます。\nよく使われるターゲットは、データ全体の事例割合です。 例えば2021年と2022年を結合すると、CBDに立地する物件割合は0.223、他に立地する割合は0.777であり、これをターゲットすることができます。",
     "crumbs": [
-      "<span class='chapter-number'>3</span>  <span class='chapter-title'>特徴のバランス</span>"
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Balancing Weight</span>"
     ]
   },
   {
-    "objectID": "Moment.html#olsの問題点と解決策",
-    "href": "Moment.html#olsの問題点と解決策",
-    "title": "3  特徴のバランス",
-    "section": "3.2 OLSの問題点と解決策",
-    "text": "3.2 OLSの問題点と解決策\nOLSにより暗黙のうちに計算されるWeightは、平均値をバランスします ?eq-balance 。 しかしながら、Balancing weightsに求められる他の性質は必ずしも満たされません。\n\n3.2.1 解釈の難しさ\nバランス後の、\\(X\\) の平均値がどのような水準になるのか、一般に不透明です。 結果を解釈するためには、\\(X\\) の平均値は明確な水準、例えばデータ全体での平均値と一致させることが望ましいです。 しかしながら、OLSはそのような水準との一致を保証しません。\nOLSによるバランス後の\\(X\\)の平均値について、lmw packageにより診断できます。\n\n\n\n\n\n\n\n\n\n黒丸はOLSによるバランス後、ばつ印はバランス前の平均値を示しています。 Control groupは、\\(D=0\\) (2021年)、Treatment groupは、\\(D=1\\) (2022年)の値です。 0線は、サンプル平均を示しています。\n同図からバランス前は、2022年についてはSizeがサンプル平均よりも小さく、Tenureは長いことが確認できます。 黒丸を見ると、OLSによるバランス後はどちらも2022年と2021年の間で平均差がなくなることが確認できます。 ただし　０線からは乖離しており、サンプル平均とは一致していないことが確認できます。\n\n\n3.2.2 負の荷重\nBalancing weightsは、正の値を取ることが望まれます。 しかしながらOLSが生成するWeightは、負の値を取る可能性があり、ミスリーデイングな推定結果をもたらす可能性があります。\nlmw packageは、OLSが生成するweightsの値を計算します。 例えばhist関数により、ヒストグラムとして可視化できます。\n\n\n\n\n\n\n\n\n\n本応用例では、負のweightsは発生していないことが確認できました。\n\n\n3.2.3 解決策\n\\(D\\)と\\(X\\)の交差項を含めた以下のモデルを推定した、\\(\\beta_{D},..,\\beta_{DL}\\)の平均値は、サンプル全体の\\(X\\)の平均値とバランス後の平均値を一致させるWeightを活用した平均の差と一致します(Chattopadhyay and Zubizarreta 2023)。 \\[Y\\sim D\\times (\\beta_D + \\beta_{D1}X_1+..+\\beta_{DLX_L}) + \\beta_0 + \\beta_1X_1+..+\\beta_LX_L.\\] ただし負のweightは以前として生じる可能性があります。\n負のWeightを発生させない方法としては、Entropy weights (Hainmueller 2012) や Stable weights (Zubizarreta 2015) が有力です。 これらの手法では、サンプル平均との一致や正の値を取ることを条件として課した上で、weightを計算します。 このためOLSが持つ問題点の多くを克服しており、より信頼できるバランス後の比較分析が可能です。 これらの手法は WeightIt package (Greifer 2024) で容易に実装できます。",
+    "objectID": "03BalanceWeight.html#推定方法",
+    "href": "03BalanceWeight.html#推定方法",
+    "title": "3  Balancing Weight",
+    "section": "3.2 推定方法",
+    "text": "3.2 推定方法\n\\(X\\)の組み合わせの種類に比べて、十分な事例数が存在するのであれば、Balancing weightは、データ上での\\(X\\)の割合を用いて計算できます。\nこの方法はExact MatchingやStratified Estimation (Wager 2024) として知られる方法による推定結果と完全に一致します。 例えばExact Matchingは、MatchIt package (Stuart et al. 2011) などを利用して実装できます。\nExact matchingやStratified Estimationは、非常に直感的な推定方法ですが、\\(X\\) の組み合わせが増えると、実行不可能です。 例えば\\(X\\)に、両親の年収や資産などの連続変数が含まれている場合は、\\(X\\)の組み合わせが非常に大きくなり、Balancing weightsを計算することは事実上不可能となります。\nこの問題を解決するために、次節以降で紹介する、OLSや傾向スコアの逆数(Inverse probability weights)の活用が有用です。",
     "crumbs": [
-      "<span class='chapter-number'>3</span>  <span class='chapter-title'>特徴のバランス</span>"
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Balancing Weight</span>"
     ]
   },
   {
-    "objectID": "Moment.html#rによる実践例",
-    "href": "Moment.html#rによる実践例",
-    "title": "3  特徴のバランス",
+    "objectID": "03BalanceWeight.html#rによる実践例",
+    "href": "03BalanceWeight.html#rによる実践例",
+    "title": "3  Balancing Weight",
     "section": "3.3 Rによる実践例",
-    "text": "3.3 Rによる実践例\n\n\\(D\\)と\\(X\\)の交差項を含めたモデルのOLS推定、およびその性質の診断は、以下のパッケージを用いて実装できます。\n\nreadr (tidyverseに同梱): データの読み込み\nlmw: OLSが計算するbalance weightsを計算\n\nRepository\n\nmarginaleffects: 交差項を含めたモデルでの推定\n\nMannual\n\n\n\n\n3.3.1 準備\nデータを取得します。 \\(D\\) として、中心6区かそれ以外で、1/0となる変数を定義します。 シンプルな比較分析について信頼区間は、データ分割は不要です。\n\nData = readr::read_csv(\"Public.csv\") # データ読み込み\n\nData = dplyr::mutate(\n  Data,\n  D = dplyr::if_else(\n    LargeDistrict == \"中心6区\",1,0\n  ) # 中心6区であれば1、それ以外であれば0\n)\n\n\n\n3.3.2 Balanced comparson by OLS\n交差項を含むOLSによりBalance させた推定結果は以下で導出できます。 Size,Tenure,StationDistanceの平均値、分散、共分散を、中心6区とそれ以外で一致させています\n\nOLS = lm(\n  Price ~ \n    D*(I(Size^2) + I(Tenure^2) + I(StationDistance^2) +\n         (Size + Tenure + StationDistance)**2) + # DとXの交差項\n    I(Size^2) + I(Tenure^2) + I(StationDistance^2) +\n               (Size + Tenure + StationDistance)**2, # X,\n  Data\n)\n\nmarginaleffects::avg_comparisons(\n  OLS, # 計算の元となるモデル\n  variables = \"D\", # Dについて平均差を推定\n  vcov = \"HC4\") # ロバストな信頼区間\n\n\n Estimate Std. Error    z Pr(&gt;|z|)     S 2.5 % 97.5 %\n     19.4      0.705 27.6   &lt;0.001 554.2  18.1   20.8\n\nTerm: D\nType:  response \nComparison: mean(1) - mean(0)\nColumns: term, contrast, estimate, std.error, statistic, p.value, s.value, conf.low, conf.high, predicted_lo, predicted_hi, predicted \n\n\nバランスさせない平均差(以下)と比べると、平均差が少し減少しています。\n\nestimatr::lm_robust(\n  Price ~ D,\n  Data\n)\n\n            Estimate Std. Error  t value     Pr(&gt;|t|) CI Lower CI Upper   DF\n(Intercept) 38.03972  0.3182179 119.5399 0.000000e+00 37.41591 38.66354 6376\nD           20.94057  1.2529064  16.7136 2.084367e-61 18.48446 23.39669 6376\n\n\n\n3.3.2.1 Balanced Weight\nlmw パッケージのlmw関数を用いれば、OLSが算出しているBalance weightsを計算できます。\n\nMatch = lmw::lmw(\n  ~ D + I(Size^2) + I(Tenure^2) + I(StationDistance^2) +\n               (Size + Tenure + StationDistance)**2, # 平均、分散、共分散をバランス\n  Data,\n  method = \"MRI\" # DとXの交差項を導入\n) # Weightの算出\n\nhist(Match$weights) # Weightのヒストグラムを算出\n\n\n\n\n\n\n\n\n少数ですが負のWeightが発生しています。",
+    "text": "3.3 Rによる実践例\n\n以下のパッケージを使用\n\nreadr (tidyverseに同梱): データの読み込み\nmatchit: Exact matchingを含む多様なMatchingを実装\n\nmannual\n\n\n\n\n3.3.1 準備\nデータを取得します。 \\(D\\) として、中心6区かそれ以外で、1/0となる変数を定義します。 シンプルな比較分析について信頼区間は、データ分割は不要です。\n\nData = readr::read_csv(\"Public.csv\") # データ読み込み\n\nData = mutate(\n  Data,\n  D = if_else(\n    LargeDistrict == \"中心6区\",1,0\n  )\n)\n\n\n\n3.3.2 Balanced Weight\nMatchItパッケージ内のmatchti関数を用いて、Balanced weightsを計算します。 例えば立地別の平均取引価格とその信頼区間は、以下で計算できます。\n\nMatch = MatchIt::matchit(\n  D ~ Size + Tenure, # D ~ Xを指定\n  Data, # 用いるデータの指定\n  method = \"exact\", # Balanced weightを計算するために、exact matchingを実行\n  target = \"ATE\" # サンプル全体のXの分布をターゲット\n  )\n\nDataWeight = MatchIt::match.data(\n  Match, \n  drop.unmatched = FALSE # Balance weightが計算できない事例も含む\n  ) # Balance weightを含んだデータを生成 \n\nMatch # Balance weightの特徴を表示\n\nA `matchit` object\n - method: Exact matching\n - number of obs.: 6378 (original), 4939 (matched)\n - target estimand: ATT\n - covariates: Size, Tenure\n\n\nnumber of obs.において、元々の事例数 (6378) と balanced weightを計算できた事例数 (1702) を表示しています。 事例が大きく減少しており、balanced weightを計算できない事例が多かったことを示しています。 この理由は、Size, Tenure, StationDistanceが完全に一致する事例が、\\(D=1\\) または \\(D=0\\) のどちらかしか存在しない場合が多いためです。\nBalanced weightが算出できた事例について、バランス後の平均差を計算すると以下となります。\n\nlm(Price ~ D,\n   DataWeight,\n   weights = weights # Balancing weightsを使用\n   )\n\n\nCall:\nlm(formula = Price ~ D, data = DataWeight, weights = weights)\n\nCoefficients:\n(Intercept)            D  \n      38.96        18.19  \n\n\n単純比較の結果は以下であり、大きく異なることが確認できます。\n\nlm(Price ~ D,\n   DataWeight)\n\n\nCall:\nlm(formula = Price ~ D, data = DataWeight)\n\nCoefficients:\n(Intercept)            D  \n      38.04        20.94  \n\n\nただし今回のように、多くの事例が分析から除外されてしまった場合、単純比較とバランス後の平均差が乖離する理由は不明瞭です。 \\(X\\)をバランスさせることで平均差が変化した可能性がありますが、分析事例の限定も値を変化させます。 このため次節以降の方法を用いて、極力分析事例を除外しない方法を用いることが望ましいです。\n\n\n\n\nBruns-Smith, David, Oliver Dukes, Avi Feller, and Elizabeth L Ogburn. 2023. “Augmented Balancing Weights as Linear Regression.” arXiv Preprint arXiv:2304.14545.\n\n\nChattopadhyay, Ambarish, Christopher H Hase, and José R Zubizarreta. 2020. “Balancing Vs Modeling Approaches to Weighting in Practice.” Statistics in Medicine 39 (24): 3227–54.\n\n\nStuart, Elizabeth A, Gary King, Kosuke Imai, and Daniel Ho. 2011. “MatchIt: Nonparametric Preprocessing for Parametric Causal Inference.” Journal of Statistical Software.\n\n\nWager, Stefan. 2024. “Causal Inference: A Statistical Learning Approach.” preparation.",
     "crumbs": [
-      "<span class='chapter-number'>3</span>  <span class='chapter-title'>特徴のバランス</span>"
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Balancing Weight</span>"
     ]
   },
   {
-    "objectID": "Moment.html#reference",
-    "href": "Moment.html#reference",
-    "title": "3  特徴のバランス",
-    "section": "3.4 Reference",
-    "text": "3.4 Reference\n\n\n\n\nAngrist, Joshua D, and Brigham Frandsen. 2022. “Machine Labor.” Journal of Labor Economics 40 (S1): S97–140.\n\n\nChattopadhyay, Ambarish, Christopher H Hase, and José R Zubizarreta. 2020. “Balancing Vs Modeling Approaches to Weighting in Practice.” Statistics in Medicine 39 (24): 3227–54.\n\n\nChattopadhyay, Ambarish, and José R Zubizarreta. 2023. “On the Implied Weights of Linear Regression for Causal Inference.” Biometrika 110 (3): 615–29.\n\n\nChernozhukov, Victor, Christian Hansen, and Martin Spindler. 2015. “Valid Post-Selection and Post-Regularization Inference: An Elementary, General Approach.” Annu. Rev. Econ. 7 (1): 649–88.\n\n\nGreifer, Noah. 2024. WeightIt: Weighting for Covariate Balance in Observational Studies. https://ngreifer.github.io/WeightIt/.\n\n\nHainmueller, Jens. 2012. “Entropy Balancing for Causal Effects: A Multivariate Reweighting Method to Produce Balanced Samples in Observational Studies.” Political Analysis 20 (1): 25–46.\n\n\nImbens, Guido W. 2015. “Matching Methods in Practice: Three Examples.” Journal of Human Resources 50 (2): 373–419.\n\n\nZubizarreta, José R. 2015. “Stable Weights That Balance Covariates for Estimation with Incomplete Outcome Data.” Journal of the American Statistical Association 110 (511): 910–22.",
-    "crumbs": [
-      "<span class='chapter-number'>3</span>  <span class='chapter-title'>特徴のバランス</span>"
-    ]
-  },
-  {
-    "objectID": "IPW.html",
-    "href": "IPW.html",
-    "title": "4  Inverse Probability Weight",
+    "objectID": "04OLS.html",
+    "href": "04OLS.html",
+    "title": "4  OLSによる特徴のバランス",
     "section": "",
-    "text": "4.1 Inverse probability weighting\nBalancing weightsを計算する別のアプローチとして、傾向スコア (Propensity score; Rosenbaum and Rubin (1983)) の活用が挙げられます。\n\\((X=x)\\)へのウェイトとして、\\(X\\) の母分布をターゲットとするのであれば、Balancing weight \\(\\omega(X)\\) と傾向スコア \\(p_d(X)\\) の間に以下の関係性が成り立ちます。 \\[\\omega(X) = \\frac{D=dの割合}{p_d(X)}\\] よってバランス後の平均値は以下のように書き換えられます。 \\[\\frac{D=dについて(\\omega(X)\\times Y)の総和}{D=dの事例数}\\] \\[=\\frac{D=dについて[(D=dの割合/p_d(X))\\times Y]の総和}{D=dの割合\\times 総事例数}\\] \\[=\\frac{D=dについて[(1/p_d(X))\\times Y]の総和}{総事例数}\\] よって、傾向スコアが推定できれば、その逆数\\((1/p_d(X))\\) を掛ることでバランス後の平均値が推定できます。",
+    "text": "4.1 OLSによる平均値のバランス\n\\(X\\) の組み合わせが多く、Balancing weightsを計算することが困難な場合、\\(X\\)の分布を近似的にバランスさせることが有力です。 このような方法は大きく、balancing approachとmodelling approach に大別できます (Chattopadhyay, Hase, and Zubizarreta 2020)。\n本節ではbalancing approachの代表例である、OLS（重回帰）によって、分布を特徴づける代表的な値である平均値や分散などをバランスさせるアプローチを紹介します。\n近年の研究により、線型モデルのOLS推定は、Moment Balanceを達成することが確認されています (Imbens 2015; Chattopadhyay and Zubizarreta 2023)。 Chattopadhyay and Zubizarreta (2023) は、以下を証明しました。\n重回帰による推定は、\\(D\\)間で\\(X\\) の平均値をバランスさせた上で、平均値を比較しています。 また最終的な推定結果の推定誤差に影響を与える、Weightの分散も可能な限り削減しています。",
     "crumbs": [
-      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Inverse Probability Weight</span>"
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>OLSによる特徴のバランス</span>"
     ]
   },
   {
-    "objectID": "IPW.html#傾向スコアの推定方法",
-    "href": "IPW.html#傾向スコアの推定方法",
-    "title": "4  Inverse Probability Weight",
-    "section": "4.2 傾向スコアの推定方法",
-    "text": "4.2 傾向スコアの推定方法\n傾向スコアの推定方法については、予測を目的とする要約 (?sec-Prediction) の手法を応用することができます。 例えば以下のモデルを、シンプルにOLSを用いて推定することも可能です。 \\[D\\sim\\beta_0+\\beta_1X_1+..\\] ただ多くの応用で、LogitやProbitなど、予測値が\\([0,1]\\) の範囲に収まることが保証される方法を用いることが多くなっています。\n近年では、より柔軟な推定手法 (LASSOやRandomForest, Boostingなどの機械学習の手法)を用いることが増えています。 既存の機械学習の手法が容易に応用できる点は、傾向スコアを用いることの大きな利点となります。",
-    "crumbs": [
-      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Inverse Probability Weight</span>"
-    ]
-  },
-  {
-    "objectID": "IPW.html#問題点",
-    "href": "IPW.html#問題点",
-    "title": "4  Inverse Probability Weight",
-    "section": "4.3 問題点",
-    "text": "4.3 問題点\nInverse probability weightingを用いたバランス後の平均値推定は、傾向スコアの推定精度に決定的に依存します。 シンプルなモデルをLogitなどで推定した場合、モデル定式化の誤りが深刻となりえます。 機械学習等のより柔軟な推定手法を用いれば、モデル定式化の誤りは減少します。 しかしながら、依然として推定精度は不十分な場合が多いことが知られています(Chernozhukov et al. 2018)1。\n以上の問題を克服するために、次節では \\(Y\\) の予測モデルも併用する推定方法 (Augmented inverse probability weighting) を紹介します。",
-    "crumbs": [
-      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Inverse Probability Weight</span>"
-    ]
-  },
-  {
-    "objectID": "IPW.html#他の方法",
-    "href": "IPW.html#他の方法",
-    "title": "4  Inverse Probability Weight",
-    "section": "4.4 他の方法",
-    "text": "4.4 他の方法\nここまでBalancing weightsを推定する方法として、OLSや傾向スコアを用いた方法を紹介しました。 他の有力な方法として、Imai and Ratkovic (2014) は、\\(X\\) のバランスと\\(p_d(X)\\)を極力両立するように推定する方法を提案しています。 Iacus, King, and Porro (2012), Huling and Mak (2024) では、\\(X\\) の分布の距離(Energy distance)を最小化するようにweightを推定します。",
-    "crumbs": [
-      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Inverse Probability Weight</span>"
-    ]
-  },
-  {
-    "objectID": "IPW.html#reference",
-    "href": "IPW.html#reference",
-    "title": "4  Inverse Probability Weight",
-    "section": "4.5 Reference",
-    "text": "4.5 Reference\n\n\n\n\nChernozhukov, Victor, Denis Chetverikov, Mert Demirer, Esther Duflo, Christian Hansen, Whitney Newey, and James Robins. 2018. “Double/debiased machine learning for treatment and structural parameters.” The Econometrics Journal 21 (1): C1–68. https://doi.org/10.1111/ectj.12097.\n\n\nHuling, Jared D, and Simon Mak. 2024. “Energy Balancing of Covariate Distributions.” Journal of Causal Inference 12 (1): 20220029.\n\n\nIacus, Stefano M, Gary King, and Giuseppe Porro. 2012. “Causal Inference Without Balance Checking: Coarsened Exact Matching.” Political Analysis 20 (1): 1–24.\n\n\nImai, Kosuke, and Marc Ratkovic. 2014. “Covariate Balancing Propensity Score.” Journal of the Royal Statistical Society Series B: Statistical Methodology 76 (1): 243–63.\n\n\nRosenbaum, Paul R, and Donald B Rubin. 1983. “The Central Role of the Propensity Score in Observational Studies for Causal Effects.” Biometrika 70 (1): 41–55.",
-    "crumbs": [
-      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Inverse Probability Weight</span>"
-    ]
-  },
-  {
-    "objectID": "IPW.html#footnotes",
-    "href": "IPW.html#footnotes",
-    "title": "4  Inverse Probability Weight",
+    "objectID": "04OLS.html#olsによる平均値のバランス",
+    "href": "04OLS.html#olsによる平均値のバランス",
+    "title": "4  OLSによる特徴のバランス",
     "section": "",
-    "text": "この問題は収束の遅さとして知られています↩︎",
+    "text": "OLSの性質\n\n\n\n\n\\(D=\\{0,1\\}\\)を前提とします\n\\(Y\\sim D + X_1 + .. + X_L\\) をOLSで推定し算出される \\(D\\) の係数値は、以下の方法で計算される値と完全に一致する\n\n\\[\\beta_D=D=1における(\\omega(x,1)\\times Y)の平均値\\]\n\\[-D=0における(\\omega(x,0)\\times Y)の平均値\\]\n\n\\(\\omega(x,d)\\)は、OLSが暗黙のうちに算出する近似的なBalancing Weightsであり、以下の性質を持ちます。\n\nすべての\\(X_l\\) について\n\n\n\\[D=1における(\\omega(x,1)\\times X_l)の平均値\\]\n\\[=D=0における(\\omega(x,0)\\times X_l)の平均値\\]\n\n上記を満たす\\(\\omega(x,d)\\) の中で、最小の分散を持つWeights\n\n\n\n\n\n4.1.1 例\n部屋の広さ (Size) と 築年数 (Tenure) をバランスさせた後に、2022/2021年の平均取引価格差を推定します。 \\(Price\\sim D + Size + Tenure\\) をOLS回帰すると、以下のようなバランスが達成されます。\n\n\n\n\n\n\n\n\n\n赤点 (Unadjusted) は、バランス前の単純平均差を表します。 価格が大きく上昇していますが、取引物件の部屋の広さは狭くなり、築年数は古くなっています。 青点 (Adjusted)は、OLSによる暗黙のバランス後の差を示しています。 結果、SizeやTenureの平均値は完全にバランスしており、結果平均取引価格差も上昇しています。 Tenure2やSize2は、築年数や部屋の広さの二乗項(分散)、Tenure_Sizeは交差項(共分散)を示しており、これらについてはOLSを行ったとしてもバランスしていません。",
     "crumbs": [
-      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Inverse Probability Weight</span>"
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>OLSによる特徴のバランス</span>"
     ]
   },
   {
-    "objectID": "Argumentation.html",
-    "href": "Argumentation.html",
-    "title": "5  Augmentation",
-    "section": "",
-    "text": "5.1 動機\nバランス後の平均差の推定結果は、balancing weightsの推定精度に強く依存します。 例えば傾向スコアの逆数 (?sec-WhatIfPF) を用いた推定では、傾向スコア(\\(D\\) の母平均)の高い精度での推定が必要ですが、実践は困難です。 \\(D\\)のモデルを、Logitなどの伝統的な方法で推定する場合、研究者が事前に設定するモデルの定式化に推定結果が強く依存します。 LASSOなどより柔軟な推定方法を用いると、モデルへの依存度は低下させられますが、データへの依存度は上昇してしまいます。 このためより推定結果が不安定になりやすく、例えば信頼区間の計算 (?sec-SimpleComparison) などが困難になります。\nBalancing weightsの推定結果への依存度を下げる方法として、\\(Y\\) のモデルを用いた補強 (Augment) が提案されています (Ben-Michael et al. 2021)。 このような手法は、特に機械学習を用いた推定との相性が良く、近年改めて注目されています(Chernozhukov et al. 2018)。 以下では補強を行なった推定値として、Augmented Inverse Probability Weight (Robins and Rotnitzky 1995) を紹介します。",
+    "objectID": "04OLS.html#olsによる分散や共分散のバランス",
+    "href": "04OLS.html#olsによる分散や共分散のバランス",
+    "title": "4  OLSによる特徴のバランス",
+    "section": "4.2 OLSによる分散や共分散のバランス",
+    "text": "4.2 OLSによる分散や共分散のバランス\n\\(Price\\sim D + Size + Tenure\\) を推定しても、SizeやTenureの平均値のみしかバランスできません。 一見、これはOLSの致命的な弱点のように見えますが、簡単な修正のよって解決できます\n分散や共分散もバランスさせるためには、二乗項や交差項もモデルに導入したモデル \\(Price\\sim D + Size + Tenure + Size^2 + Tenure^2 + Tenure\\times Size\\) をOLS推定します。 これによって、Sizeの二乗の”平均値”などもバランスさせることができます。 これは各変数の分散や共分散をバランスを意味します 結果、以下の図の通り、分散や共分散もBalanceします。\n\n4.2.1 例",
     "crumbs": [
-      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Augmentation</span>"
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>OLSによる特徴のバランス</span>"
     ]
   },
   {
-    "objectID": "Argumentation.html#augmented-inverse-probability-weighting",
-    "href": "Argumentation.html#augmented-inverse-probability-weighting",
-    "title": "5  Augmentation",
-    "section": "5.2 Augmented Inverse Probability Weighting",
-    "text": "5.2 Augmented Inverse Probability Weighting\n\n\n\n\n\n\nAugmented Inverse Probability Weightingの定義\n\n\n\n\nバランス後の平均値は、以下の通り推定できます ただし \\(f(D=d,X)\\) は \\(Y\\) の予測値, \\(p_{d}(X)\\) は傾向スコアの推定値です。\n\n\n\nAugmented inverse probability weighting はいくつかの利点を持ちます。 実践上の大きな利点は、\\(Y\\)や\\(D\\)の予測モデル \\((f(D,X),p_d(X))\\) 推定に機械学習を利用できることです。\n\n\\(Y\\)や\\(D\\) の予測値 \\(f(D,X)\\) や \\(p_d(X)\\) は、母平均の一致推定量である必要があります。 一致推定量とは、無限大の事例数で推定できた場合、予測値と母平均が一致する推定値のことです。この要求は、機械学習を活用することで比較的緩やかな仮定のもとで保証されます。\n機械学習の弱点である、モデルがデータにより依存していまう、という問題についても、その弊害を軽減できます。 限られた事例数のもとで、\\(f(D,X)\\) や \\(p_d(X)\\) の推定誤差が十分に削減できなかったとしても、それらを用いて推定されるバランス後の平均値は、より高い精度で推定でき、信頼区間も計算できます。これは\\(Y\\)と\\(D\\)の予測モデルの内、どちらか一方の推定精度が不十分であったとしても、バランス後の平均値の推定結果が大きな影響を受けないように設計されているためです。\n\n\\(f(D,X),p_d(X)\\)をOLSやLogit、LASSOなどで推定する場合、Augmented Inverse Probability Weightを用いた推定値は、以下のような性質を持ちます。\n\n\n\n\n\n\nAugmented Inverse Probability Weightingの性質\n\n\n\n\n以下の仮定のもとで、Augmented Inverse Probability Weightを用いた推定値について、信頼区間が計算できる\n\n仮定1. Overlapが成り立つ\n仮定2. \\(f(D,X),p_d(X)\\) の推定精度は、ある程度高い\n仮定3. \\(f(D,X),p_d(X)\\) は、交差推定で推定されている\n\n\n仮定1 (Posivitiy)は、バランス後の比較の根本的な仮定であり、推定方法に拘らず必要です。\n仮定2 が要求する推定精度を保証することは、厳密には困難です。 このため実用においては、さまざまな推定方法 (OLS,LASSOなど)の予測精度をデータ分割 (?sec-Prediction) などで検証し、最善の方法を用いる必要があります。\n仮定3が要求する交差推定は、以下の手順で実行できます。\n\n5.2.1 交差推定\nある事例 \\(i\\) について、予測値を算出する予測モデルは、当該事例\\(i\\)を用いずに推定される必要があります。 このような推定を効率的に行う方法として、交差推定 (Cross fitting)が頻繁に用いられます。\n\n\n\n\n\n\n交差推定\n\n\n\n\n事例をランダムにいくつかのグループ (第1,..,Kグループ)\n第１グループに対する予測値を算出する。その際に用いる予測モデルは、第１グループ以外の事例を用いて推定する。\n第２グループについて、手順２を繰り返し、全事例に対して予測値を算出する。\n第３グループ以降についても、順次、手順２を繰り返す",
+    "objectID": "04OLS.html#olsの問題点と解決策",
+    "href": "04OLS.html#olsの問題点と解決策",
+    "title": "4  OLSによる特徴のバランス",
+    "section": "4.3 OLSの問題点と解決策",
+    "text": "4.3 OLSの問題点と解決策\nOLSにより暗黙のうちに計算されるWeightは、平均値をバランスします。 しかしながら、Balancing weightsに求められる他の性質は必ずしも満たされません。\n\n4.3.1 バランスさせる特徴の選択\nOLSにおいては、分布の特徴をどこまでバランスさせるのかが問題となります。 事例数が十分あれば、3乗項などの高次項もバランスさせることは可能です。 しかしながら事例数が少ない場合、大量のモーメントをバランスさせると、推定誤差が大きくなってしまいます。\nこのような問題に対して、OLS推定を行う前に重要な変数のみを選択することが必要となります。 変数選択を行う方法としては、Chernozhukov, Hansen, and Spindler (2015) がPost Double Selectionというデータ主導の手法を提案しており、幅広く応用されています。 Angrist and Frandsen (2022) は、変数選択について、より入門的な紹介を行っています。\n\n\n4.3.2 解釈の難しさ\nバランス後の、\\(X\\) の平均値がどのような水準になるのか、一般に不透明です。 結果を解釈するためには、\\(X\\) の平均値は明確な水準、例えばデータ全体での平均値と一致させることが望ましいです。 しかしながら、OLSはそのような水準との一致を保証しません。\nOLSによるバランス後の\\(X\\)の平均値について、lmw packageにより診断できます。\n\n\n\n\n\n\n\n\n\n黒丸はOLSによるバランス後、ばつ印はバランス前の平均値を示しています。 Control groupは、\\(D=0\\) (2021年)、Treatment groupは、\\(D=1\\) (2022年)の値です。 0線は、サンプル平均を示しています。\n同図からバランス前は、2022年についてはSizeがサンプル平均よりも小さく、Tenureは長いことが確認できます。 黒丸を見ると、OLSによるバランス後はどちらも2022年と2021年の間で平均差がなくなることが確認できます。 ただし　０線からは乖離しており、サンプル平均とは一致していないことが確認できます。\n\n\n4.3.3 負の荷重\nBalancing weightsは、正の値を取ることが望まれます。 しかしながらOLSが生成するWeightは、負の値を取る可能性があり、ミスリーデイングな推定結果をもたらす可能性があります。\nlmw packageは、OLSが生成するweightsの値を計算します。 例えばhist関数により、ヒストグラムとして可視化できます。\n\n\n\n\n\n\n\n\n\n本応用例では、負のweightsは発生していないことが確認できました。\n\n\n4.3.4 解決策\n\\(D\\)と\\(X\\)の交差項を含めた以下のモデルを推定した、\\(\\beta_{D},..,\\beta_{DL}\\)の平均値は、サンプル全体の\\(X\\)の平均値とバランス後の平均値を一致させるWeightを活用した平均の差と一致します(Chattopadhyay and Zubizarreta 2023)。 \\[Y\\sim D\\times (\\beta_D + \\beta_{D1}X_1+..+\\beta_{DLX_L}) + \\beta_0 + \\beta_1X_1+..+\\beta_LX_L.\\] ただし負のweightは以前として生じる可能性があります。\n負のWeightを発生させない方法としては、Entropy weights (Hainmueller 2012) や Stable weights (Zubizarreta 2015) が有力です。 これらの手法では、サンプル平均との一致や正の値を取ることを条件として課した上で、weightを計算します。 このためOLSが持つ問題点の多くを克服しており、より信頼できるバランス後の比較分析が可能です。 これらの手法は WeightIt package (Greifer 2024) で容易に実装できます。",
     "crumbs": [
-      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Augmentation</span>"
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>OLSによる特徴のバランス</span>"
     ]
   },
   {
-    "objectID": "Argumentation.html#rによる実践例",
-    "href": "Argumentation.html#rによる実践例",
-    "title": "5  Augmentation",
-    "section": "5.3 Rによる実践例",
-    "text": "5.3 Rによる実践例\nAhrens et al. (2024) の手法を実装します。\n\n以下のパッケージを使用\n\nreadr (tidyverseに同梱): データの読み込み\nddml: Augmented Inverse Probability Weightingの実装\n\n\n\n5.3.1 準備\nデータを取得します。 \\(D\\) として、中心6区かそれ以外で、1/0となる変数を定義します。 シンプルな比較分析について信頼区間は、データ分割は不要です。\n\nData = readr::read_csv(\"Public.csv\") # データ読み込み\n\nData = dplyr::mutate(\n  Data,\n  D = dplyr::if_else(\n    LargeDistrict == \"中心6区\",1,0\n  ) # 中心6区であれば1、それ以外であれば0\n) # Dの定義\n\nY = Data$Price\nD = Data$D\nX = model.matrix(\n  ~ 0 + poly(Size,2) + poly(Tenure,2) + poly(StationDistance,2),\n  Data\n)\nX = scale(X)\n\n\n\n5.3.2 Balanced comparson by OLS\n\nATE = ddml::ddml_ate(\n  y = Y,\n  D = D,\n  X = X,\n  learners = list(\n    list(fun = ddml::mdl_glmnet)\n  ),\n  shortstack = TRUE,\n  sample_folds = 2,\n  silent = TRUE\n)\n\nATE$oos_pred$ED_X |&gt; summary()\n\n      nnls         \n Min.   :0.005053  \n 1st Qu.:0.151506  \n Median :0.226395  \n Mean   :0.222927  \n 3rd Qu.:0.293535  \n Max.   :0.549479  \n\nATE |&gt; summary()\n\nATE estimation results: \n \n     Estimate Std. Error t value  Pr(&gt;|t|)\nnnls     21.2      0.816      26 6.21e-149",
+    "objectID": "04OLS.html#rによる実践例",
+    "href": "04OLS.html#rによる実践例",
+    "title": "4  OLSによる特徴のバランス",
+    "section": "4.4 Rによる実践例",
+    "text": "4.4 Rによる実践例\n\n\\(D\\)と\\(X\\)の交差項を含めたモデルのOLS推定、およびその性質の診断は、以下のパッケージを用いて実装できます。\n\nreadr (tidyverseに同梱): データの読み込み\nlmw: OLSが計算するbalance weightsを計算\n\nRepository\n\nestimatr: OLSをRobust standard errorとともに計算\n\nRepository\n\n\n\n\n4.4.1 準備\nデータを取得します。 \\(D\\) として、取引年が2022か2021かで、1/0となる変数を定義します。 シンプルな比較分析について信頼区間は、データ分割は不要です。\n\nData = readr::read_csv(\"Public.csv\") # データ読み込み\n\nData = dplyr::mutate(\n  Data,\n  D = dplyr::if_else(\n    TradeYear == 2022,1,0\n  ) # 2022年に取引されれば1、2021年に取引されていれば0\n)\n\n\n\n4.4.2 OLSによるバランス\n\\(D\\) 間でSize,Tenure,StationDistanceの平均値をバランスさせ、Priceの平均値を比較します。\n\nestimatr::lm_robust(\n  Price ~ D + Size + Tenure + StationDistance,\n  Data)\n\n                 Estimate Std. Error   t value      Pr(&gt;|t|)   CI Lower\n(Intercept)     18.220348 0.66937719  27.21985 1.936053e-154 16.9081431\nD                3.291335 0.49644627   6.62979  3.637414e-11  2.3181330\nSize             1.020167 0.02016880  50.58143  0.000000e+00  0.9806289\nTenure          -0.642758 0.01921993 -33.44226 4.592543e-226 -0.6804355\nStationDistance -1.385741 0.06666545 -20.78650  6.553571e-93 -1.5164280\n                  CI Upper   DF\n(Intercept)     19.5325519 6373\nD                4.2645363 6373\nSize             1.0597042 6373\nTenure          -0.6050805 6373\nStationDistance -1.2550546 6373\n\n\n\\(D\\) の係数値は3.29であり、20.06ほど中心6区の物件の方が平均取引価格が高いことがわかります。\n次に各変数の分散と共分散もバランスさせます\n\nestimatr::lm_robust(\n  Price ~ D + \n    (Size + Tenure + StationDistance)**2 + # 交差項の作成\n    I(Size^2) + I(Tenure^2) + I(StationDistance^2), # 分散\n  Data)\n\n                           Estimate  Std. Error     t value     Pr(&gt;|t|)\n(Intercept)            12.024717311 2.426526351   4.9555272 7.399852e-07\nD                       3.549365254 0.464118828   7.6475356 2.351889e-14\nSize                    0.930278241 0.107218463   8.6764743 5.120647e-18\nTenure                 -0.767807222 0.089209259  -8.6068109 9.356521e-18\nStationDistance         0.297767994 0.148326373   2.0075189 4.473662e-02\nI(Size^2)               0.007970750 0.001270150   6.2754397 3.715775e-10\nI(Tenure^2)             0.015201668 0.001580642   9.6173986 9.484623e-22\nI(StationDistance^2)    0.008627214 0.009717788   0.8877754 3.746951e-01\nSize:Tenure            -0.018107917 0.001686814 -10.7349813 1.177832e-26\nSize:StationDistance   -0.047561307 0.004216930 -11.2786575 3.162594e-29\nTenure:StationDistance  0.027723625 0.004373212   6.3394191 2.464335e-10\n                           CI Lower    CI Upper   DF\n(Intercept)             7.267908790 16.78152583 6367\nD                       2.639536109  4.45919440 6367\nSize                    0.720093959  1.14046252 6367\nTenure                 -0.942687402 -0.59292704 6367\nStationDistance         0.006998370  0.58853762 6367\nI(Size^2)               0.005480828  0.01046067 6367\nI(Tenure^2)             0.012103077  0.01830026 6367\nI(StationDistance^2)   -0.010422923  0.02767735 6367\nSize:Tenure            -0.021414640 -0.01480119 6367\nSize:StationDistance   -0.055827909 -0.03929470 6367\nTenure:StationDistance  0.019150657  0.03629659 6367\n\n\n\\(D\\) の係数値は3.55であり、平均のみバランスさせた場合と大きな変化はありませんでした。\n最後に比較するために、一切のバランスを行わない単純比較の結果を示します。\n\nestimatr::lm_robust(\n  Price ~ D,\n  Data)\n\n             Estimate Std. Error   t value     Pr(&gt;|t|) CI Lower  CI Upper   DF\n(Intercept) 41.432306  0.5056499 81.938722 0.0000000000 40.44106 42.423550 6376\nD            2.675008  0.7673215  3.486164 0.0004933012  1.17080  4.179216 6376\n\n\n係数値は2.67であり、SizeやTenureなどをバランスさせた場合と比べて、小さな値となってます。\n\n4.4.2.1 Balanced Weight\nlmw パッケージのlmw関数を用いれば、OLSが算出しているBalance weightsを計算できます。\n\nMatch = lmw::lmw(\n  ~ D + I(Size^2) + I(Tenure^2) + I(StationDistance^2) +\n               (Size + Tenure + StationDistance)**2, # 平均、分散、共分散をバランス\n  Data\n) # Weightの算出\n\nhist(Match$weights) # Weightのヒストグラムを算出\n\n\n\n\n\n\n\n\n少数ですが負のWeightが発生しています。\n\n\n\n\nAngrist, Joshua D, and Brigham Frandsen. 2022. “Machine Labor.” Journal of Labor Economics 40 (S1): S97–140.\n\n\nChattopadhyay, Ambarish, Christopher H Hase, and José R Zubizarreta. 2020. “Balancing Vs Modeling Approaches to Weighting in Practice.” Statistics in Medicine 39 (24): 3227–54.\n\n\nChattopadhyay, Ambarish, and José R Zubizarreta. 2023. “On the Implied Weights of Linear Regression for Causal Inference.” Biometrika 110 (3): 615–29.\n\n\nChernozhukov, Victor, Christian Hansen, and Martin Spindler. 2015. “Valid Post-Selection and Post-Regularization Inference: An Elementary, General Approach.” Annu. Rev. Econ. 7 (1): 649–88.\n\n\nGreifer, Noah. 2024. WeightIt: Weighting for Covariate Balance in Observational Studies. https://ngreifer.github.io/WeightIt/.\n\n\nHainmueller, Jens. 2012. “Entropy Balancing for Causal Effects: A Multivariate Reweighting Method to Produce Balanced Samples in Observational Studies.” Political Analysis 20 (1): 25–46.\n\n\nImbens, Guido W. 2015. “Matching Methods in Practice: Three Examples.” Journal of Human Resources 50 (2): 373–419.\n\n\nZubizarreta, José R. 2015. “Stable Weights That Balance Covariates for Estimation with Incomplete Outcome Data.” Journal of the American Statistical Association 110 (511): 910–22.",
     "crumbs": [
-      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Augmentation</span>"
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>OLSによる特徴のバランス</span>"
     ]
   },
   {
-    "objectID": "Argumentation.html#reference",
-    "href": "Argumentation.html#reference",
-    "title": "5  Augmentation",
-    "section": "5.4 Reference",
-    "text": "5.4 Reference\n\n\n\n\nAhrens, Achim, Christian B Hansen, Mark E Schaffer, and Thomas Wiemann. 2024. “Model Averaging and Double Machine Learning.” arXiv Preprint arXiv:2401.01645.\n\n\nBen-Michael, Eli, Avi Feller, David A Hirshberg, and José R Zubizarreta. 2021. “The Balancing Act in Causal Inference.” arXiv Preprint arXiv:2110.14831.\n\n\nChernozhukov, Victor, Denis Chetverikov, Mert Demirer, Esther Duflo, Christian Hansen, Whitney Newey, and James Robins. 2018. “Double/debiased machine learning for treatment and structural parameters.” The Econometrics Journal 21 (1): C1–68. https://doi.org/10.1111/ectj.12097.\n\n\nRobins, James M., and Andrea Rotnitzky. 1995. “Semiparametric Efficiency in Multivariate Regression Models with Missing Data.” Journal of the American Statistical Association 90 (429): 122129. https://doi.org/10.1080/01621459.1995.10476494.",
-    "crumbs": [
-      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Augmentation</span>"
-    ]
-  },
-  {
-    "objectID": "Reference.html",
-    "href": "Reference.html",
+    "objectID": "Referemce.html",
+    "href": "Referemce.html",
     "title": "Reference",
     "section": "",
-    "text": "Ahrens, Achim, Christian B Hansen, Mark E Schaffer, and Thomas Wiemann.\n2024. “Model Averaging and Double Machine Learning.”\narXiv Preprint arXiv:2401.01645.\n\n\nAngrist, Joshua D, and Brigham Frandsen. 2022. “Machine\nLabor.” Journal of Labor Economics 40 (S1): S97–140.\n\n\nBen-Michael, Eli, Avi Feller, David A Hirshberg, and José R Zubizarreta.\n2021. “The Balancing Act in Causal Inference.” arXiv\nPreprint arXiv:2110.14831.\n\n\nBruns-Smith, David, Oliver Dukes, Avi Feller, and Elizabeth L Ogburn.\n2023. “Augmented Balancing Weights as Linear Regression.”\narXiv Preprint arXiv:2304.14545.\n\n\nChattopadhyay, Ambarish, Christopher H Hase, and José R Zubizarreta.\n2020. “Balancing Vs Modeling Approaches to Weighting in\nPractice.” Statistics in Medicine 39 (24): 3227–54.\n\n\nChattopadhyay, Ambarish, and José R Zubizarreta. 2023. “On the\nImplied Weights of Linear Regression for Causal Inference.”\nBiometrika 110 (3): 615–29.\n\n\nChattopadhyay, Ambarish, and José R. Zubizarreta. 2024.\n“Causation, Comparison, and\nRegression.” Harvard Data Science Review 6\n(1).\n\n\nChernozhukov, Victor, Denis Chetverikov, Mert Demirer, Esther Duflo,\nChristian Hansen, Whitney Newey, and James Robins. 2018. “Double/debiased machine learning for treatment and\nstructural parameters.” The Econometrics Journal\n21 (1): C1–68. https://doi.org/10.1111/ectj.12097.\n\n\nChernozhukov, Victor, Juan Carlos Escanciano, Hidehiko Ichimura, Whitney\nK Newey, and James M Robins. 2022. “Locally Robust Semiparametric\nEstimation.” Econometrica 90 (4): 1501–35.\n\n\nChernozhukov, Victor, Christian Hansen, and Martin Spindler. 2015.\n“Valid Post-Selection and Post-Regularization Inference: An\nElementary, General Approach.” Annu. Rev. Econ. 7 (1):\n649–88.\n\n\nGreifer, Noah. 2024. WeightIt: Weighting for Covariate Balance in\nObservational Studies. https://ngreifer.github.io/WeightIt/.\n\n\nHainmueller, Jens. 2012. “Entropy Balancing for Causal Effects: A\nMultivariate Reweighting Method to Produce Balanced Samples in\nObservational Studies.” Political Analysis 20 (1):\n25–46.\n\n\nHuling, Jared D, and Simon Mak. 2024. “Energy Balancing of\nCovariate Distributions.” Journal of Causal Inference 12\n(1): 20220029.\n\n\nIacus, Stefano M, Gary King, and Giuseppe Porro. 2012. “Causal\nInference Without Balance Checking: Coarsened Exact Matching.”\nPolitical Analysis 20 (1): 1–24.\n\n\nImai, Kosuke, and Marc Ratkovic. 2014. “Covariate Balancing\nPropensity Score.” Journal of the Royal Statistical Society\nSeries B: Statistical Methodology 76 (1): 243–63.\n\n\nImbens, Guido W. 2015. “Matching Methods in Practice: Three\nExamples.” Journal of Human Resources 50 (2): 373–419.\n\n\nRobins, James M., and Andrea Rotnitzky. 1995. “Semiparametric\nEfficiency in Multivariate Regression Models with Missing Data.”\nJournal of the American Statistical Association 90 (429):\n122129. https://doi.org/10.1080/01621459.1995.10476494.\n\n\nRosenbaum, Paul R, and Donald B Rubin. 1983. “The Central Role of\nthe Propensity Score in Observational Studies for Causal\nEffects.” Biometrika 70 (1): 41–55.\n\n\nStuart, Elizabeth A, Gary King, Kosuke Imai, and Daniel Ho. 2011.\n“MatchIt: Nonparametric Preprocessing for Parametric Causal\nInference.” Journal of Statistical Software.\n\n\nVan Der Laan, Mark J, and Daniel Rubin. 2006. “Targeted Maximum\nLikelihood Learning.” The International Journal of\nBiostatistics 2 (1).\n\n\nWager, Stefan. 2024. “Causal Inference: A Statistical Learning\nApproach.” preparation.\n\n\nZubizarreta, José R. 2015. “Stable Weights That Balance Covariates\nfor Estimation with Incomplete Outcome Data.” Journal of the\nAmerican Statistical Association 110 (511): 910–22.",
+    "text": "Angrist, Joshua D, and Brigham Frandsen. 2022. “Machine\nLabor.” Journal of Labor Economics 40 (S1): S97–140.\n\n\nBruns-Smith, David, Oliver Dukes, Avi Feller, and Elizabeth L Ogburn.\n2023. “Augmented Balancing Weights as Linear Regression.”\narXiv Preprint arXiv:2304.14545.\n\n\nChattopadhyay, Ambarish, Christopher H Hase, and José R Zubizarreta.\n2020. “Balancing Vs Modeling Approaches to Weighting in\nPractice.” Statistics in Medicine 39 (24): 3227–54.\n\n\nChattopadhyay, Ambarish, and José R Zubizarreta. 2023. “On the\nImplied Weights of Linear Regression for Causal Inference.”\nBiometrika 110 (3): 615–29.\n\n\nChattopadhyay, Ambarish, and José R. Zubizarreta. 2024.\n“Causation, Comparison, and\nRegression.” Harvard Data Science Review 6\n(1).\n\n\nChernozhukov, Victor, Christian Hansen, and Martin Spindler. 2015.\n“Valid Post-Selection and Post-Regularization Inference: An\nElementary, General Approach.” Annu. Rev. Econ. 7 (1):\n649–88.\n\n\nGreifer, Noah. 2024. WeightIt: Weighting for Covariate Balance in\nObservational Studies. https://ngreifer.github.io/WeightIt/.\n\n\nHainmueller, Jens. 2012. “Entropy Balancing for Causal Effects: A\nMultivariate Reweighting Method to Produce Balanced Samples in\nObservational Studies.” Political Analysis 20 (1):\n25–46.\n\n\nImbens, Guido W. 2015. “Matching Methods in Practice: Three\nExamples.” Journal of Human Resources 50 (2): 373–419.\n\n\nStuart, Elizabeth A, Gary King, Kosuke Imai, and Daniel Ho. 2011.\n“MatchIt: Nonparametric Preprocessing for Parametric Causal\nInference.” Journal of Statistical Software.\n\n\nWager, Stefan. 2024. “Causal Inference: A Statistical Learning\nApproach.” preparation.\n\n\nZubizarreta, José R. 2015. “Stable Weights That Balance Covariates\nfor Estimation with Incomplete Outcome Data.” Journal of the\nAmerican Statistical Association 110 (511): 910–22.",
     "crumbs": [
       "Reference"
     ]

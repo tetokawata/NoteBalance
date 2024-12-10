@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.6.32">
+<meta name="generator" content="quarto-1.6.39">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>4&nbsp; Inverse Probability Weight – バランス後の母平均差の推定 (ver 0.0)</title>
+<title>Reference – バランス後の母平均差の推定 (ver 0.0.1)</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -24,7 +24,6 @@ ul.task-list li input[type="checkbox"] {
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
-  margin-bottom: 0em;
 }
 .hanging-indent div.csl-entry {
   margin-left:2em;
@@ -50,17 +49,16 @@ div.csl-indent {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./Argumentation.html" rel="next">
-<link href="./Moment.html" rel="prev">
+<link href="./04OLS.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-2486e1f0a3ee9ee1fc393803a1361cdb.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-e26003cea8cd680ca0c55a263523d882.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-ed6da6eef3892af8a4b5ed59bfb951f5.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-626149efe8f5d16e1d391ba177679bf0.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -89,35 +87,6 @@ div.csl-indent {
   }
 }</script>
 
-  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
 
 </head>
 
@@ -130,7 +99,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./IPW.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Inverse Probability Weight</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./Referemce.html">Reference</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -145,7 +114,7 @@ window.Quarto = {
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
-      <a href="./">バランス後の母平均差の推定 (ver 0.0)</a> 
+      <a href="./">バランス後の母平均差の推定 (ver 0.0.1)</a> 
     </div>
       </div>
         <div class="mt-2 flex-shrink-0 align-items-center">
@@ -163,37 +132,31 @@ window.Quarto = {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./Intro.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Balanced Comparison</span></span></a>
+  <a href="./01Intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">バランス後の比較</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./BalanceWeight.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Balancing Weight</span></span></a>
+  <a href="./02Weight.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Weight</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./Moment.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">特徴のバランス</span></span></a>
+  <a href="./03BalanceWeight.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Balancing Weight</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./IPW.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Inverse Probability Weight</span></span></a>
+  <a href="./04OLS.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">OLSによる特徴のバランス</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./Argumentation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Augmentation</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./Reference.html" class="sidebar-item-text sidebar-link">
+  <a href="./Referemce.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Reference</span></a>
   </div>
 </li>
@@ -202,25 +165,15 @@ window.Quarto = {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">Table of contents</h2>
-   
-  <ul>
-  <li><a href="#inverse-probability-weighting" id="toc-inverse-probability-weighting" class="nav-link active" data-scroll-target="#inverse-probability-weighting"><span class="header-section-number">4.1</span> Inverse probability weighting</a></li>
-  <li><a href="#傾向スコアの推定方法" id="toc-傾向スコアの推定方法" class="nav-link" data-scroll-target="#傾向スコアの推定方法"><span class="header-section-number">4.2</span> 傾向スコアの推定方法</a></li>
-  <li><a href="#問題点" id="toc-問題点" class="nav-link" data-scroll-target="#問題点"><span class="header-section-number">4.3</span> 問題点</a></li>
-  <li><a href="#他の方法" id="toc-他の方法" class="nav-link" data-scroll-target="#他の方法"><span class="header-section-number">4.4</span> 他の方法</a></li>
-  <li><a href="#reference" id="toc-reference" class="nav-link" data-scroll-target="#reference"><span class="header-section-number">4.5</span> Reference</a></li>
-  </ul>
-</nav>
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+        
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span id="sec-IPW" class="quarto-section-identifier"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Inverse Probability Weight</span></span></h1>
+<h1 class="title">Reference</h1>
 </div>
 
 
@@ -237,68 +190,69 @@ window.Quarto = {
 </header>
 
 
-<p>Balancing weightsを計算する別のアプローチとして、傾向スコア (Propensity score; <span class="citation" data-cites="rosenbaum1983central">Rosenbaum and Rubin (<a href="Reference.html#ref-rosenbaum1983central" role="doc-biblioref">1983</a>)</span>) の活用が挙げられます。</p>
-<div class="callout callout-style-default callout-important callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="ref-angrist2022machine" class="csl-entry" role="listitem">
+Angrist, Joshua D, and Brigham Frandsen. 2022. <span>“Machine
+Labor.”</span> <em>Journal of Labor Economics</em> 40 (S1): S97–140.
 </div>
-<div class="callout-title-container flex-fill">
-傾向スコアの定義
+<div id="ref-bruns2023augmented" class="csl-entry" role="listitem">
+Bruns-Smith, David, Oliver Dukes, Avi Feller, and Elizabeth L Ogburn.
+2023. <span>“Augmented Balancing Weights as Linear Regression.”</span>
+<em>arXiv Preprint arXiv:2304.14545</em>.
+</div>
+<div id="ref-chattopadhyay2020balancing" class="csl-entry" role="listitem">
+Chattopadhyay, Ambarish, Christopher H Hase, and José R Zubizarreta.
+2020. <span>“Balancing Vs Modeling Approaches to Weighting in
+Practice.”</span> <em>Statistics in Medicine</em> 39 (24): 3227–54.
+</div>
+<div id="ref-chattopadhyay2023implied" class="csl-entry" role="listitem">
+Chattopadhyay, Ambarish, and José R Zubizarreta. 2023. <span>“On the
+Implied Weights of Linear Regression for Causal Inference.”</span>
+<em>Biometrika</em> 110 (3): 615–29.
+</div>
+<div id="ref-Chattopadhyay2024Causation" class="csl-entry" role="listitem">
+Chattopadhyay, Ambarish, and José R. Zubizarreta. 2024.
+<span>“<span>Causation</span>, <span>Comparison</span>, and
+<span>Regression</span>.”</span> <em>Harvard Data Science Review</em> 6
+(1).
+</div>
+<div id="ref-chernozhukov2015valid" class="csl-entry" role="listitem">
+Chernozhukov, Victor, Christian Hansen, and Martin Spindler. 2015.
+<span>“Valid Post-Selection and Post-Regularization Inference: An
+Elementary, General Approach.”</span> <em>Annu. Rev. Econ.</em> 7 (1):
+649–88.
+</div>
+<div id="ref-greifer2024weightit" class="csl-entry" role="listitem">
+Greifer, Noah. 2024. <em>WeightIt: Weighting for Covariate Balance in
+Observational Studies</em>. <a href="https://ngreifer.github.io/WeightIt/">https://ngreifer.github.io/WeightIt/</a>.
+</div>
+<div id="ref-hainmueller2012entropy" class="csl-entry" role="listitem">
+Hainmueller, Jens. 2012. <span>“Entropy Balancing for Causal Effects: A
+Multivariate Reweighting Method to Produce Balanced Samples in
+Observational Studies.”</span> <em>Political Analysis</em> 20 (1):
+25–46.
+</div>
+<div id="ref-imbens2015matching" class="csl-entry" role="listitem">
+Imbens, Guido W. 2015. <span>“Matching Methods in Practice: Three
+Examples.”</span> <em>Journal of Human Resources</em> 50 (2): 373–419.
+</div>
+<div id="ref-stuart2011matchit" class="csl-entry" role="listitem">
+Stuart, Elizabeth A, Gary King, Kosuke Imai, and Daniel Ho. 2011.
+<span>“MatchIt: Nonparametric Preprocessing for Parametric Causal
+Inference.”</span> <em>Journal of Statistical Software</em>.
+</div>
+<div id="ref-wager2024causal" class="csl-entry" role="listitem">
+Wager, Stefan. 2024. <span>“Causal Inference: A Statistical Learning
+Approach.”</span> preparation.
+</div>
+<div id="ref-zubizarreta2015stable" class="csl-entry" role="listitem">
+Zubizarreta, José R. 2015. <span>“Stable Weights That Balance Covariates
+for Estimation with Incomplete Outcome Data.”</span> <em>Journal of the
+American Statistical Association</em> 110 (511): 910–22.
 </div>
 </div>
-<div class="callout-body-container callout-body">
-<ul>
-<li><span class="math inline">\(X\)</span> 内で <span class="math inline">\(D=d\)</span> である事例の母集団における割合 <span class="math inline">\((p_d(X))\)</span></li>
-</ul>
-</div>
-</div>
-<section id="inverse-probability-weighting" class="level2" data-number="4.1">
-<h2 data-number="4.1" class="anchored" data-anchor-id="inverse-probability-weighting"><span class="header-section-number">4.1</span> Inverse probability weighting</h2>
-<p><span class="math inline">\((X=x)\)</span>へのウェイトとして、<span class="math inline">\(X\)</span> の母分布をターゲットとするのであれば、Balancing weight <span class="math inline">\(\omega(X)\)</span> と傾向スコア <span class="math inline">\(p_d(X)\)</span> の間に以下の関係性が成り立ちます。 <span class="math display">\[\omega(X) = \frac{D=dの割合}{p_d(X)}\]</span> よってバランス後の平均値は以下のように書き換えられます。 <span class="math display">\[\frac{D=dについて(\omega(X)\times Y)の総和}{D=dの事例数}\]</span> <span class="math display">\[=\frac{D=dについて[(D=dの割合/p_d(X))\times Y]の総和}{D=dの割合\times 総事例数}\]</span> <span class="math display">\[=\frac{D=dについて[(1/p_d(X))\times Y]の総和}{総事例数}\]</span> よって、傾向スコアが推定できれば、その逆数<span class="math inline">\((1/p_d(X))\)</span> を掛ることでバランス後の平均値が推定できます。</p>
-</section>
-<section id="傾向スコアの推定方法" class="level2" data-number="4.2">
-<h2 data-number="4.2" class="anchored" data-anchor-id="傾向スコアの推定方法"><span class="header-section-number">4.2</span> 傾向スコアの推定方法</h2>
-<p>傾向スコアの推定方法については、予測を目的とする要約 (<span class="quarto-unresolved-ref">?sec-Prediction</span>) の手法を応用することができます。 例えば以下のモデルを、シンプルにOLSを用いて推定することも可能です。 <span class="math display">\[D\sim\beta_0+\beta_1X_1+..\]</span> ただ多くの応用で、LogitやProbitなど、予測値が<span class="math inline">\([0,1]\)</span> の範囲に収まることが保証される方法を用いることが多くなっています。</p>
-<p>近年では、より柔軟な推定手法 (LASSOやRandomForest, Boostingなどの機械学習の手法)を用いることが増えています。 既存の機械学習の手法が容易に応用できる点は、傾向スコアを用いることの大きな利点となります。</p>
-</section>
-<section id="問題点" class="level2" data-number="4.3">
-<h2 data-number="4.3" class="anchored" data-anchor-id="問題点"><span class="header-section-number">4.3</span> 問題点</h2>
-<p>Inverse probability weightingを用いたバランス後の平均値推定は、傾向スコアの推定精度に決定的に依存します。 シンプルなモデルをLogitなどで推定した場合、モデル定式化の誤りが深刻となりえます。 機械学習等のより柔軟な推定手法を用いれば、モデル定式化の誤りは減少します。 しかしながら、依然として推定精度は不十分な場合が多いことが知られています<span class="citation" data-cites="chernozhukov2018double">(<a href="Reference.html#ref-chernozhukov2018double" role="doc-biblioref">Chernozhukov et al. 2018</a>)</span><a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>。</p>
-<p>以上の問題を克服するために、次節では <span class="math inline">\(Y\)</span> の予測モデルも併用する推定方法 (Augmented inverse probability weighting) を紹介します。</p>
-</section>
-<section id="他の方法" class="level2" data-number="4.4">
-<h2 data-number="4.4" class="anchored" data-anchor-id="他の方法"><span class="header-section-number">4.4</span> 他の方法</h2>
-<p>ここまでBalancing weightsを推定する方法として、OLSや傾向スコアを用いた方法を紹介しました。 他の有力な方法として、<span class="citation" data-cites="imai2014covariate">Imai and Ratkovic (<a href="Reference.html#ref-imai2014covariate" role="doc-biblioref">2014</a>)</span> は、<span class="math inline">\(X\)</span> のバランスと<span class="math inline">\(p_d(X)\)</span>を極力両立するように推定する方法を提案しています。 <span class="citation" data-cites="iacus2012causal">Iacus, King, and Porro (<a href="Reference.html#ref-iacus2012causal" role="doc-biblioref">2012</a>)</span>, <span class="citation" data-cites="huling2024energy">Huling and Mak (<a href="Reference.html#ref-huling2024energy" role="doc-biblioref">2024</a>)</span> では、<span class="math inline">\(X\)</span> の分布の距離(Energy distance)を最小化するようにweightを推定します。</p>
-</section>
-<section id="reference" class="level2" data-number="4.5">
-<h2 data-number="4.5" class="anchored" data-anchor-id="reference"><span class="header-section-number">4.5</span> Reference</h2>
 
 
-<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
-<div id="ref-chernozhukov2018double" class="csl-entry" role="listitem">
-Chernozhukov, Victor, Denis Chetverikov, Mert Demirer, Esther Duflo, Christian Hansen, Whitney Newey, and James Robins. 2018. <span>“<span class="nocase">Double/debiased machine learning for treatment and structural parameters</span>.”</span> <em>The Econometrics Journal</em> 21 (1): C1–68. <a href="https://doi.org/10.1111/ectj.12097">https://doi.org/10.1111/ectj.12097</a>.
-</div>
-<div id="ref-huling2024energy" class="csl-entry" role="listitem">
-Huling, Jared D, and Simon Mak. 2024. <span>“Energy Balancing of Covariate Distributions.”</span> <em>Journal of Causal Inference</em> 12 (1): 20220029.
-</div>
-<div id="ref-iacus2012causal" class="csl-entry" role="listitem">
-Iacus, Stefano M, Gary King, and Giuseppe Porro. 2012. <span>“Causal Inference Without Balance Checking: Coarsened Exact Matching.”</span> <em>Political Analysis</em> 20 (1): 1–24.
-</div>
-<div id="ref-imai2014covariate" class="csl-entry" role="listitem">
-Imai, Kosuke, and Marc Ratkovic. 2014. <span>“Covariate Balancing Propensity Score.”</span> <em>Journal of the Royal Statistical Society Series B: Statistical Methodology</em> 76 (1): 243–63.
-</div>
-<div id="ref-rosenbaum1983central" class="csl-entry" role="listitem">
-Rosenbaum, Paul R, and Donald B Rubin. 1983. <span>“The Central Role of the Propensity Score in Observational Studies for Causal Effects.”</span> <em>Biometrika</em> 70 (1): 41–55.
-</div>
-</div>
-</section>
-<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
-<hr>
-<ol>
-<li id="fn1"><p>この問題は収束の遅さとして知られています<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-</ol>
-</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -383,8 +337,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   });
   clipboard.on('success', onCopySuccess);
   if (window.document.getElementById('quarto-embedded-source-code-modal')) {
-    // For code content inside modals, clipBoardJS needs to be initialized with a container option
-    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
     const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
       text: getTextToCopy,
       container: window.document.getElementById('quarto-embedded-source-code-modal')
@@ -495,7 +447,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       if (window.Quarto?.typesetMath) {
         window.Quarto.typesetMath(note);
       }
-      // TODO in 1.5, we should make sure this works without a callout special case
       if (note.classList.contains("callout")) {
         return note.outerHTML;
       } else {
@@ -723,14 +674,11 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./Moment.html" class="pagination-link" aria-label="特徴のバランス">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">特徴のバランス</span></span>
+      <a href="./04OLS.html" class="pagination-link" aria-label="OLSによる特徴のバランス">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">OLSによる特徴のバランス</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./Argumentation.html" class="pagination-link" aria-label="Augmentation">
-        <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Augmentation</span></span> <i class="bi bi-arrow-right-short"></i>
-      </a>
   </div>
 </nav>
 </div> <!-- /content -->
