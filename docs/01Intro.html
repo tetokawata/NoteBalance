@@ -181,13 +181,10 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#不動産市場の年次比較" id="toc-不動産市場の年次比較" class="nav-link active" data-scroll-target="#不動産市場の年次比較"><span class="header-section-number">1.1</span> 不動産市場の年次比較</a>
-  <ul class="collapse">
-  <li><a href="#実例" id="toc-実例" class="nav-link" data-scroll-target="#実例"><span class="header-section-number">1.1.1</span> 実例</a></li>
-  </ul></li>
+  <li><a href="#不動産市場の年次比較" id="toc-不動産市場の年次比較" class="nav-link active" data-scroll-target="#不動産市場の年次比較"><span class="header-section-number">1.1</span> 不動産市場の年次比較</a></li>
   <li><a href="#バランス後の平均差" id="toc-バランス後の平均差" class="nav-link" data-scroll-target="#バランス後の平均差"><span class="header-section-number">1.2</span> バランス後の平均差</a>
   <ul class="collapse">
-  <li><a href="#実例-1" id="toc-実例-1" class="nav-link" data-scroll-target="#実例-1"><span class="header-section-number">1.2.1</span> 実例</a></li>
+  <li><a href="#実例" id="toc-実例" class="nav-link" data-scroll-target="#実例"><span class="header-section-number">1.2.1</span> 実例</a></li>
   <li><a href="#overlapの仮定" id="toc-overlapの仮定" class="nav-link" data-scroll-target="#overlapの仮定"><span class="header-section-number">1.2.2</span> Overlapの仮定</a></li>
   </ul></li>
   <li><a href="#他の実例" id="toc-他の実例" class="nav-link" data-scroll-target="#他の実例"><span class="header-section-number">1.3</span> 他の実例</a>
@@ -221,11 +218,11 @@ window.Quarto = {
 </header>
 
 
-<p>バランス後の比較 (Balanced Comparison) では、ある属性<span class="math inline">\(D\)</span>の間での<span class="math inline">\(Y\)</span>についての差を、<span class="math inline">\(X\)</span>については<strong>差が解消し</strong>、推定します。 このような比較は、因果効果や格差の推定の肝となります。</p>
+<p>バランス後の比較 (Balanced Comparison) では、グループ<span class="math inline">\(D\)</span>の間で、<span class="math inline">\(X\)</span>についての<strong>差を解消した後に</strong>、<span class="math inline">\(Y\)</span>についての平均差を推定します。 このような比較は、因果効果や格差の推定の肝となります。</p>
 <p>まず実例から紹介します。</p>
 <section id="不動産市場の年次比較" class="level2" data-number="1.1">
 <h2 data-number="1.1" class="anchored" data-anchor-id="不動産市場の年次比較"><span class="header-section-number">1.1</span> 不動産市場の年次比較</h2>
-<p>2022年と2021年の東京23区の中古マンション市場における、取引価格と立地(中心6区(CBD; 港区、中央区、文京区、千代田区、渋谷区、新宿区)かそれ以外か)について平均的な差は以下の通りです。</p>
+<p>東京23区の中古マンション市場において、2022年と2021年の取引価格と立地(中心6区(CBD; 港区、中央区、文京区、千代田区、渋谷区、新宿区)かそれ以外か)について、平均的な差を図示します。</p>
 <div class="cell">
 <div class="cell-output-display">
 <div>
@@ -235,30 +232,28 @@ window.Quarto = {
 </div>
 </div>
 </div>
-<p>2022年の平均取引価格は、2021年に比べて上昇し、同時にCBDの物件割合も増加しています。 一般にCBDに立地する物件の方が、高い取引価格が予想されます。 このため立地によって、取引価格の上昇が”底上げ”されている可能性があります。</p>
+<p>2022年の平均取引価格は、2021年に比べて上昇しており、一見不動産市場における価格上昇が続いているように見えます。 しかしながら、同時にCBDの物件割合も増加しています。 一般にCBDに立地する物件の方が、高い取引価格が予想されます。 このため立地によって、取引価格の上昇が”底上げ”されている可能性があります。</p>
 <p><strong>もし</strong>中心6区の物件割合が不変であった場合、平均取引価格にどのような差が残るでしょうか？ このような問いに対して、バランス後の比較分析は回答できます。</p>
-<section id="実例" class="level3" data-number="1.1.1">
-<h3 data-number="1.1.1" class="anchored" data-anchor-id="実例"><span class="header-section-number">1.1.1</span> 実例</h3>
 <p>以下では実際のデータを用いて、取引年と立地(CBD であれば1、それ以外であれば0)ごとに、平均取引価格を示しています。 また各取引年における取引事例の立地割合も算出しています。</p>
 <div class="cell">
 <div class="cell-output-display">
-<div id="ivzymsuynv" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#ivzymsuynv table {
+<div id="qvrughlgeo" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#qvrughlgeo table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#ivzymsuynv thead, #ivzymsuynv tbody, #ivzymsuynv tfoot, #ivzymsuynv tr, #ivzymsuynv td, #ivzymsuynv th {
+#qvrughlgeo thead, #qvrughlgeo tbody, #qvrughlgeo tfoot, #qvrughlgeo tr, #qvrughlgeo td, #qvrughlgeo th {
   border-style: none;
 }
 
-#ivzymsuynv p {
+#qvrughlgeo p {
   margin: 0;
   padding: 0;
 }
 
-#ivzymsuynv .gt_table {
+#qvrughlgeo .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -284,12 +279,12 @@ window.Quarto = {
   border-left-color: #D3D3D3;
 }
 
-#ivzymsuynv .gt_caption {
+#qvrughlgeo .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#ivzymsuynv .gt_title {
+#qvrughlgeo .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -301,7 +296,7 @@ window.Quarto = {
   border-bottom-width: 0;
 }
 
-#ivzymsuynv .gt_subtitle {
+#qvrughlgeo .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -313,7 +308,7 @@ window.Quarto = {
   border-top-width: 0;
 }
 
-#ivzymsuynv .gt_heading {
+#qvrughlgeo .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -325,13 +320,13 @@ window.Quarto = {
   border-right-color: #D3D3D3;
 }
 
-#ivzymsuynv .gt_bottom_border {
+#qvrughlgeo .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#ivzymsuynv .gt_col_headings {
+#qvrughlgeo .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -346,7 +341,7 @@ window.Quarto = {
   border-right-color: #D3D3D3;
 }
 
-#ivzymsuynv .gt_col_heading {
+#qvrughlgeo .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -366,7 +361,7 @@ window.Quarto = {
   overflow-x: hidden;
 }
 
-#ivzymsuynv .gt_column_spanner_outer {
+#qvrughlgeo .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -378,15 +373,15 @@ window.Quarto = {
   padding-right: 4px;
 }
 
-#ivzymsuynv .gt_column_spanner_outer:first-child {
+#qvrughlgeo .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#ivzymsuynv .gt_column_spanner_outer:last-child {
+#qvrughlgeo .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#ivzymsuynv .gt_column_spanner {
+#qvrughlgeo .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -398,11 +393,11 @@ window.Quarto = {
   width: 100%;
 }
 
-#ivzymsuynv .gt_spanner_row {
+#qvrughlgeo .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#ivzymsuynv .gt_group_heading {
+#qvrughlgeo .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -428,7 +423,7 @@ window.Quarto = {
   text-align: left;
 }
 
-#ivzymsuynv .gt_empty_group_heading {
+#qvrughlgeo .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -443,15 +438,15 @@ window.Quarto = {
   vertical-align: middle;
 }
 
-#ivzymsuynv .gt_from_md > :first-child {
+#qvrughlgeo .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#ivzymsuynv .gt_from_md > :last-child {
+#qvrughlgeo .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#ivzymsuynv .gt_row {
+#qvrughlgeo .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -470,7 +465,7 @@ window.Quarto = {
   overflow-x: hidden;
 }
 
-#ivzymsuynv .gt_stub {
+#qvrughlgeo .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -483,7 +478,7 @@ window.Quarto = {
   padding-right: 5px;
 }
 
-#ivzymsuynv .gt_stub_row_group {
+#qvrughlgeo .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -497,15 +492,15 @@ window.Quarto = {
   vertical-align: top;
 }
 
-#ivzymsuynv .gt_row_group_first td {
+#qvrughlgeo .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#ivzymsuynv .gt_row_group_first th {
+#qvrughlgeo .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#ivzymsuynv .gt_summary_row {
+#qvrughlgeo .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -515,16 +510,16 @@ window.Quarto = {
   padding-right: 5px;
 }
 
-#ivzymsuynv .gt_first_summary_row {
+#qvrughlgeo .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#ivzymsuynv .gt_first_summary_row.thick {
+#qvrughlgeo .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#ivzymsuynv .gt_last_summary_row {
+#qvrughlgeo .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -534,7 +529,7 @@ window.Quarto = {
   border-bottom-color: #D3D3D3;
 }
 
-#ivzymsuynv .gt_grand_summary_row {
+#qvrughlgeo .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -544,7 +539,7 @@ window.Quarto = {
   padding-right: 5px;
 }
 
-#ivzymsuynv .gt_first_grand_summary_row {
+#qvrughlgeo .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -554,7 +549,7 @@ window.Quarto = {
   border-top-color: #D3D3D3;
 }
 
-#ivzymsuynv .gt_last_grand_summary_row_top {
+#qvrughlgeo .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -564,11 +559,11 @@ window.Quarto = {
   border-bottom-color: #D3D3D3;
 }
 
-#ivzymsuynv .gt_striped {
+#qvrughlgeo .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#ivzymsuynv .gt_table_body {
+#qvrughlgeo .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -577,7 +572,7 @@ window.Quarto = {
   border-bottom-color: #D3D3D3;
 }
 
-#ivzymsuynv .gt_footnotes {
+#qvrughlgeo .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -591,7 +586,7 @@ window.Quarto = {
   border-right-color: #D3D3D3;
 }
 
-#ivzymsuynv .gt_footnote {
+#qvrughlgeo .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -600,7 +595,7 @@ window.Quarto = {
   padding-right: 5px;
 }
 
-#ivzymsuynv .gt_sourcenotes {
+#qvrughlgeo .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -614,7 +609,7 @@ window.Quarto = {
   border-right-color: #D3D3D3;
 }
 
-#ivzymsuynv .gt_sourcenote {
+#qvrughlgeo .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -622,72 +617,72 @@ window.Quarto = {
   padding-right: 5px;
 }
 
-#ivzymsuynv .gt_left {
+#qvrughlgeo .gt_left {
   text-align: left;
 }
 
-#ivzymsuynv .gt_center {
+#qvrughlgeo .gt_center {
   text-align: center;
 }
 
-#ivzymsuynv .gt_right {
+#qvrughlgeo .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#ivzymsuynv .gt_font_normal {
+#qvrughlgeo .gt_font_normal {
   font-weight: normal;
 }
 
-#ivzymsuynv .gt_font_bold {
+#qvrughlgeo .gt_font_bold {
   font-weight: bold;
 }
 
-#ivzymsuynv .gt_font_italic {
+#qvrughlgeo .gt_font_italic {
   font-style: italic;
 }
 
-#ivzymsuynv .gt_super {
+#qvrughlgeo .gt_super {
   font-size: 65%;
 }
 
-#ivzymsuynv .gt_footnote_marks {
+#qvrughlgeo .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#ivzymsuynv .gt_asterisk {
+#qvrughlgeo .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#ivzymsuynv .gt_indent_1 {
+#qvrughlgeo .gt_indent_1 {
   text-indent: 5px;
 }
 
-#ivzymsuynv .gt_indent_2 {
+#qvrughlgeo .gt_indent_2 {
   text-indent: 10px;
 }
 
-#ivzymsuynv .gt_indent_3 {
+#qvrughlgeo .gt_indent_3 {
   text-indent: 15px;
 }
 
-#ivzymsuynv .gt_indent_4 {
+#qvrughlgeo .gt_indent_4 {
   text-indent: 20px;
 }
 
-#ivzymsuynv .gt_indent_5 {
+#qvrughlgeo .gt_indent_5 {
   text-indent: 25px;
 }
 
-#ivzymsuynv .katex-display {
+#qvrughlgeo .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#ivzymsuynv div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#qvrughlgeo div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -752,13 +747,12 @@ window.Quarto = {
 <p><span class="math display">\[2022年の平均価格 = 64.814\times0.221 + 39.150\times 0.779=44.810\]</span></p>
 <p><span class="math display">\[2021年の平均価格 = 60.474\times0.216 + 37.748\times 0.784=42.658\]</span></p>
 <p>2022年と2021の平均差を計算すると、2022年の平均取引価格の方が、2.153ほど高くなっていることが確認できます。</p>
-<p>繰り返し期待値の法則自体は、非常にシンプルな計算ルールです。 しかしながら、「<span class="math inline">\(X\)</span>のバランス」の意義を明確にします。 計算上、平均価格の違いは、同じ立地内での平均取引価格の違いと立地ごとの事例割合の違いによって生じます。 2022年の平均取引価格は、CBDでも意外でも、2021年よりも高くなっています。 同時に、CBDの物件が取引されている割合は21.6 <span class="math inline">\(\%\)</span> から 22.1 <span class="math inline">\(\%\)</span> に上昇しています。</p>
-<p>バランス後の比較分析では、「<strong>もし</strong> 取引されている物件に占めるCBDの割合が、変化しなかった場合」の 平均取引価格の変化を推定します。</p>
-</section>
+<p>繰り返し期待値の法則自体は、非常にシンプルな計算ルールですが、「<span class="math inline">\(X\)</span>のバランス」の意義を明確にします。 平均価格の違いは、同じ立地内での平均取引価格の違いと立地ごとの事例割合の違いによって生じます。 立地にかかわらず、2022年の平均取引価格は、2021年よりも高くなっています。 同時に、CBDの物件が取引されている割合は21.6 <span class="math inline">\(\%\)</span> から 22.1 <span class="math inline">\(\%\)</span> に上昇しています。</p>
+<p>バランス後の比較分析では、「取引されている物件に占めるCBDの割合が、変化しなかった場合」の 平均取引価格の変化を推定します。 すなわちWhat-if分析の一種であると考えられます。</p>
 </section>
 <section id="バランス後の平均差" class="level2" data-number="1.2">
 <h2 data-number="1.2" class="anchored" data-anchor-id="バランス後の平均差"><span class="header-section-number">1.2</span> バランス後の平均差</h2>
-<p>本ノートにおいて、バランス後の比較分析の一つであり、バランス後の平均差を推定します。 バランス後の平均差は、バランス後の平均値の差として定義します。</p>
+<p>本ノートにおいて、バランス後の比較分析の一つであり、バランス後の平均差を推定します。 バランス後の平均差は、バランス後の平均値の差として定義します。 ターゲットをこのように設定すると、取引年にかかわらず、CBDとそれ以外に立地する事例の割合は一定となります。 よって、平均価格の変化を生み出す要因から、事例割合の変化は排除できます。</p>
 <div class="callout callout-style-default callout-important callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -777,28 +771,28 @@ window.Quarto = {
 </ul>
 </div>
 </div>
-<section id="実例-1" class="level3" data-number="1.2.1">
-<h3 data-number="1.2.1" class="anchored" data-anchor-id="実例-1"><span class="header-section-number">1.2.1</span> 実例</h3>
-<p>以下の例では、すべてのSizeが同じ割合になるように、ターゲットを設定します。</p>
+<section id="実例" class="level3" data-number="1.2.1">
+<h3 data-number="1.2.1" class="anchored" data-anchor-id="実例"><span class="header-section-number">1.2.1</span> 実例</h3>
+<p>以下の例ではターゲットを、「すべてのSizeが同じ割合」と設定します。</p>
 <div class="cell">
 <div class="cell-output-display">
-<div id="iarjesemwa" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#iarjesemwa table {
+<div id="essjvpbwkf" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#essjvpbwkf table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#iarjesemwa thead, #iarjesemwa tbody, #iarjesemwa tfoot, #iarjesemwa tr, #iarjesemwa td, #iarjesemwa th {
+#essjvpbwkf thead, #essjvpbwkf tbody, #essjvpbwkf tfoot, #essjvpbwkf tr, #essjvpbwkf td, #essjvpbwkf th {
   border-style: none;
 }
 
-#iarjesemwa p {
+#essjvpbwkf p {
   margin: 0;
   padding: 0;
 }
 
-#iarjesemwa .gt_table {
+#essjvpbwkf .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -824,12 +818,12 @@ window.Quarto = {
   border-left-color: #D3D3D3;
 }
 
-#iarjesemwa .gt_caption {
+#essjvpbwkf .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#iarjesemwa .gt_title {
+#essjvpbwkf .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -841,7 +835,7 @@ window.Quarto = {
   border-bottom-width: 0;
 }
 
-#iarjesemwa .gt_subtitle {
+#essjvpbwkf .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -853,7 +847,7 @@ window.Quarto = {
   border-top-width: 0;
 }
 
-#iarjesemwa .gt_heading {
+#essjvpbwkf .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -865,13 +859,13 @@ window.Quarto = {
   border-right-color: #D3D3D3;
 }
 
-#iarjesemwa .gt_bottom_border {
+#essjvpbwkf .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#iarjesemwa .gt_col_headings {
+#essjvpbwkf .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -886,7 +880,7 @@ window.Quarto = {
   border-right-color: #D3D3D3;
 }
 
-#iarjesemwa .gt_col_heading {
+#essjvpbwkf .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -906,7 +900,7 @@ window.Quarto = {
   overflow-x: hidden;
 }
 
-#iarjesemwa .gt_column_spanner_outer {
+#essjvpbwkf .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -918,15 +912,15 @@ window.Quarto = {
   padding-right: 4px;
 }
 
-#iarjesemwa .gt_column_spanner_outer:first-child {
+#essjvpbwkf .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#iarjesemwa .gt_column_spanner_outer:last-child {
+#essjvpbwkf .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#iarjesemwa .gt_column_spanner {
+#essjvpbwkf .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -938,11 +932,11 @@ window.Quarto = {
   width: 100%;
 }
 
-#iarjesemwa .gt_spanner_row {
+#essjvpbwkf .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#iarjesemwa .gt_group_heading {
+#essjvpbwkf .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -968,7 +962,7 @@ window.Quarto = {
   text-align: left;
 }
 
-#iarjesemwa .gt_empty_group_heading {
+#essjvpbwkf .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -983,15 +977,15 @@ window.Quarto = {
   vertical-align: middle;
 }
 
-#iarjesemwa .gt_from_md > :first-child {
+#essjvpbwkf .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#iarjesemwa .gt_from_md > :last-child {
+#essjvpbwkf .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#iarjesemwa .gt_row {
+#essjvpbwkf .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1010,7 +1004,7 @@ window.Quarto = {
   overflow-x: hidden;
 }
 
-#iarjesemwa .gt_stub {
+#essjvpbwkf .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1023,7 +1017,7 @@ window.Quarto = {
   padding-right: 5px;
 }
 
-#iarjesemwa .gt_stub_row_group {
+#essjvpbwkf .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1037,15 +1031,15 @@ window.Quarto = {
   vertical-align: top;
 }
 
-#iarjesemwa .gt_row_group_first td {
+#essjvpbwkf .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#iarjesemwa .gt_row_group_first th {
+#essjvpbwkf .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#iarjesemwa .gt_summary_row {
+#essjvpbwkf .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1055,16 +1049,16 @@ window.Quarto = {
   padding-right: 5px;
 }
 
-#iarjesemwa .gt_first_summary_row {
+#essjvpbwkf .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#iarjesemwa .gt_first_summary_row.thick {
+#essjvpbwkf .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#iarjesemwa .gt_last_summary_row {
+#essjvpbwkf .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1074,7 +1068,7 @@ window.Quarto = {
   border-bottom-color: #D3D3D3;
 }
 
-#iarjesemwa .gt_grand_summary_row {
+#essjvpbwkf .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1084,7 +1078,7 @@ window.Quarto = {
   padding-right: 5px;
 }
 
-#iarjesemwa .gt_first_grand_summary_row {
+#essjvpbwkf .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1094,7 +1088,7 @@ window.Quarto = {
   border-top-color: #D3D3D3;
 }
 
-#iarjesemwa .gt_last_grand_summary_row_top {
+#essjvpbwkf .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1104,11 +1098,11 @@ window.Quarto = {
   border-bottom-color: #D3D3D3;
 }
 
-#iarjesemwa .gt_striped {
+#essjvpbwkf .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#iarjesemwa .gt_table_body {
+#essjvpbwkf .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1117,7 +1111,7 @@ window.Quarto = {
   border-bottom-color: #D3D3D3;
 }
 
-#iarjesemwa .gt_footnotes {
+#essjvpbwkf .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1131,7 +1125,7 @@ window.Quarto = {
   border-right-color: #D3D3D3;
 }
 
-#iarjesemwa .gt_footnote {
+#essjvpbwkf .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -1140,7 +1134,7 @@ window.Quarto = {
   padding-right: 5px;
 }
 
-#iarjesemwa .gt_sourcenotes {
+#essjvpbwkf .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1154,7 +1148,7 @@ window.Quarto = {
   border-right-color: #D3D3D3;
 }
 
-#iarjesemwa .gt_sourcenote {
+#essjvpbwkf .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1162,72 +1156,72 @@ window.Quarto = {
   padding-right: 5px;
 }
 
-#iarjesemwa .gt_left {
+#essjvpbwkf .gt_left {
   text-align: left;
 }
 
-#iarjesemwa .gt_center {
+#essjvpbwkf .gt_center {
   text-align: center;
 }
 
-#iarjesemwa .gt_right {
+#essjvpbwkf .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#iarjesemwa .gt_font_normal {
+#essjvpbwkf .gt_font_normal {
   font-weight: normal;
 }
 
-#iarjesemwa .gt_font_bold {
+#essjvpbwkf .gt_font_bold {
   font-weight: bold;
 }
 
-#iarjesemwa .gt_font_italic {
+#essjvpbwkf .gt_font_italic {
   font-style: italic;
 }
 
-#iarjesemwa .gt_super {
+#essjvpbwkf .gt_super {
   font-size: 65%;
 }
 
-#iarjesemwa .gt_footnote_marks {
+#essjvpbwkf .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#iarjesemwa .gt_asterisk {
+#essjvpbwkf .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#iarjesemwa .gt_indent_1 {
+#essjvpbwkf .gt_indent_1 {
   text-indent: 5px;
 }
 
-#iarjesemwa .gt_indent_2 {
+#essjvpbwkf .gt_indent_2 {
   text-indent: 10px;
 }
 
-#iarjesemwa .gt_indent_3 {
+#essjvpbwkf .gt_indent_3 {
   text-indent: 15px;
 }
 
-#iarjesemwa .gt_indent_4 {
+#essjvpbwkf .gt_indent_4 {
   text-indent: 20px;
 }
 
-#iarjesemwa .gt_indent_5 {
+#essjvpbwkf .gt_indent_5 {
   text-indent: 25px;
 }
 
-#iarjesemwa .katex-display {
+#essjvpbwkf .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#iarjesemwa div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#essjvpbwkf div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -1294,15 +1288,16 @@ Overlapの仮定
 </div>
 <div class="callout-body-container callout-body">
 <ul>
-<li>ターゲットが正の値を取る<strong>全ての</strong><span class="math inline">\(X\)</span>の組み合わせについて、<span class="math inline">\(D=1\)</span>の事例も<span class="math inline">\(D=0\)</span>の事例も、<strong>母集団上</strong>には<strong>両方</strong>存在する: <span class="math display">\[1 &gt; E[D|X] &gt;0\]</span> ただし <span class="math inline">\(E[D|X]\)</span> は<span class="math inline">\(D\)</span>の母平均(<span class="math inline">\(D=1\)</span>の割合)</li>
+<li>ターゲットが正の値を取る<strong>全ての</strong><span class="math inline">\(X\)</span>の組み合わせについて、<span class="math inline">\(D=1\)</span>の事例も<span class="math inline">\(D=0\)</span>の事例も、<strong>両方</strong>存在する: <span class="math display">\[1 &gt; E[D|X] &gt;0\]</span> ただし <span class="math inline">\(E[D|X]\)</span> は<span class="math inline">\(D\)</span>の母平均(<span class="math inline">\(D=1\)</span>の割合)</li>
 </ul>
 </div>
 </div>
-<p>Overlapが成り立っていない場合、<span class="math inline">\(D=1\)</span> または <span class="math inline">\(D=0\)</span> しか存在しない<span class="math inline">\(X\)</span>の組み合わせが存在することになります。 結果、バランス後の比較は<strong>根本的に</strong>不可能です。 例えば、教育経験<span class="math inline">\((=X)\)</span>をバランスさせた男女間<span class="math inline">\((=D)\)</span>での賃金格差を推定したいとします。 ここで関心となる母集団は、男女間での教育経験の分断が極めて大きく、大学卒以上の女性は存在しないとします。 この場合、大学卒の女性割合は<span class="math inline">\(0\)</span>であり、どのようなBalancing weight <span class="math inline">\(\omega(大学卒)\)</span> を用いたとしても、男性/女性の大学卒比率を揃えることは不可能です。 言い換えるならば、大学卒の女性が存在しないため、大学卒内で男女間の賃金を比較できないため、バランス後の比較は不可能です。</p>
+<p>Overlapが成り立っていない場合、<span class="math inline">\(D=1\)</span> または <span class="math inline">\(D=0\)</span> しか存在しない<span class="math inline">\(X\)</span>の組み合わせが存在することになります。 結果、厳密なバランス後の比較は<strong>根本的に</strong>不可能です。 例えば、教育経験<span class="math inline">\((=X)\)</span>をバランスさせた男女間<span class="math inline">\((=D)\)</span>での賃金格差を推定したいとします。 しかしながらデータにおける男女間での教育経験の分断が極めて大きく、大学卒以上の女性は存在しないとします。 この場合、大学卒の女性割合は<span class="math inline">\(0\)</span>であり、どのようなBalancing weightを用いたとしても、男性/女性の大学卒比率を揃えることは不可能です。 言い換えるならば、大学卒の女性が存在しないため、大学卒内で男女間の賃金を比較できないため、バランス後の比較は不可能です。</p>
 </section>
 </section>
 <section id="他の実例" class="level2" data-number="1.3">
 <h2 data-number="1.3" class="anchored" data-anchor-id="他の実例"><span class="header-section-number">1.3</span> 他の実例</h2>
+<p>バランス後の比較分析の応用例は、大量に存在します。 以下では実務においてよく利用されている指標を紹介します。</p>
 <section id="合計特殊出生率" class="level3" data-number="1.3.1">
 <h3 data-number="1.3.1" class="anchored" data-anchor-id="合計特殊出生率"><span class="header-section-number">1.3.1</span> 合計特殊出生率</h3>
 <p>バランス後の比較分析は、社会/政策分析において幅広く利用されています。 代表例は、合計特殊出生率の国家間/時代間比較です。</p>
