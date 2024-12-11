@@ -242,16 +242,52 @@ window.Quarto = {
 
 <section id="preface" class="level1 unnumbered">
 <h1 class="unnumbered">Preface</h1>
-<p>比較分析の方法を、Rでの実装とともに紹介します。</p>
+<p>データに基づく定量的な比較分析の方法を、Rでの実装とともに紹介します。</p>
 <p>比較分析は、社会における特定の「グループ間の違い」を明らかにすることを目標とします。 本ノートでは、データ上のある変数 <span class="math inline">\(D\)</span> 間での、別の変数 <span class="math inline">\(Y\)</span> の平均値の差を推定する方法を紹介します。</p>
 <p>比較分析は、社会/市場を理解するための方法として、中核的な位置を占めています。 例えば、ある職業訓練プログラムが就業確率や就業後賃金に与える因果的効果を推定するためには、職業訓練プログラムへの参加者と非参加者の間で見られる就業状態や賃金の比較分析が求められます。 「世代間」格差の移転を推定するためには、両親の経済/社会状態間で、子供の賃金を比較を行います。</p>
-<p>社会/市場分析における多くの比較研究では、「背景属性」のバランスが求められます。 例えば2022年と2023年の中古マンション市場の取引価格を比較したいとします。 最も単純な比較方法は、平均取引価格を2023年と2022年で単純比較することですが、物件の他の特徴(部屋の広さ、駅からの距離など)も同時に変化していることが予想されます。 本ノートでは、「もし物件の他の特徴が変化しなかったときの」2023年と2022年で平均取引価格がどの程度変化額を推定する方法を紹介します。</p>
-<p>詳細な入門としては、<a href="https://hdsr.mitpress.mit.edu/pub/1ybwbmlw/release/2"><span class="citation" data-cites="Chattopadhyay2024Causation">Chattopadhyay and Zubizarreta (<span>2024</span>)</span></a> などを参考にしてください。</p>
+<p>因果効果や格差の推定を目的とする比較研究では、しばしば「背景属性」のバランスが求められます。 例えば2022年と2023年の中古マンション市場の取引価格を比較したいとします。 最も単純な比較方法は、平均取引価格を2023年と2022年で単純比較することですが、物件の他の特徴(部屋の広さ、駅からの距離など)も同時に変化していることが予想されます。 本ノートでは、「もし物件の他の特徴が変化しなかったときの」2023年と2022年で平均取引価格がどの程度変化額を推定する方法を紹介します。</p>
+<p>本ノートの中心的なコンセプトは、Balancing Weightです。 Balancing Weightは、以下のアプローチを統合的整理できる極めて有益な概念です。</p>
+<ul>
+<li><p>重回帰(OLS)やPenalized Regression<span class="citation" data-cites="chattopadhyay2023implied bruns2023augmented">(<a href="Referemce.html#ref-chattopadhyay2023implied" role="doc-biblioref">Chattopadhyay and Zubizarreta 2023</a>; <a href="Referemce.html#ref-bruns2023augmented" role="doc-biblioref">Bruns-Smith et al. 2023</a>)</span>による調整</p></li>
+<li><p>傾向スコアの活用 <span class="citation" data-cites="imai2014covariate chernozhukov2018double chernozhukov2022locally">(<a href="Referemce.html#ref-imai2014covariate" role="doc-biblioref">Imai and Ratkovic 2014</a>; <a href="Referemce.html#ref-chernozhukov2018double" role="doc-biblioref">Chernozhukov et al. 2018</a>, <a href="Referemce.html#ref-chernozhukov2022locally" role="doc-biblioref">2022</a>)</span></p></li>
+<li><p>Entropy Weight <span class="citation" data-cites="hainmueller2012entropy">(<a href="Referemce.html#ref-hainmueller2012entropy" role="doc-biblioref">Hainmueller 2012</a>)</span> やStable Weight <span class="citation" data-cites="zubizarreta2015stable">(<a href="Referemce.html#ref-zubizarreta2015stable" role="doc-biblioref">Zubizarreta 2015</a>)</span>/ Energy Weight <span class="citation" data-cites="huling2024energy">(<a href="Referemce.html#ref-huling2024energy" role="doc-biblioref">Huling and Mak 2024</a>)</span> による調整</p></li>
+</ul>
+<p>簡易な入門としては <a href="https://hdsr.mitpress.mit.edu/pub/1ybwbmlw/release/2"><span class="citation" data-cites="Chattopadhyay2024Causation">Chattopadhyay and Zubizarreta (<span>2024</span>)</span></a> 、詳細な入門としては<span class="citation" data-cites="chattopadhyay2020balancing ben2021balancing">(<a href="Referemce.html#ref-chattopadhyay2020balancing" role="doc-biblioref">Chattopadhyay, Hase, and Zubizarreta 2020</a>; <a href="Referemce.html#ref-ben2021balancing" role="doc-biblioref">Ben-Michael et al. 2021</a>)</span>などを参考にしてください。</p>
 
 
 <div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
+<div id="ref-ben2021balancing" class="csl-entry" role="listitem">
+Ben-Michael, Eli, Avi Feller, David A Hirshberg, and José R Zubizarreta. 2021. <span>“The Balancing Act in Causal Inference.”</span> <em>arXiv Preprint arXiv:2110.14831</em>.
+</div>
+<div id="ref-bruns2023augmented" class="csl-entry" role="listitem">
+Bruns-Smith, David, Oliver Dukes, Avi Feller, and Elizabeth L Ogburn. 2023. <span>“Augmented Balancing Weights as Linear Regression.”</span> <em>arXiv Preprint arXiv:2304.14545</em>.
+</div>
+<div id="ref-chattopadhyay2020balancing" class="csl-entry" role="listitem">
+Chattopadhyay, Ambarish, Christopher H Hase, and José R Zubizarreta. 2020. <span>“Balancing Vs Modeling Approaches to Weighting in Practice.”</span> <em>Statistics in Medicine</em> 39 (24): 3227–54.
+</div>
+<div id="ref-chattopadhyay2023implied" class="csl-entry" role="listitem">
+Chattopadhyay, Ambarish, and José R Zubizarreta. 2023. <span>“On the Implied Weights of Linear Regression for Causal Inference.”</span> <em>Biometrika</em> 110 (3): 615–29.
+</div>
 <div id="ref-Chattopadhyay2024Causation" class="csl-entry" role="listitem">
 Chattopadhyay, Ambarish, and José R. Zubizarreta. 2024. <span>“<span>Causation</span>, <span>Comparison</span>, and <span>Regression</span>.”</span> <em>Harvard Data Science Review</em> 6 (1).
+</div>
+<div id="ref-chernozhukov2018double" class="csl-entry" role="listitem">
+Chernozhukov, Victor, Denis Chetverikov, Mert Demirer, Esther Duflo, Christian Hansen, Whitney Newey, and James Robins. 2018. <span>“<span class="nocase">Double/debiased machine learning for treatment and structural parameters</span>.”</span> <em>The Econometrics Journal</em> 21 (1): C1–68. <a href="https://doi.org/10.1111/ectj.12097">https://doi.org/10.1111/ectj.12097</a>.
+</div>
+<div id="ref-chernozhukov2022locally" class="csl-entry" role="listitem">
+Chernozhukov, Victor, Juan Carlos Escanciano, Hidehiko Ichimura, Whitney K Newey, and James M Robins. 2022. <span>“Locally Robust Semiparametric Estimation.”</span> <em>Econometrica</em> 90 (4): 1501–35.
+</div>
+<div id="ref-hainmueller2012entropy" class="csl-entry" role="listitem">
+Hainmueller, Jens. 2012. <span>“Entropy Balancing for Causal Effects: A Multivariate Reweighting Method to Produce Balanced Samples in Observational Studies.”</span> <em>Political Analysis</em> 20 (1): 25–46.
+</div>
+<div id="ref-huling2024energy" class="csl-entry" role="listitem">
+Huling, Jared D, and Simon Mak. 2024. <span>“Energy Balancing of Covariate Distributions.”</span> <em>Journal of Causal Inference</em> 12 (1): 20220029.
+</div>
+<div id="ref-imai2014covariate" class="csl-entry" role="listitem">
+Imai, Kosuke, and Marc Ratkovic. 2014. <span>“Covariate Balancing Propensity Score.”</span> <em>Journal of the Royal Statistical Society Series B: Statistical Methodology</em> 76 (1): 243–63.
+</div>
+<div id="ref-zubizarreta2015stable" class="csl-entry" role="listitem">
+Zubizarreta, José R. 2015. <span>“Stable Weights That Balance Covariates for Estimation with Incomplete Outcome Data.”</span> <em>Journal of the American Statistical Association</em> 110 (511): 910–22.
 </div>
 </div>
 </section>
