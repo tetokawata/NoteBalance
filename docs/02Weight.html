@@ -183,7 +183,7 @@ window.Quarto = {
   <ul>
   <li><a href="#データ上の平均値" id="toc-データ上の平均値" class="nav-link active" data-scroll-target="#データ上の平均値"><span class="header-section-number">2.1</span> データ上の平均値</a></li>
   <li><a href="#ターゲット上の平均値" id="toc-ターゲット上の平均値" class="nav-link" data-scroll-target="#ターゲット上の平均値"><span class="header-section-number">2.2</span> ターゲット上の平均値</a></li>
-  <li><a href="#weighte-mean" id="toc-weighte-mean" class="nav-link" data-scroll-target="#weighte-mean"><span class="header-section-number">2.3</span> Weighte mean</a></li>
+  <li><a href="#荷重平均値" id="toc-荷重平均値" class="nav-link" data-scroll-target="#荷重平均値"><span class="header-section-number">2.3</span> 荷重平均値</a></li>
   </ul>
 </nav>
     </div>
@@ -209,31 +209,31 @@ window.Quarto = {
 </header>
 
 
-<p>Balancing Weightsを紹介する準備として、より一般的な概念であるWeightsを紹介します。 Weightsは、データ上の事例の分布を、統計的な処理として変化させるために用いられます。</p>
-<p>以下最も典型的な応用である、データのサンプリングの偏りへの対応、を例としてWeightを紹介します。</p>
+<p>Balancing Weightsを紹介する準備として、より一般的な概念であるWeightsを紹介します。 Weightsは、データ上の事例の分布を、統計的な処理によって、変化させるために用いられます。</p>
+<p>以下、サンプリングの偏りへの対応を例とします。</p>
 <section id="データ上の平均値" class="level2" data-number="2.1">
 <h2 data-number="2.1" class="anchored" data-anchor-id="データ上の平均値"><span class="header-section-number">2.1</span> データ上の平均値</h2>
-<p>今、ある調査会社が調査員を千代田区、文京区、板橋区に派遣し、中古マンションの取引事例を収集したとします。 各調査員は、全く同じ数の事例を収集します。</p>
+<p>今、ある不動産研究所が調査員を千代田区、文京区、板橋区に派遣し、中古マンションの取引事例を収集したとします。 各調査員は、全く同じ数の事例を収集します。</p>
 <p>以下では、立地(District)ごとに、平均取引価格とデータ全体に対する事例数の割合をまとめています。</p>
 <div class="cell">
 <div class="cell-output-display">
-<div id="ijleizzmnb" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#ijleizzmnb table {
+<div id="jvanwctjss" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#jvanwctjss table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#ijleizzmnb thead, #ijleizzmnb tbody, #ijleizzmnb tfoot, #ijleizzmnb tr, #ijleizzmnb td, #ijleizzmnb th {
+#jvanwctjss thead, #jvanwctjss tbody, #jvanwctjss tfoot, #jvanwctjss tr, #jvanwctjss td, #jvanwctjss th {
   border-style: none;
 }
 
-#ijleizzmnb p {
+#jvanwctjss p {
   margin: 0;
   padding: 0;
 }
 
-#ijleizzmnb .gt_table {
+#jvanwctjss .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -259,12 +259,12 @@ window.Quarto = {
   border-left-color: #D3D3D3;
 }
 
-#ijleizzmnb .gt_caption {
+#jvanwctjss .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#ijleizzmnb .gt_title {
+#jvanwctjss .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -276,7 +276,7 @@ window.Quarto = {
   border-bottom-width: 0;
 }
 
-#ijleizzmnb .gt_subtitle {
+#jvanwctjss .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -288,7 +288,7 @@ window.Quarto = {
   border-top-width: 0;
 }
 
-#ijleizzmnb .gt_heading {
+#jvanwctjss .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -300,13 +300,13 @@ window.Quarto = {
   border-right-color: #D3D3D3;
 }
 
-#ijleizzmnb .gt_bottom_border {
+#jvanwctjss .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#ijleizzmnb .gt_col_headings {
+#jvanwctjss .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -321,7 +321,7 @@ window.Quarto = {
   border-right-color: #D3D3D3;
 }
 
-#ijleizzmnb .gt_col_heading {
+#jvanwctjss .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -341,7 +341,7 @@ window.Quarto = {
   overflow-x: hidden;
 }
 
-#ijleizzmnb .gt_column_spanner_outer {
+#jvanwctjss .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -353,15 +353,15 @@ window.Quarto = {
   padding-right: 4px;
 }
 
-#ijleizzmnb .gt_column_spanner_outer:first-child {
+#jvanwctjss .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#ijleizzmnb .gt_column_spanner_outer:last-child {
+#jvanwctjss .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#ijleizzmnb .gt_column_spanner {
+#jvanwctjss .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -373,11 +373,11 @@ window.Quarto = {
   width: 100%;
 }
 
-#ijleizzmnb .gt_spanner_row {
+#jvanwctjss .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#ijleizzmnb .gt_group_heading {
+#jvanwctjss .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -403,7 +403,7 @@ window.Quarto = {
   text-align: left;
 }
 
-#ijleizzmnb .gt_empty_group_heading {
+#jvanwctjss .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -418,15 +418,15 @@ window.Quarto = {
   vertical-align: middle;
 }
 
-#ijleizzmnb .gt_from_md > :first-child {
+#jvanwctjss .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#ijleizzmnb .gt_from_md > :last-child {
+#jvanwctjss .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#ijleizzmnb .gt_row {
+#jvanwctjss .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -445,7 +445,7 @@ window.Quarto = {
   overflow-x: hidden;
 }
 
-#ijleizzmnb .gt_stub {
+#jvanwctjss .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -458,7 +458,7 @@ window.Quarto = {
   padding-right: 5px;
 }
 
-#ijleizzmnb .gt_stub_row_group {
+#jvanwctjss .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -472,15 +472,15 @@ window.Quarto = {
   vertical-align: top;
 }
 
-#ijleizzmnb .gt_row_group_first td {
+#jvanwctjss .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#ijleizzmnb .gt_row_group_first th {
+#jvanwctjss .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#ijleizzmnb .gt_summary_row {
+#jvanwctjss .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -490,16 +490,16 @@ window.Quarto = {
   padding-right: 5px;
 }
 
-#ijleizzmnb .gt_first_summary_row {
+#jvanwctjss .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#ijleizzmnb .gt_first_summary_row.thick {
+#jvanwctjss .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#ijleizzmnb .gt_last_summary_row {
+#jvanwctjss .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -509,7 +509,7 @@ window.Quarto = {
   border-bottom-color: #D3D3D3;
 }
 
-#ijleizzmnb .gt_grand_summary_row {
+#jvanwctjss .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -519,7 +519,7 @@ window.Quarto = {
   padding-right: 5px;
 }
 
-#ijleizzmnb .gt_first_grand_summary_row {
+#jvanwctjss .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -529,7 +529,7 @@ window.Quarto = {
   border-top-color: #D3D3D3;
 }
 
-#ijleizzmnb .gt_last_grand_summary_row_top {
+#jvanwctjss .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -539,11 +539,11 @@ window.Quarto = {
   border-bottom-color: #D3D3D3;
 }
 
-#ijleizzmnb .gt_striped {
+#jvanwctjss .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#ijleizzmnb .gt_table_body {
+#jvanwctjss .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -552,7 +552,7 @@ window.Quarto = {
   border-bottom-color: #D3D3D3;
 }
 
-#ijleizzmnb .gt_footnotes {
+#jvanwctjss .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -566,7 +566,7 @@ window.Quarto = {
   border-right-color: #D3D3D3;
 }
 
-#ijleizzmnb .gt_footnote {
+#jvanwctjss .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -575,7 +575,7 @@ window.Quarto = {
   padding-right: 5px;
 }
 
-#ijleizzmnb .gt_sourcenotes {
+#jvanwctjss .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -589,7 +589,7 @@ window.Quarto = {
   border-right-color: #D3D3D3;
 }
 
-#ijleizzmnb .gt_sourcenote {
+#jvanwctjss .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -597,72 +597,72 @@ window.Quarto = {
   padding-right: 5px;
 }
 
-#ijleizzmnb .gt_left {
+#jvanwctjss .gt_left {
   text-align: left;
 }
 
-#ijleizzmnb .gt_center {
+#jvanwctjss .gt_center {
   text-align: center;
 }
 
-#ijleizzmnb .gt_right {
+#jvanwctjss .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#ijleizzmnb .gt_font_normal {
+#jvanwctjss .gt_font_normal {
   font-weight: normal;
 }
 
-#ijleizzmnb .gt_font_bold {
+#jvanwctjss .gt_font_bold {
   font-weight: bold;
 }
 
-#ijleizzmnb .gt_font_italic {
+#jvanwctjss .gt_font_italic {
   font-style: italic;
 }
 
-#ijleizzmnb .gt_super {
+#jvanwctjss .gt_super {
   font-size: 65%;
 }
 
-#ijleizzmnb .gt_footnote_marks {
+#jvanwctjss .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#ijleizzmnb .gt_asterisk {
+#jvanwctjss .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#ijleizzmnb .gt_indent_1 {
+#jvanwctjss .gt_indent_1 {
   text-indent: 5px;
 }
 
-#ijleizzmnb .gt_indent_2 {
+#jvanwctjss .gt_indent_2 {
   text-indent: 10px;
 }
 
-#ijleizzmnb .gt_indent_3 {
+#jvanwctjss .gt_indent_3 {
   text-indent: 15px;
 }
 
-#ijleizzmnb .gt_indent_4 {
+#jvanwctjss .gt_indent_4 {
   text-indent: 20px;
 }
 
-#ijleizzmnb .gt_indent_5 {
+#jvanwctjss .gt_indent_5 {
   text-indent: 25px;
 }
 
-#ijleizzmnb .katex-display {
+#jvanwctjss .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#ijleizzmnb div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#jvanwctjss div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -697,6 +697,7 @@ window.Quarto = {
 </div>
 </div>
 </div>
+<p>全ての区について、全く同数の事例が収集されていることに注意してください。</p>
 <p>繰り返し期待値の法則を用いると、この情報だけからデータ全体の平均取引価格は計算できます。</p>
 <div class="callout callout-style-default callout-important callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -709,8 +710,8 @@ window.Quarto = {
 </div>
 <div class="callout-body-container callout-body">
 <ul>
-<li><p>平均値を計算したい変数<span class="math inline">\(Y\)</span>と他の変数<span class="math inline">\(X\)</span>がデータから観察できる</p></li>
-<li><p><span class="math inline">\(X\)</span>の値は、 <span class="math inline">\(x_1,..,x_L\)</span></p></li>
+<li><p>平均値を計算したい変数<span class="math inline">\(Y\)</span>と他の変数<span class="math inline">\(X\)</span>をデータから観察できる</p></li>
+<li><p><span class="math inline">\(X\)</span>の値は、 <span class="math inline">\(x_1,..,x_L\)</span> 、の中のどれかの値をとる</p></li>
 <li><p><span class="math inline">\(Yの平均値\)</span>は</p></li>
 </ul>
 <p><span class="math display">\[=(X=x_1)を満たす事例のYの平均値\times (X=x_1)を満たす事例の割合\]</span></p>
@@ -726,29 +727,49 @@ window.Quarto = {
 <p><span class="math display">\[+\underbrace{47.3}_{文京区の事例の平均取引価格}\times \underbrace{0.333}_{文京区の事例の割合}\]</span></p>
 <p><span class="math display">\[+\underbrace{29.5}_{板橋区の事例の平均取引価格}\times \underbrace{0.333}_{板橋区の事例の割合}\]</span></p>
 <p><span class="math display">\[=47.8\]</span></p>
-<p>繰り返し期待値の法則は、単なる計算方法以上の含意を持っています。 データ上の平均値は、<span class="math inline">\(X\)</span>についてのサブグループ内での平均値とサブグループの割合、によって決定されます。 もしサブグループの割合が研究関心から乖離している場合、サブグループ内での平均値が妥当な値であったとしても、ミスリードな平均値が計算されてしまいます。</p>
+<p>繰り返し期待値の法則は、単なる計算方法以上の含意を持っています。 データ上の平均値は、<span class="math inline">\(X\)</span>についてのサブグループ内での平均値とサブグループの割合の掛け算の総和となります。 もしサブグループの割合が研究関心から乖離している場合、サブグループ内での平均値が妥当な値であったとしても、ミスリードな平均値が計算されてしまいます。</p>
 </section>
 <section id="ターゲット上の平均値" class="level2" data-number="2.2">
 <h2 data-number="2.2" class="anchored" data-anchor-id="ターゲット上の平均値"><span class="header-section-number">2.2</span> ターゲット上の平均値</h2>
-<p>今研究関心は、「もし実際の取引履歴をすべて収集した事例を用いて計算された平均取引価格」、であるとします。 このような平均値を計算したい仮想的な事例集をターゲットと呼びます。</p>
-<p>今、実際(ターゲット)の取引割合は、千代田区が0.161、文京区が0.33、板橋区が0.509であることが判明しているとします。 もしデータ上の各区の取引割合がターゲットの取引割合であった場合、平均値はどのように変化するでしょうか？ このような平均値を以後、調整された平均値と呼びます。</p>
-<p><span class="math inline">\(調整された平均取引価格\)</span>は</p>
+<p>今研究関心は、「もし実際の取引履歴をすべて収集した事例を用いて計算された平均取引価格」、であるとします。 このような平均値を計算したい仮想的な事例集を、<strong>ターゲット</strong>と呼びます。</p>
+<p>今、ターゲットの取引割合は、千代田区が0.161、文京区が0.33、板橋区が0.509であることが判明しているとします。 もしデータ上の各区の取引割合を、ターゲットの取引割合に変化させた場合、平均値はどのように変化するでしょうか？ このような平均値を以後、<strong>調整された平均値</strong>と呼びます。</p>
+<p>上記データにおける調整された平均取引価格は、以下のように算出されます。</p>
 <p><span class="math display">\[=\underbrace{66.5}_{千代田区の事例の平均取引価格}\times \underbrace{0.161}_{千代田区の事例の割合}\]</span></p>
 <p><span class="math display">\[+\underbrace{47.3}_{文京区の事例の平均取引価格}\times \underbrace{0.33}_{文京区の事例の割合}\]</span></p>
 <p><span class="math display">\[+\underbrace{29.5}_{板橋区の事例の平均取引価格}\times \underbrace{0.509}_{板橋区の事例の割合}\]</span></p>
 <p><span class="math display">\[=41.3\]</span></p>
 <p>データ上の平均値は47.8であったので、過大であったことがわかります。 これは、平均取引価格が高い傾向にある千代田区の物件割合が、現実の取引割合(0.161)よりも、データ上の割合(0.333)が過大であることに起因します。</p>
-</section>
-<section id="weighte-mean" class="level2" data-number="2.3">
-<h2 data-number="2.3" class="anchored" data-anchor-id="weighte-mean"><span class="header-section-number">2.3</span> Weighte mean</h2>
-<p>このような調整を行うための有力な方法は、荷重平均値(Weighted mean)を計算することです。 一般にWeighted meanは以下のように定義されます。</p>
 <div class="callout callout-style-default callout-important callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Weighted mean
+調整された平均値
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li><p>平均値を計算したい変数<span class="math inline">\(Y\)</span>と他の変数<span class="math inline">\(X\)</span>をデータから観察できる</p></li>
+<li><p><span class="math inline">\(X\)</span>の値は、 <span class="math inline">\(x_1,..,x_L\)</span> 、の中のどれかの値をとる</p></li>
+<li><p><span class="math inline">\(Yの調整された平均値\)</span>は</p></li>
+</ul>
+<p><span class="math display">\[=(X=x_1)を満たす事例のYの平均値\times (X=x_1)についてのターゲット\]</span></p>
+<p><span class="math display">\[+..\]</span></p>
+<p><span class="math display">\[+(X=x_L)を満たす事例のYの平均値\times (X=x_L)についてのターゲット\]</span></p>
+</div>
+</div>
+</section>
+<section id="荷重平均値" class="level2" data-number="2.3">
+<h2 data-number="2.3" class="anchored" data-anchor-id="荷重平均値"><span class="header-section-number">2.3</span> 荷重平均値</h2>
+<p>このような調整を行うための有力な方法は、荷重平均値(Weighted mean)を計算することです。 一般に荷重平均値は以下のように定義されます。</p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+荷重平均値
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -757,35 +778,38 @@ Weighted mean
 </ul>
 <p><span class="math display">\[=(\omega\times Y)の平均値\]</span></p>
 <ul>
-<li><span class="math inline">\(\omega=\)</span> Weight <span class="math inline">\((\omega の平均値 = 1)\)</span></li>
+<li><p><span class="math inline">\(\omega=\)</span> Weight</p>
+<ul>
+<li><span class="math inline">\(\omega の平均値 = 1\)</span></li>
+</ul></li>
 </ul>
 </div>
 </div>
 <p>Weightは各事例の<span class="math inline">\(Y\)</span>の値が、最終的な平均値に反映される度合いをコントロールします。 例えば、もし<span class="math inline">\(\omega=0\)</span>であれば、その事例は<span class="math inline">\(Y\)</span>の平均値の計算に一切反映されません。</p>
 <p>Weightは、データとターゲットにおけるDistrictの分布を揃えるように設定されます。 すなわち</p>
-<p><span class="math display">\[\omega\times 事例割合=ターゲットとなる割合\]</span></p>
+<p><span class="math display">\[\omega\times データ上の事例割合=ターゲットとなる割合\]</span></p>
 <p>を達成するように<span class="math inline">\(\omega\)</span>を算出します。 両辺を事例割合で割ると、</p>
-<p><span class="math display">\[\omega=\frac{ターゲットとなる割合}{事例割合}\]</span> となります。 すなわちターゲットよりも過大に収集されているグループについては小さめに、ターゲットよりも過小なグループは大きめに反映されます。</p>
+<p><span class="math display">\[\omega=\frac{ターゲットとなる割合}{データ上の事例割合}\]</span> となります。 すなわちターゲットよりも過大に収集されているグループについては小さめに、ターゲットよりも過小なグループは大きめに反映されます。</p>
 <p>上記の例に適用すると、以下となります。</p>
 <div class="cell">
 <div class="cell-output-display">
-<div id="yxxqxaifbb" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#yxxqxaifbb table {
+<div id="sgdkdpbdhu" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#sgdkdpbdhu table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#yxxqxaifbb thead, #yxxqxaifbb tbody, #yxxqxaifbb tfoot, #yxxqxaifbb tr, #yxxqxaifbb td, #yxxqxaifbb th {
+#sgdkdpbdhu thead, #sgdkdpbdhu tbody, #sgdkdpbdhu tfoot, #sgdkdpbdhu tr, #sgdkdpbdhu td, #sgdkdpbdhu th {
   border-style: none;
 }
 
-#yxxqxaifbb p {
+#sgdkdpbdhu p {
   margin: 0;
   padding: 0;
 }
 
-#yxxqxaifbb .gt_table {
+#sgdkdpbdhu .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -811,12 +835,12 @@ Weighted mean
   border-left-color: #D3D3D3;
 }
 
-#yxxqxaifbb .gt_caption {
+#sgdkdpbdhu .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#yxxqxaifbb .gt_title {
+#sgdkdpbdhu .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -828,7 +852,7 @@ Weighted mean
   border-bottom-width: 0;
 }
 
-#yxxqxaifbb .gt_subtitle {
+#sgdkdpbdhu .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -840,7 +864,7 @@ Weighted mean
   border-top-width: 0;
 }
 
-#yxxqxaifbb .gt_heading {
+#sgdkdpbdhu .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -852,13 +876,13 @@ Weighted mean
   border-right-color: #D3D3D3;
 }
 
-#yxxqxaifbb .gt_bottom_border {
+#sgdkdpbdhu .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#yxxqxaifbb .gt_col_headings {
+#sgdkdpbdhu .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -873,7 +897,7 @@ Weighted mean
   border-right-color: #D3D3D3;
 }
 
-#yxxqxaifbb .gt_col_heading {
+#sgdkdpbdhu .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -893,7 +917,7 @@ Weighted mean
   overflow-x: hidden;
 }
 
-#yxxqxaifbb .gt_column_spanner_outer {
+#sgdkdpbdhu .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -905,15 +929,15 @@ Weighted mean
   padding-right: 4px;
 }
 
-#yxxqxaifbb .gt_column_spanner_outer:first-child {
+#sgdkdpbdhu .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#yxxqxaifbb .gt_column_spanner_outer:last-child {
+#sgdkdpbdhu .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#yxxqxaifbb .gt_column_spanner {
+#sgdkdpbdhu .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -925,11 +949,11 @@ Weighted mean
   width: 100%;
 }
 
-#yxxqxaifbb .gt_spanner_row {
+#sgdkdpbdhu .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#yxxqxaifbb .gt_group_heading {
+#sgdkdpbdhu .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -955,7 +979,7 @@ Weighted mean
   text-align: left;
 }
 
-#yxxqxaifbb .gt_empty_group_heading {
+#sgdkdpbdhu .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -970,15 +994,15 @@ Weighted mean
   vertical-align: middle;
 }
 
-#yxxqxaifbb .gt_from_md > :first-child {
+#sgdkdpbdhu .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#yxxqxaifbb .gt_from_md > :last-child {
+#sgdkdpbdhu .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#yxxqxaifbb .gt_row {
+#sgdkdpbdhu .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -997,7 +1021,7 @@ Weighted mean
   overflow-x: hidden;
 }
 
-#yxxqxaifbb .gt_stub {
+#sgdkdpbdhu .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1010,7 +1034,7 @@ Weighted mean
   padding-right: 5px;
 }
 
-#yxxqxaifbb .gt_stub_row_group {
+#sgdkdpbdhu .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1024,15 +1048,15 @@ Weighted mean
   vertical-align: top;
 }
 
-#yxxqxaifbb .gt_row_group_first td {
+#sgdkdpbdhu .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#yxxqxaifbb .gt_row_group_first th {
+#sgdkdpbdhu .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#yxxqxaifbb .gt_summary_row {
+#sgdkdpbdhu .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1042,16 +1066,16 @@ Weighted mean
   padding-right: 5px;
 }
 
-#yxxqxaifbb .gt_first_summary_row {
+#sgdkdpbdhu .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#yxxqxaifbb .gt_first_summary_row.thick {
+#sgdkdpbdhu .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#yxxqxaifbb .gt_last_summary_row {
+#sgdkdpbdhu .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1061,7 +1085,7 @@ Weighted mean
   border-bottom-color: #D3D3D3;
 }
 
-#yxxqxaifbb .gt_grand_summary_row {
+#sgdkdpbdhu .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1071,7 +1095,7 @@ Weighted mean
   padding-right: 5px;
 }
 
-#yxxqxaifbb .gt_first_grand_summary_row {
+#sgdkdpbdhu .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1081,7 +1105,7 @@ Weighted mean
   border-top-color: #D3D3D3;
 }
 
-#yxxqxaifbb .gt_last_grand_summary_row_top {
+#sgdkdpbdhu .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1091,11 +1115,11 @@ Weighted mean
   border-bottom-color: #D3D3D3;
 }
 
-#yxxqxaifbb .gt_striped {
+#sgdkdpbdhu .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#yxxqxaifbb .gt_table_body {
+#sgdkdpbdhu .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1104,7 +1128,7 @@ Weighted mean
   border-bottom-color: #D3D3D3;
 }
 
-#yxxqxaifbb .gt_footnotes {
+#sgdkdpbdhu .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1118,7 +1142,7 @@ Weighted mean
   border-right-color: #D3D3D3;
 }
 
-#yxxqxaifbb .gt_footnote {
+#sgdkdpbdhu .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -1127,7 +1151,7 @@ Weighted mean
   padding-right: 5px;
 }
 
-#yxxqxaifbb .gt_sourcenotes {
+#sgdkdpbdhu .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1141,7 +1165,7 @@ Weighted mean
   border-right-color: #D3D3D3;
 }
 
-#yxxqxaifbb .gt_sourcenote {
+#sgdkdpbdhu .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1149,72 +1173,72 @@ Weighted mean
   padding-right: 5px;
 }
 
-#yxxqxaifbb .gt_left {
+#sgdkdpbdhu .gt_left {
   text-align: left;
 }
 
-#yxxqxaifbb .gt_center {
+#sgdkdpbdhu .gt_center {
   text-align: center;
 }
 
-#yxxqxaifbb .gt_right {
+#sgdkdpbdhu .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#yxxqxaifbb .gt_font_normal {
+#sgdkdpbdhu .gt_font_normal {
   font-weight: normal;
 }
 
-#yxxqxaifbb .gt_font_bold {
+#sgdkdpbdhu .gt_font_bold {
   font-weight: bold;
 }
 
-#yxxqxaifbb .gt_font_italic {
+#sgdkdpbdhu .gt_font_italic {
   font-style: italic;
 }
 
-#yxxqxaifbb .gt_super {
+#sgdkdpbdhu .gt_super {
   font-size: 65%;
 }
 
-#yxxqxaifbb .gt_footnote_marks {
+#sgdkdpbdhu .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#yxxqxaifbb .gt_asterisk {
+#sgdkdpbdhu .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#yxxqxaifbb .gt_indent_1 {
+#sgdkdpbdhu .gt_indent_1 {
   text-indent: 5px;
 }
 
-#yxxqxaifbb .gt_indent_2 {
+#sgdkdpbdhu .gt_indent_2 {
   text-indent: 10px;
 }
 
-#yxxqxaifbb .gt_indent_3 {
+#sgdkdpbdhu .gt_indent_3 {
   text-indent: 15px;
 }
 
-#yxxqxaifbb .gt_indent_4 {
+#sgdkdpbdhu .gt_indent_4 {
   text-indent: 20px;
 }
 
-#yxxqxaifbb .gt_indent_5 {
+#sgdkdpbdhu .gt_indent_5 {
   text-indent: 25px;
 }
 
-#yxxqxaifbb .katex-display {
+#sgdkdpbdhu .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#yxxqxaifbb div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#sgdkdpbdhu div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -1257,6 +1281,9 @@ Weighted mean
 </div>
 </div>
 </div>
+<p>よって荷重平均値は以下のように算出できます。</p>
+<p><span class="math display">\[\Biggr[\underbrace{\underbrace{44}_{取引価格}\times \underbrace{0.483}_{荷重} + 70.0\times 0.483+..}_{千代田区の事例}\underbrace{+75.0\times 0.991+..}_{文京区の事例}\]</span></p>
+<p><span class="math display">\[\underbrace{+59.0\times 1.529+..}_{板橋区の事例}\Biggr]の平均=\underbrace{41.3}_{調整された平均値}\]</span></p>
 
 
 </section>
