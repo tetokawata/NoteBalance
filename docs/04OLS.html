@@ -314,10 +314,10 @@ OLSの性質 <span class="citation" data-cites="chattopadhyay2023implied">(<a hr
 <p>重回帰による推定は、<span class="math inline">\(D\)</span>間で<span class="math inline">\(X\)</span> の平均値をバランスさせた上で、平均値を比較しています。 また最終的な推定結果の推定誤差に影響を与える、Weightの分散も可能な限り削減しています。</p>
 <section id="例" class="level3" data-number="4.1.1">
 <h3 data-number="4.1.1" class="anchored" data-anchor-id="例"><span class="header-section-number">4.1.1</span> 例</h3>
-<p>部屋の広さ (Size) と 築年数 (Tenure) をバランスさせた後に、2022/2021年の平均取引価格差を推定します。 <span class="math inline">\(Price\sim D + Size + Tenure\)</span> をOLS回帰すると、以下のようなバランスが達成されます。</p>
+<p>部屋の広さ (Size) と 築年数 (Tenure) をバランスさせた後に、2022(<span class="math inline">\(D=1\)</span>)/2021(<span class="math inline">\(D=0\)</span>)年の平均取引価格差を推定します。 <span class="math inline">\(Price\sim D + Size + Tenure\)</span> をOLS回帰すると、以下のようなバランスが達成されます。</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>estimatr<span class="sc">::</span><span class="fu">lm_robust</span>(</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  Y <span class="sc">~</span> D <span class="sc">+</span> Size <span class="sc">+</span> Tenure, </span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  Price <span class="sc">~</span> D <span class="sc">+</span> Size <span class="sc">+</span> Tenure, </span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  Data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
@@ -338,7 +338,7 @@ OLSの性質 <span class="citation" data-cites="chattopadhyay2023implied">(<a hr
 <p>分散や共分散もバランスさせるためには、二乗項や交差項もモデルに導入したモデル <span class="math inline">\(Price\sim D + Size + Tenure + Size^2 + Tenure^2 + Tenure\times Size\)</span> をOLS推定します。 これによって、Sizeの二乗の”平均値”などもバランスさせることができます。 これは各変数の分散や共分散をバランスを意味します 結果、以下の図の通り、分散や共分散もBalanceします。</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>estimatr<span class="sc">::</span><span class="fu">lm_robust</span>(</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  Y <span class="sc">~</span> D <span class="sc">+</span> Size <span class="sc">+</span> Tenure <span class="sc">+</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  Price <span class="sc">~</span> D <span class="sc">+</span> Size <span class="sc">+</span> Tenure <span class="sc">+</span></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">I</span>(Size<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> <span class="fu">I</span>(Tenure<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span></span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    (Size <span class="sc">+</span> Tenure)<span class="sc">**</span><span class="dv">2</span>, </span>
 <span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  Data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -352,7 +352,17 @@ OLSの性質 <span class="citation" data-cites="chattopadhyay2023implied">(<a hr
 </div>
 </div>
 </div>
-<p>バランス後の平均差は、通常の</p>
+<p>バランス後の平均差は、通常のOLS推定によって得られる<span class="math inline">\(D\)</span>の係数値となります。 以下では一切の<span class="math inline">\(X\)</span>をバランスさせないケース、SizeとTenureの平均値のみをバランスさせるケース、平均に加えて分散と共分散もバランスさせたケースの推定結果を、信頼区間とともに比較しています。</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="04OLS_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>コントロールをしないケースに比べて、SizeやTenureをバランスさせると、より2022年と2021年の平均差が大きくなりました。 一方で、平均値に加えて分散や共分散をバランスさせたとしても、あまり大きな変化は生じませんでした。</p>
 </section>
 <section id="olsの問題点と解決策" class="level2" data-number="4.3">
 <h2 data-number="4.3" class="anchored" data-anchor-id="olsの問題点と解決策"><span class="header-section-number">4.3</span> OLSの問題点と解決策</h2>
@@ -370,7 +380,7 @@ OLSの性質 <span class="citation" data-cites="chattopadhyay2023implied">(<a hr
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="04OLS_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="04OLS_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -386,7 +396,7 @@ OLSの性質 <span class="citation" data-cites="chattopadhyay2023implied">(<a hr
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="04OLS_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="04OLS_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -449,7 +459,7 @@ OLSの性質 <span class="citation" data-cites="chattopadhyay2023implied">(<a hr
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="04OLS_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="04OLS_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -481,7 +491,7 @@ OLSの性質 <span class="citation" data-cites="chattopadhyay2023implied">(<a hr
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="04OLS_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="04OLS_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -500,7 +510,7 @@ OLSの性質 <span class="citation" data-cites="chattopadhyay2023implied">(<a hr
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="04OLS_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="04OLS_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -512,7 +522,7 @@ OLSの性質 <span class="citation" data-cites="chattopadhyay2023implied">(<a hr
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="04OLS_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="04OLS_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
