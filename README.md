@@ -1,7 +1,5 @@
 # NoteBalance
 
-- [作成中の原稿](https://tetokawata.github.io/NoteBalance/)
-
 - 初学者を念頭に、バランス後の母平均差の推定方法を議論したノートです。
 
     - [作成中の原稿](https://tetokawata.github.io/NoteBalance/)
