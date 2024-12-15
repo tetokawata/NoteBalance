@@ -1,0 +1,187 @@
+# Balancing Weight {#sec-BalanceWeight}
+
+
+```{r}
+library(tidyverse)
+
+Data = arrow::read_parquet("Data/Data.parquet") |> 
+  filter(TradeYear %in% c(2021,2022)) |> 
+  mutate(
+    CBD = case_when(
+            District %in% c("千代田区","港区","中央区","新宿区","渋谷区","本郷区") ~ "1",
+            .default = "0"
+        ),
+    Tenure = TradeYear - BuildYear,
+    Tenure2 = Tenure*Tenure,
+    Size2 = Size*Size,
+    Tenure_Size = Tenure*Size
+  )
+
+```
+
+近似的なバランスを達成するために、多くの手法が提案されています [@chattopadhyay2020balancing; @bruns2023augmented]。
+このような手法を整理し、活用していくためには、**Balancing weight** という概念を導入することが有益です。
+
+## Balancing Weightの定義
+
+Balancing weightは、各事例に対して計算されるウェイト(加重)です。
+
+バランス後の平均値は、**Balancing weight**を用いた加重平均としても計算できます。
+バランス後の平均値を以下のように書き換えられることで、Balancing weight $\omega(x)$ は定義できます。
+
+$$事例割合\times \omega(x) = ターゲット$$
+
+事例割合をターゲットと一致させるために、$\omega(x)$ を活用します。
+式を変形すると 
+
+$$\omega(x)=\frac{ターゲット}{事例割合}$$
+
+となり、ターゲットに比べて過大な事例割合が過大なグループに対しては低い、過小なグループに対しては大きなWeightを付与することが確認でいます。
+
+先のデータに適用すると、以下のようなBalancing Weightが計算されます。
+
+```{r}
+Data |> 
+  mutate(
+    取引年 = TradeYear |> 
+      as.character()
+  ) |> 
+  mutate(
+    `平均価格` = mean(Price),
+    事例割合 = n(),
+    .by = c("CBD","取引年")
+  ) |> 
+  distinct(
+    `平均価格`,
+    CBD,
+    取引年,
+    事例割合,
+  ) |> 
+  mutate(
+    事例割合 = (事例割合/sum(事例割合)),
+    .by = c("取引年")
+  )  |> 
+  arrange(
+    取引年,
+    CBD) |> 
+  mutate(
+    ターゲット = rep(0.5,4),
+    `Balancing Weight` = 0.5/事例割合
+  ) |> 
+  gt::gt() |>
+  gt::fmt_number(
+    decimals = 3
+  ) |> 
+  gt::tab_style(
+    style = gt::cell_fill(color = "lightblue"),
+    locations = gt::cells_body(
+      rows = 取引年 == "2022"
+      )
+    )
+```
+
+Balancing weightsを用いると、バランス後の平均値は以下のように計算できます
+
+$$2021年のバランス後の平均値 =2021年の(\omega(X_i)\times Y_i)の平均値$$
+
+$$2022年のバランス後の平均値 =2022年の(\omega(X_i)\times Y_i)の平均値$$
+
+### Targetの設定
+
+一般に、すべてのグループが同じ割合になるようなターゲットを設定すると、非常に極端な値を取るWeightが必要になります。
+このような極端なWeightを用いて推定は、データに含まれるハズレ値の影響を受けやすくなります。
+このため多くの応用では、より推定が容易かつ解釈が容易なターゲットが設定されます。
+
+よく使われるターゲットは、データ全体の事例割合です。
+例えば2021年と2022年を結合すると、CBDに立地する物件割合は0.223、他に立地する割合は0.777であり、これをターゲットすることができます。
+
+## 推定方法
+
+$X$の組み合わせの種類に比べて、十分な事例数が存在するのであれば、Balancing weightは、データ上での$X$の割合を用いて計算できます。
+
+この方法はExact MatchingやStratified Estimation [@wager2024causal] として知られる方法による推定結果と完全に一致します。
+例えばExact Matchingは、[MatchIt package](https://kosukeimai.github.io/MatchIt/) [@stuart2011matchit] などを利用して実装できます。
+
+Exact matchingやStratified Estimationは、非常に直感的な推定方法ですが、$X$ の組み合わせが増えると、実行不可能です。
+例えば$X$に、両親の年収や資産などの連続変数が含まれている場合は、$X$の組み合わせが非常に大きくなり、Balancing weightsを計算することは事実上不可能となります。
+
+この問題を解決するために、次節以降で紹介する、OLSや傾向スコアの逆数(Inverse probability weights)の活用が有用です。
+
+## Rによる実践例
+
+- 以下のパッケージを使用
+
+    - readr (tidyverseに同梱): データの読み込み
+    
+    - matchit: Exact matchingを含む多様なMatchingを実装
+    
+        - [mannual](https://kosukeimai.github.io/MatchIt/)
+
+### 準備
+
+データを取得します。
+$D$ として、中心6区かそれ以外で、1/0となる変数を定義します。
+シンプルな比較分析について信頼区間は、データ分割は不要です。
+
+```{r}
+#| echo: true
+
+Data = readr::read_csv("Public.csv") # データ読み込み
+
+Data = mutate(
+  Data,
+  D = if_else(
+    LargeDistrict == "中心6区",1,0
+  )
+)
+```
+
+### Balanced Weight
+
+MatchItパッケージ内のmatchti関数を用いて、Balanced weightsを計算します。
+例えば立地別の平均取引価格とその信頼区間は、以下で計算できます。
+
+```{r}
+#| echo: true
+
+Match = MatchIt::matchit(
+  D ~ Size + Tenure, # D ~ Xを指定
+  Data, # 用いるデータの指定
+  method = "exact", # Balanced weightを計算するために、exact matchingを実行
+  target = "ATE" # サンプル全体のXの分布をターゲット
+  )
+
+DataWeight = MatchIt::match.data(
+  Match, 
+  drop.unmatched = FALSE # Balance weightが計算できない事例も含む
+  ) # Balance weightを含んだデータを生成 
+
+Match # Balance weightの特徴を表示
+```
+
+number of obs.において、元々の事例数 (6378) と balanced weightを計算できた事例数 (1702) を表示しています。
+事例が大きく減少しており、balanced weightを計算できない事例が多かったことを示しています。
+この理由は、Size, Tenure, StationDistanceが完全に一致する事例が、$D=1$ または $D=0$ のどちらかしか存在しない場合が多いためです。
+
+Balanced weightが算出できた事例について、バランス後の平均差を計算すると以下となります。
+
+```{r}
+#| echo: true
+lm(Price ~ D,
+   DataWeight,
+   weights = weights # Balancing weightsを使用
+   )
+
+```
+
+単純比較の結果は以下であり、大きく異なることが確認できます。
+
+```{r}
+#| echo: true
+lm(Price ~ D,
+   DataWeight)
+```
+
+ただし今回のように、多くの事例が分析から除外されてしまった場合、単純比較とバランス後の平均差が乖離する理由は不明瞭です。
+$X$をバランスさせることで平均差が変化した可能性がありますが、分析事例の限定も値を変化させます。
+このため次節以降の方法を用いて、極力分析事例を除外しない方法を用いることが望ましいです。
