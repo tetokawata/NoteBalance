@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Reference – バランス後の母平均差の推定 (ver 0.0.2)</title>
+<title>Reference – バランス後の母平均差の推定 (ver 0.0.9)</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -49,7 +49,7 @@ div.csl-indent {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./04OLS.html" rel="prev">
+<link href="./05R.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -114,7 +114,7 @@ div.csl-indent {
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
-      <a href="./">バランス後の母平均差の推定 (ver 0.0.2)</a> 
+      <a href="./">バランス後の母平均差の推定 (ver 0.0.9)</a> 
     </div>
       </div>
         <div class="mt-2 flex-shrink-0 align-items-center">
@@ -156,6 +156,12 @@ div.csl-indent {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./05R.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">機械学習の活用: 残差回帰</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./Referemce.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Reference</span></a>
   </div>
@@ -191,14 +197,10 @@ div.csl-indent {
 
 
 <div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
-<div id="ref-abadie2022robust" class="csl-entry" role="listitem">
-Abadie, Alberto, and Jann Spiess. 2022. <span>“Robust Post-Matching
-Inference.”</span> <em>Journal of the American Statistical
-Association</em> 117 (538): 983–95.
-</div>
-<div id="ref-angrist2022machine" class="csl-entry" role="listitem">
-Angrist, Joshua D, and Brigham Frandsen. 2022. <span>“Machine
-Labor.”</span> <em>Journal of Labor Economics</em> 40 (S1): S97–140.
+<div id="ref-ahrens2024model" class="csl-entry" role="listitem">
+Ahrens, Achim, Christian B Hansen, Mark E Schaffer, and Thomas Wiemann.
+2024. <span>“Model Averaging and Double Machine Learning.”</span>
+<em>arXiv Preprint arXiv:2401.01645</em>.
 </div>
 <div id="ref-ben2021balancing" class="csl-entry" role="listitem">
 Ben-Michael, Eli, Avi Feller, David A Hirshberg, and José R Zubizarreta.
@@ -228,20 +230,19 @@ Chattopadhyay, Ambarish, and José R. Zubizarreta. 2024.
 </div>
 <div id="ref-chernozhukov2018double" class="csl-entry" role="listitem">
 Chernozhukov, Victor, Denis Chetverikov, Mert Demirer, Esther Duflo,
-Christian Hansen, Whitney Newey, and James Robins. 2018. <span>“<span class="nocase">Double/debiased machine learning for treatment and
-structural parameters</span>.”</span> <em>The Econometrics Journal</em>
-21 (1): C1–68. <a href="https://doi.org/10.1111/ectj.12097">https://doi.org/10.1111/ectj.12097</a>.
+Christian Hansen, Whitney Newey, and James Robins. 2018.
+<span>“Double/Debiased Machine Learning for Treatment and Structural
+Parameters.”</span> <em>The Econometrics Journal</em> 21 (1): C1–68.
 </div>
 <div id="ref-chernozhukov2022locally" class="csl-entry" role="listitem">
 Chernozhukov, Victor, Juan Carlos Escanciano, Hidehiko Ichimura, Whitney
 K Newey, and James M Robins. 2022. <span>“Locally Robust Semiparametric
 Estimation.”</span> <em>Econometrica</em> 90 (4): 1501–35.
 </div>
-<div id="ref-chernozhukov2015valid" class="csl-entry" role="listitem">
-Chernozhukov, Victor, Christian Hansen, and Martin Spindler. 2015.
-<span>“Valid Post-Selection and Post-Regularization Inference: An
-Elementary, General Approach.”</span> <em>Annu. Rev. Econ.</em> 7 (1):
-649–88.
+<div id="ref-chernozhukov2024applied" class="csl-entry" role="listitem">
+Chernozhukov, Victor, Christian Hansen, Nathan Kallus, Martin Spindler,
+and Vasilis Syrgkanis. 2024. <span>“Applied Causal Inference Powered by
+ML and AI.”</span> <em>arXiv Preprint arXiv:2403.02467</em>.
 </div>
 <div id="ref-greifer2024weightit" class="csl-entry" role="listitem">
 Greifer, Noah. 2024. <em>WeightIt: Weighting for Covariate Balance in
@@ -263,14 +264,60 @@ Imai, Kosuke, and Marc Ratkovic. 2014. <span>“Covariate Balancing
 Propensity Score.”</span> <em>Journal of the Royal Statistical Society
 Series B: Statistical Methodology</em> 76 (1): 243–63.
 </div>
+<div id="ref-james2013introduction" class="csl-entry" role="listitem">
+James, Gareth, Daniela Witten, Trevor Hastie, Robert Tibshirani, et al.
+2021. <em>An Introduction to Statistical Learning</em>. Vol. 112.
+Springer.
+</div>
+<div id="ref-ludwig2019augmenting" class="csl-entry" role="listitem">
+Ludwig, Jens, Sendhil Mullainathan, and Jann Spiess. 2019.
+<span>“Augmenting Pre-Analysis Plans with Machine Learning.”</span> In
+<em>Aea Papers and Proceedings</em>, 109:71–76. American Economic
+Association 2014 Broadway, Suite 305, Nashville, TN 37203.
+</div>
+<div id="ref-naimi2024pseudo" class="csl-entry" role="listitem">
+Naimi, Ashley I, Ya-Hui Yu, and Lisa M Bodnar. 2024.
+<span>“Pseudo-Random Number Generator Influences on Average Treatment
+Effect Estimates Obtained with Machine Learning.”</span>
+<em>Epidemiology</em> 35 (6): 779–86.
+</div>
+<div id="ref-schader2024don" class="csl-entry" role="listitem">
+Schader, Lindsey, Weishan Song, Russell Kempker, and David Benkeser.
+2024. <span>“Don’t Let Your Analysis Go to Seed: On the Impact of Random
+Seed on Machine Learning-Based Causal Inference.”</span>
+<em>Epidemiology</em> 35 (6): 764–78.
+</div>
+<div id="ref-schulerintroduction" class="csl-entry" role="listitem">
+Schuler, Alejandro, and Mark van der Laan. 2024. <span>“Introduction to
+Modern Causal Inference.”</span> preparation.
+</div>
 <div id="ref-stuart2011matchit" class="csl-entry" role="listitem">
 Stuart, Elizabeth A, Gary King, Kosuke Imai, and Daniel Ho. 2011.
 <span>“MatchIt: Nonparametric Preprocessing for Parametric Causal
 Inference.”</span> <em>Journal of Statistical Software</em>.
 </div>
+<div id="ref-urminsky2019double" class="csl-entry" role="listitem">
+Urminsky, Oleg, Christian Hansen, and Victor Chernozhukov. 2019.
+<span>“The Double-Lasso Method for Principled Variable
+Selection.”</span>
+</div>
+<div id="ref-varian2014big" class="csl-entry" role="listitem">
+Varian, Hal R. 2014. <span>“Big Data: New Tricks for
+Econometrics.”</span> <em>Journal of Economic Perspectives</em> 28 (2):
+3–28.
+</div>
 <div id="ref-wager2024causal" class="csl-entry" role="listitem">
 Wager, Stefan. 2024. <span>“Causal Inference: A Statistical Learning
 Approach.”</span> preparation.
+</div>
+<div id="ref-zhou2022marginal" class="csl-entry" role="listitem">
+Zhou, Xiang, and Aleksei Opacic. 2022. <span>“Marginal Interventional
+Effects.”</span> <em>arXiv Preprint arXiv:2206.10717</em>.
+</div>
+<div id="ref-zivich2024commentary" class="csl-entry" role="listitem">
+Zivich, Paul N. 2024. <span>“Commentary: The Seedy Side of Causal Effect
+Estimation with Machine Learning.”</span> <em>Epidemiology</em> 35 (6):
+787–90.
 </div>
 <div id="ref-zubizarreta2015stable" class="csl-entry" role="listitem">
 Zubizarreta, José R. 2015. <span>“Stable Weights That Balance Covariates
@@ -701,8 +748,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./04OLS.html" class="pagination-link" aria-label="OLSによる特徴のバランス">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">OLSによる特徴のバランス</span></span>
+      <a href="./05R.html" class="pagination-link" aria-label="機械学習の活用: 残差回帰">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">機械学習の活用: 残差回帰</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
