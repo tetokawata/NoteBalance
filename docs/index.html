@@ -248,11 +248,12 @@ window.Quarto = {
 
 <section id="preface" class="level1 unnumbered">
 <h1 class="unnumbered">Preface</h1>
-<p>データに基づく定量的な比較分析の方法を、Rでの実装とともに紹介します。</p>
+<p>定量的な比較分析の方法を、Rでの実装とともに紹介します。</p>
 <p>比較分析は、社会における特定の「グループ間の違い」を明らかにすることを目標とします。 本ノートでは、データ上のある変数 <span class="math inline">\(D\)</span> 間での、別の変数 <span class="math inline">\(Y\)</span> の平均値の差を推定する方法を紹介します。</p>
-<p>比較分析は、社会/市場を理解するための方法として、中核的な位置を占めています。 例えば、ある職業訓練プログラムが就業確率や就業後の賃金に与える因果的効果を推定するためには、職業訓練プログラムへの参加者と非参加者の間で、就業状態や賃金の比較分析が求められます。</p>
-<p>比較分析は格差研究でも重要です。 例えば、「世代間」格差の移転を推定するためには、両親の経済/社会状態と子供の経済/社会状況との関係性を推定します。 例えば、母親の学歴(大学卒/高校卒など)グループ間で、その子供の教育達成度賃金を比較します。</p>
-<p>因果効果や格差の推定を目的とする比較研究では、しばしば「背景属性」のバランスが求められます。 例えば2022年と2023年の中古マンション市場の取引価格を比較したいとします。 最も単純な比較方法は、平均取引価格を2023年と2022年で単純比較することですが、物件の他の特徴(部屋の広さ、駅からの距離など)も同時に変化していることが予想されます。 本ノートでは、「もし物件の他の特徴が変化しなかったときの」2023年と2022年で平均取引価格がどの程度変化額を推定する方法を紹介します。</p>
+<p>比較分析は、社会/市場を理解するための方法として、中核的な位置を占めています。 例えば、ある職業訓練プログラムが就業確率や就業後の賃金に与える因果的効果を推定を試みます。 このような研究課題では、異なる職業訓練プログラムへの参加者間で、就業状態や賃金の比較が求められます <span class="citation" data-cites="behaghel2014private kallus2023treatment">(<a href="Referemce.html#ref-behaghel2014private" role="doc-biblioref">Behaghel, Crépon, and Gurgand 2014</a>; <a href="Referemce.html#ref-kallus2023treatment" role="doc-biblioref">Kallus 2023</a>)</span>。</p>
+<p>比較分析は格差研究でも重要です。 格差の「世代間」移転を推定するためには、両親の経済/社会状態と子供の経済/社会状況との関係性を推定します。 例えば、母親の学歴(大学卒/高校卒など)グループ間で、その子供の教育達成度賃金を比較します。</p>
+<p>格差の”要因”を考察するために行われる分解分析も、比較研究の一種です。 <span class="citation" data-cites="vafa2024estimating">Vafa, Athey, and Blei (<a href="Referemce.html#ref-vafa2024estimating" role="doc-biblioref">2024</a>)</span> では、同一の職業経験を有する男女間での賃金格差を推定しています。 男女間での単純な賃金格差と比較することで、職業経験の性別間分断が、賃金格差に与えている影響について示唆を得ることができます。</p>
+<p>以上のような比較研究では、しばしば「背景属性」のバランスが求められます。 例えば2022年と2023年の中古マンション市場の取引価格を比較したいとします。 最も単純な比較方法は、平均取引価格を2023年と2022年で単純比較することですが、物件の他の特徴(部屋の広さ、駅からの距離など)も同時に変化していることが予想されます。 本ノートでは、「もし物件の他の特徴が変化しなかったときの」2023年と2022年で平均取引価格がどの程度変化額を推定する方法を紹介します。</p>
 <p>本ノートの中心的なコンセプトは、Balancing Weightです。 Balancing Weightは、以下のアプローチを統合的整理できる極めて有益な概念です。</p>
 <ul>
 <li><p>重回帰(OLS)やPenalized Regressionによる調整<span class="citation" data-cites="chattopadhyay2023implied bruns2023augmented">(<a href="Referemce.html#ref-chattopadhyay2023implied" role="doc-biblioref">Chattopadhyay and Zubizarreta 2023</a>; <a href="Referemce.html#ref-bruns2023augmented" role="doc-biblioref">Bruns-Smith et al. 2023</a>)</span></p></li>
@@ -262,15 +263,18 @@ window.Quarto = {
 <p>簡易な入門としては <a href="https://hdsr.mitpress.mit.edu/pub/1ybwbmlw/release/2"><span class="citation" data-cites="Chattopadhyay2024Causation">Chattopadhyay and Zubizarreta (<span>2024</span>)</span></a> 、詳細な入門としては <span class="citation" data-cites="chattopadhyay2020balancing">Chattopadhyay, Hase, and Zubizarreta (<a href="Referemce.html#ref-chattopadhyay2020balancing" role="doc-biblioref">2020</a>)</span> , <span class="citation" data-cites="ben2021balancing">Ben-Michael et al. (<a href="Referemce.html#ref-ben2021balancing" role="doc-biblioref">2021</a>)</span> などを参考にしてください。</p>
 <p>本ノートの構成は以下のとおりです。</p>
 <ul>
-<li><p><a href="01Intro.html" class="quarto-xref"><span>1&nbsp; バランス後の比較</span></a></p></li>
-<li><p><a href="02Weight.html" class="quarto-xref"><span>2&nbsp; Weight</span></a></p></li>
-<li><p><a href="03BalanceWeight.html" class="quarto-xref"><span>3&nbsp; Balancing Weight</span></a></p></li>
-<li><p><a href="04OLS.html" class="quarto-xref"><span>4&nbsp; OLSによる特徴のバランス</span></a></p></li>
-<li><p><a href="05R.html" class="quarto-xref"><span>5&nbsp; 機械学習の活用: 残差回帰</span></a></p></li>
+<li><p><a href="01Intro.html" class="quarto-xref"><span>1&nbsp; バランス後の比較</span></a> : 本ノートのEstimandである「バランス後の比較」を定義します。</p></li>
+<li><p><a href="02Weight.html" class="quarto-xref"><span>2&nbsp; Weight</span></a> : 本ノートの中核概念であるBalancing Weightを紹介する準備として、荷重(Weight)を定義します。</p></li>
+<li><p><a href="03BalanceWeight.html" class="quarto-xref"><span>3&nbsp; Balancing Weight</span></a> : Balancing Weightを定義します。またBalancing Weightの直感的な算出方法が、利用できない状況が多いことを指摘します。</p></li>
+<li><p><a href="04OLS.html" class="quarto-xref"><span>4&nbsp; OLSによる特徴のバランス</span></a> : より幅広い状況で算出できる近似的なBalancing Weightを紹介します。また標準的なOLS推定が、暗黙のうちに近似的なBalancing Weightを算出した、バランス後の比較と解釈できることを示します。</p></li>
+<li><p><a href="05R.html" class="quarto-xref"><span>5&nbsp; 機械学習の活用: 残差回帰</span></a> : OLSよりもデータ主導のアプローチを紹介します。残差回帰に機械学習を補助的に用いることで、近似的なBalancing Weightを算出した、バランス後の比較を行うことができます。OLSとは異なり、事例数が十分大きかえれば、「母集団上で、完全なBalanceを達成した後の比較分析」、の優れた推定値と見做せることを紹介します。</p></li>
 </ul>
 
 
 <div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
+<div id="ref-behaghel2014private" class="csl-entry" role="listitem">
+Behaghel, Luc, Bruno Crépon, and Marc Gurgand. 2014. <span>“Private and Public Provision of Counseling to Job Seekers: Evidence from a Large Controlled Experiment.”</span> <em>American Economic Journal: Applied Economics</em> 6 (4): 142–74.
+</div>
 <div id="ref-ben2021balancing" class="csl-entry" role="listitem">
 Ben-Michael, Eli, Avi Feller, David A Hirshberg, and José R Zubizarreta. 2021. <span>“The Balancing Act in Causal Inference.”</span> <em>arXiv Preprint arXiv:2110.14831</em>.
 </div>
@@ -300,6 +304,12 @@ Huling, Jared D, and Simon Mak. 2024. <span>“Energy Balancing of Covariate Dis
 </div>
 <div id="ref-imai2014covariate" class="csl-entry" role="listitem">
 Imai, Kosuke, and Marc Ratkovic. 2014. <span>“Covariate Balancing Propensity Score.”</span> <em>Journal of the Royal Statistical Society Series B: Statistical Methodology</em> 76 (1): 243–63.
+</div>
+<div id="ref-kallus2023treatment" class="csl-entry" role="listitem">
+Kallus, Nathan. 2023. <span>“Treatment Effect Risk: Bounds and Inference.”</span> <em>Management Science</em> 69 (8): 4579–90.
+</div>
+<div id="ref-vafa2024estimating" class="csl-entry" role="listitem">
+Vafa, Keyon, Susan Athey, and David M Blei. 2024. <span>“Estimating Wage Disparities Using Foundation Models.”</span> <em>arXiv Preprint arXiv:2409.09894</em>.
 </div>
 <div id="ref-zubizarreta2015stable" class="csl-entry" role="listitem">
 Zubizarreta, José R. 2015. <span>“Stable Weights That Balance Covariates for Estimation with Incomplete Outcome Data.”</span> <em>Journal of the American Statistical Association</em> 110 (511): 910–22.
