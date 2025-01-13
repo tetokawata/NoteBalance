@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>4&nbsp; OLSによる特徴のバランス – バランス後の母平均差の推定 (ver 0.0.9)</title>
+<title>4&nbsp; OLSによる特徴のバランス – バランス後の母平均差の推定 (ver 0.1.1)</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -179,7 +179,7 @@ window.Quarto = {
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
-      <a href="./">バランス後の母平均差の推定 (ver 0.0.9)</a> 
+      <a href="./">バランス後の母平均差の推定 (ver 0.1.1)</a> 
     </div>
       </div>
         <div class="mt-2 flex-shrink-0 align-items-center">
@@ -286,11 +286,10 @@ window.Quarto = {
 
 
 <p><span class="math inline">\(X\)</span> の組み合わせが多く、Balancing weightsを計算することが困難な場合、<span class="math inline">\(X\)</span>の分布を近似的にバランスさせることが有力です。</p>
-<p>本節では代表的な統計手法であるOLS（重回帰）が、近似的なBalancing weightsを暗黙のうちに計算する手法であることを紹介します。 OLSは分布の特徴を、研究者が定める定式化に応じて、柔軟にBalanceされることができます。</p>
+<p>本節では代表的な統計手法であるOLS（重回帰）が、近似的なBalancing weightsを暗黙のうちに計算する手法であることを紹介します。 OLSは分布の特徴を、研究者が定める定式化に応じて、柔軟にBalanceできることが利点ですが、予期せぬ挙動を示しやすいことに注意が必要です。</p>
 <section id="olsによる平均値のバランス" class="level2" data-number="4.1">
 <h2 data-number="4.1" class="anchored" data-anchor-id="olsによる平均値のバランス"><span class="header-section-number">4.1</span> OLSによる平均値のバランス</h2>
-<p>近年の研究により、線型モデルのOLS推定は、近似的な Balanceを達成することが確認されています <span class="citation" data-cites="chattopadhyay2023implied">(<a href="Referemce.html#ref-chattopadhyay2023implied" role="doc-biblioref">Chattopadhyay and Zubizarreta 2023</a>)</span>。</p>
-<p>本ノートでは以下、<span class="math inline">\(D=\{0,1\}\)</span>を前提とします。</p>
+<p>近年の研究により、線型モデルのOLS推定は、近似的な Balanceを達成することが確認されています <span class="citation" data-cites="chattopadhyay2023implied">(<a href="Referemce.html#ref-chattopadhyay2023implied" role="doc-biblioref">Chattopadhyay and Zubizarreta 2023</a>)</span>。 本ノートでは、<span class="math inline">\(D=\{0,1\}\)</span>を前提とし、その議論の骨子を紹介します。</p>
 <div class="callout callout-style-default callout-important callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -315,7 +314,7 @@ OLSの性質 <span class="citation" data-cites="chattopadhyay2023implied">(<a hr
 <p><span class="math display">\[D=1における(\omega(x,1)\times X_l)の平均値\]</span></p>
 <p><span class="math display">\[=D=0における(\omega(x,0)\times X_l)の平均値\]</span></p>
 <ul>
-<li>上記を満たす<span class="math inline">\(\omega(x,d)\)</span> の中で、最小の分散を持つWeights</li>
+<li>上記を満たす<span class="math inline">\(\omega(x,d)\)</span> の中で、最小の分散を持つBalancing Weights</li>
 </ul>
 </div>
 </div>
@@ -366,7 +365,7 @@ OLSの性質 <span class="citation" data-cites="chattopadhyay2023implied">(<a hr
 <section id="母集団の推定方法" class="level2" data-number="4.3">
 <h2 data-number="4.3" class="anchored" data-anchor-id="母集団の推定方法"><span class="header-section-number">4.3</span> 母集団の推定方法</h2>
 <p>推定するパラメタ (<span class="math inline">\(\beta_0,..,\beta_L\)</span>) に比べて事例数が十分に大きければ、データ上のOLSの結果は、「母集団におけるOLSの結果」の優れた推定値です<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>。 特に近似的に計算される信頼区間を用いれば、母集団におけるOLSの結果を、定量的に議論できます。</p>
-<p>実際に、バランス前/後の平均差は、通常のOLS推定によって得られる<span class="math inline">\(D\)</span>の係数値となります。 以下では一切の<span class="math inline">\(X\)</span>をバランスさせないケース、SizeとTenureの平均値のみをバランスさせるケース、平均に加えて分散と共分散もバランスさせたケースの推定結果を、<span class="math inline">\(95\%\)</span> 信頼区間とともに比較しています。</p>
+<p>以下では一切の<span class="math inline">\(X\)</span>をバランスさせないケース、SizeとTenureの平均値のみをバランスさせるケース、平均に加えて分散と共分散もバランスさせたケースの推定結果を、<span class="math inline">\(95\%\)</span> 信頼区間とともに比較しています。</p>
 <div class="cell">
 <div class="cell-output-display">
 <div>
@@ -382,8 +381,8 @@ OLSの性質 <span class="citation" data-cites="chattopadhyay2023implied">(<a hr
 <section id="実践への示唆" class="level2" data-number="4.4">
 <h2 data-number="4.4" class="anchored" data-anchor-id="実践への示唆"><span class="header-section-number">4.4</span> 実践への示唆</h2>
 <p>実践における課題は、<span class="math inline">\(X\)</span> について適切な複雑さを持つモデルを設定することです。 しかしながら適切な複雑性は、母集団の特徴や事例数などに依存しており、一般に確実な解決は困難です。 ただし過去の実践の問題点、および実践上の示唆を得ることはできます。</p>
-<p>多くの研究で<span class="math inline">\(X\)</span>の二乗項や交差項を導入<strong>しない</strong>推定が行われてきました。 しかしながらこのような推定は、平均値のみのバランスにとどまり、不十分な可能性が高いと考えられます。 例えば、NBER Summer Institute 2018における、<a href="https://github.com/demirermert/MLInference">Esther Dufloのチュートリアル</a> では、連続変数については二乗項、およびオプショナルな選択肢として全変数について交差項を導入した推定を行なっています。</p>
-<p>複雑な推定を行う問題点としては、推定誤差の拡大です。 この問題は、事例数が少ない小規模データを用いた推定において深刻です。 しかしながら現代的な分析環境のもとでは、1000事例を超えるデータを用いた推定が一般的になっています。 このような状況では、モデル多少の複雑化の悪影響は小さいと考えられる。 少なくともかつての小規模事例を用いた推定よりも、より複雑なモデルを推定すべ機であると考えられます。</p>
+<p>多くの研究で<span class="math inline">\(X\)</span>の二乗項や交差項を導入<strong>しない</strong>推定が行われてきました。 しかしながらこのような推定は、平均値のみのバランスにとどまり、不十分な可能性が高いと考えられます。 例えば、NBER Summer Institute 2018における、<a href="https://github.com/demirermert/MLInference">Esther Dufloのチュートリアル</a> では、連続変数については二乗項、および全変数について交差項を導入した推定を行なっています。</p>
+<p>複雑な推定を行う問題点としては、推定誤差の拡大です。 この問題は、事例数が少ない小規模データを用いた推定において深刻です。 しかしながら現代的な分析環境のもとでは、1000事例を超えるデータを用いた推定が一般的になっています。 このため、バランスさせたい<span class="math inline">\(X\)</span>の数が少ない場合、その二乗項や交差項を加えたとしても、悪影響は小さいと考えられます。 少なくとも小規模事例を用いた推定よりも、より複雑なモデルを推定すべきであると考えられます。</p>
 <p>バランスさせたい変数 <span class="math inline">\(X\)</span> の数が多い場合、二乗項や交差項を導入するとモデルが爆発的に複雑化し、OLSでは推定できなくなります。 このような場合は、<a href="https://github.com/demirermert/MLInference">Esther Dufloのチュートリアル</a> や <a href="05R.html" class="quarto-xref"><span>Chapter 5</span></a> で議論する通り、機械学習を応用が有力です。</p>
 </section>
 <section id="応用上の課題" class="level2" data-number="4.5">
@@ -412,7 +411,7 @@ OLSの性質 <span class="citation" data-cites="chattopadhyay2023implied">(<a hr
 </section>
 <section id="負の荷重" class="level3" data-number="4.5.3">
 <h3 data-number="4.5.3" class="anchored" data-anchor-id="負の荷重"><span class="header-section-number">4.5.3</span> 負の荷重</h3>
-<p>Balancing weightsは、正の値を取ることが望まれます。 しかしながらOLSが生成するWeightは、負の値を取る可能性があり、ミスリーデイングな推定結果をもたらす可能性があります。</p>
+<p>Balancing weightsは、正の値を取ることが望まれます。 しかしながらOLSが生成するWeightは、負の値を取る可能性があり、ミスリードな推定結果をもたらす可能性があります。</p>
 <p>lmw packageは、OLSが生成するweightsの値を計算します。 例えばhist関数により、ヒストグラムとして可視化できます。</p>
 <div class="cell">
 <div class="cell-output-display">
@@ -470,13 +469,12 @@ OLSの性質 <span class="citation" data-cites="chattopadhyay2023implied">(<a hr
 <div class="cell">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>Model <span class="ot">=</span> estimatr<span class="sc">::</span><span class="fu">lm_robust</span>(</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  Price <span class="sc">~</span> D <span class="sc">+</span> Size <span class="sc">+</span> Tenure <span class="sc">+</span> StationDistance,</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  Data)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  Data) <span class="co"># OLS推定</span></span>
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>dotwhisker<span class="sc">::</span><span class="fu">dwplot</span>(</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  Model,</span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">vars_order =</span> <span class="st">"D"</span></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">list</span>(平均値のみ <span class="ot">=</span> Model),</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">vars_order =</span> <span class="st">"D"</span>) <span class="sc">+</span> <span class="co"># 信頼区間の可視化</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="co"># 背景を白地化</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -494,7 +492,7 @@ OLSの性質 <span class="citation" data-cites="chattopadhyay2023implied">(<a hr
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">I</span>(Size<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> <span class="fu">I</span>(Tenure<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> <span class="fu">I</span>(StationDistance<span class="sc">^</span><span class="dv">2</span>), <span class="co"># 分散</span></span>
 <span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  Data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>バランスをしない単純比較も含めて、推定結果を比較すると以下のようになる。</p>
+<p>バランスをしない単純比較も含めて、推定結果を比較すると以下のようになります。</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>ModelSimple <span class="ot">=</span> estimatr<span class="sc">::</span><span class="fu">lm_robust</span>(</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  Price <span class="sc">~</span> D,</span>
@@ -517,6 +515,7 @@ OLSの性質 <span class="citation" data-cites="chattopadhyay2023implied">(<a hr
 </div>
 </div>
 </div>
+<p>バランスすることで、推定値が大きくなり、信頼区間が縮小する(推定精度が改善する)ことが確認できます。</p>
 <section id="balanced-weight" class="level4" data-number="4.6.2.1">
 <h4 data-number="4.6.2.1" class="anchored" data-anchor-id="balanced-weight"><span class="header-section-number">4.6.2.1</span> Balanced Weight</h4>
 <p>lmw パッケージのlmw関数を用いれば、OLSが算出しているBalance weightsを計算できます。</p>

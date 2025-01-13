@@ -7,9 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="川田恵介">
-<meta name="dcterms.date" content="2024-12-19">
+<meta name="dcterms.date" content="2025-01-13">
 
-<title>バランス後の母平均差の推定 (ver 0.0.9)</title>
+<title>バランス後の母平均差の推定 (ver 0.1.1)</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -146,7 +146,7 @@ window.Quarto = {
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
-      <a href="./">バランス後の母平均差の推定 (ver 0.0.9)</a> 
+      <a href="./">バランス後の母平均差の推定 (ver 0.1.1)</a> 
     </div>
       </div>
         <div class="mt-2 flex-shrink-0 align-items-center">
@@ -217,7 +217,7 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">バランス後の母平均差の推定 (ver 0.0.9)</h1>
+<h1 class="title">バランス後の母平均差の推定 (ver 0.1.1)</h1>
 </div>
 
 
@@ -234,7 +234,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">December 19, 2024</p>
+      <p class="date">January 13, 2025</p>
     </div>
   </div>
   
@@ -259,6 +259,7 @@ window.Quarto = {
 <li><p>重回帰(OLS)やPenalized Regressionによる調整<span class="citation" data-cites="chattopadhyay2023implied bruns2023augmented">(<a href="Referemce.html#ref-chattopadhyay2023implied" role="doc-biblioref">Chattopadhyay and Zubizarreta 2023</a>; <a href="Referemce.html#ref-bruns2023augmented" role="doc-biblioref">Bruns-Smith et al. 2023</a>)</span></p></li>
 <li><p>傾向スコア(Propensity Score)の活用 <span class="citation" data-cites="imai2014covariate chernozhukov2018double chernozhukov2022locally">(<a href="Referemce.html#ref-imai2014covariate" role="doc-biblioref">Imai and Ratkovic 2014</a>; <a href="Referemce.html#ref-chernozhukov2018double" role="doc-biblioref">Chernozhukov et al. 2018</a>, <a href="Referemce.html#ref-chernozhukov2022locally" role="doc-biblioref">2022</a>)</span></p></li>
 <li><p>Entropy Weight <span class="citation" data-cites="hainmueller2012entropy">(<a href="Referemce.html#ref-hainmueller2012entropy" role="doc-biblioref">Hainmueller 2012</a>)</span> やStable Weight <span class="citation" data-cites="zubizarreta2015stable">(<a href="Referemce.html#ref-zubizarreta2015stable" role="doc-biblioref">Zubizarreta 2015</a>)</span>、 Energy Weight <span class="citation" data-cites="huling2024energy">(<a href="Referemce.html#ref-huling2024energy" role="doc-biblioref">Huling and Mak 2024</a>)</span> による調整</p></li>
+<li><p>機械学習などを用いたAuto Double/Debiased Machine Learning/Augmented Balancing Weights <span class="citation" data-cites="chernozhukov2022automatic chernozhukov2022debiased bruns2023augmented">(<a href="Referemce.html#ref-chernozhukov2022automatic" role="doc-biblioref">Chernozhukov, Newey, and Singh 2022a</a>, <a href="Referemce.html#ref-chernozhukov2022debiased" role="doc-biblioref">2022b</a>; <a href="Referemce.html#ref-bruns2023augmented" role="doc-biblioref">Bruns-Smith et al. 2023</a>)</span></p></li>
 </ul>
 <p>簡易な入門としては <a href="https://hdsr.mitpress.mit.edu/pub/1ybwbmlw/release/2"><span class="citation" data-cites="Chattopadhyay2024Causation">Chattopadhyay and Zubizarreta (<span>2024</span>)</span></a> 、詳細な入門としては <span class="citation" data-cites="chattopadhyay2020balancing">Chattopadhyay, Hase, and Zubizarreta (<a href="Referemce.html#ref-chattopadhyay2020balancing" role="doc-biblioref">2020</a>)</span> , <span class="citation" data-cites="ben2021balancing">Ben-Michael et al. (<a href="Referemce.html#ref-ben2021balancing" role="doc-biblioref">2021</a>)</span> などを参考にしてください。</p>
 <p>本ノートの構成は以下のとおりです。</p>
@@ -288,13 +289,19 @@ Chattopadhyay, Ambarish, Christopher H Hase, and José R Zubizarreta. 2020. <spa
 Chattopadhyay, Ambarish, and José R Zubizarreta. 2023. <span>“On the Implied Weights of Linear Regression for Causal Inference.”</span> <em>Biometrika</em> 110 (3): 615–29.
 </div>
 <div id="ref-Chattopadhyay2024Causation" class="csl-entry" role="listitem">
-Chattopadhyay, Ambarish, and José R. Zubizarreta. 2024. <span>“<span>Causation</span>, <span>Comparison</span>, and <span>Regression</span>.”</span> <em>Harvard Data Science Review</em> 6 (1).
+Chattopadhyay, Ambarish, and José R. Zubizarreta. 2024. <em>Harvard Data Science Review</em> 6 (1).
 </div>
 <div id="ref-chernozhukov2018double" class="csl-entry" role="listitem">
 Chernozhukov, Victor, Denis Chetverikov, Mert Demirer, Esther Duflo, Christian Hansen, Whitney Newey, and James Robins. 2018. <span>“Double/Debiased Machine Learning for Treatment and Structural Parameters.”</span> <em>The Econometrics Journal</em> 21 (1): C1–68.
 </div>
 <div id="ref-chernozhukov2022locally" class="csl-entry" role="listitem">
 Chernozhukov, Victor, Juan Carlos Escanciano, Hidehiko Ichimura, Whitney K Newey, and James M Robins. 2022. <span>“Locally Robust Semiparametric Estimation.”</span> <em>Econometrica</em> 90 (4): 1501–35.
+</div>
+<div id="ref-chernozhukov2022automatic" class="csl-entry" role="listitem">
+Chernozhukov, Victor, Whitney K Newey, and Rahul Singh. 2022a. <span>“Automatic Debiased Machine Learning of Causal and Structural Effects.”</span> <em>Econometrica</em> 90 (3): 967–1027.
+</div>
+<div id="ref-chernozhukov2022debiased" class="csl-entry" role="listitem">
+———. 2022b. <span>“Debiased Machine Learning of Global and Local Parameters Using Regularized Riesz Representers.”</span> <em>The Econometrics Journal</em> 25 (3): 576–601.
 </div>
 <div id="ref-hainmueller2012entropy" class="csl-entry" role="listitem">
 Hainmueller, Jens. 2012. <span>“Entropy Balancing for Causal Effects: A Multivariate Reweighting Method to Produce Balanced Samples in Observational Studies.”</span> <em>Political Analysis</em> 20 (1): 25–46.

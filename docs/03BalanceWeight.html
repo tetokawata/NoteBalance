@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>3&nbsp; Balancing Weight – バランス後の母平均差の推定 (ver 0.0.9)</title>
+<title>3&nbsp; Balancing Weight – バランス後の母平均差の推定 (ver 0.1.1)</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -179,7 +179,7 @@ window.Quarto = {
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
-      <a href="./">バランス後の母平均差の推定 (ver 0.0.9)</a> 
+      <a href="./">バランス後の母平均差の推定 (ver 0.1.1)</a> 
     </div>
       </div>
         <div class="mt-2 flex-shrink-0 align-items-center">
@@ -290,7 +290,7 @@ Balancing Weight
 <div class="callout-body-container callout-body">
 <ul>
 <li><p>Balancing weight <span class="math inline">\(\omega(x,d)\)</span>は、<span class="math inline">\(D\)</span>間での<span class="math inline">\(X\)</span>の分布の乖離を調整するために導入され、以下のように定義する。 <span class="math display">\[D=1における事例割合\times \omega(x,1)\]</span> <span class="math display">\[= D=0における事例割合\times \omega(x,0)\]</span> <span class="math display">\[=ターゲットとなる割合\]</span></p></li>
-<li><p>定義式を変形すると <span class="math display">\[\omega(x,d)=\frac{ターゲット}{D=dにおける事例割合}\]</span></p>
+<li><p>定義式を変形すると <span class="math display">\[\omega(x,d)=\frac{ターゲットとなる割合}{(D=d)グループにおける割合}\]</span></p>
 <ul>
 <li>ターゲットに比べて過大な事例割合が過大なグループに対しては小さい、過小なグループに対しては大きなWeightを付与する。</li>
 </ul></li>
@@ -301,23 +301,23 @@ Balancing Weight
 <p>先のデータに適用すると、以下のようなBalancing Weightが計算されます。</p>
 <div class="cell">
 <div class="cell-output-display">
-<div id="hmdhebwdvu" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#hmdhebwdvu table {
+<div id="ydotwcrnri" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#ydotwcrnri table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#hmdhebwdvu thead, #hmdhebwdvu tbody, #hmdhebwdvu tfoot, #hmdhebwdvu tr, #hmdhebwdvu td, #hmdhebwdvu th {
+#ydotwcrnri thead, #ydotwcrnri tbody, #ydotwcrnri tfoot, #ydotwcrnri tr, #ydotwcrnri td, #ydotwcrnri th {
   border-style: none;
 }
 
-#hmdhebwdvu p {
+#ydotwcrnri p {
   margin: 0;
   padding: 0;
 }
 
-#hmdhebwdvu .gt_table {
+#ydotwcrnri .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -343,12 +343,12 @@ Balancing Weight
   border-left-color: #D3D3D3;
 }
 
-#hmdhebwdvu .gt_caption {
+#ydotwcrnri .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#hmdhebwdvu .gt_title {
+#ydotwcrnri .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -360,7 +360,7 @@ Balancing Weight
   border-bottom-width: 0;
 }
 
-#hmdhebwdvu .gt_subtitle {
+#ydotwcrnri .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -372,7 +372,7 @@ Balancing Weight
   border-top-width: 0;
 }
 
-#hmdhebwdvu .gt_heading {
+#ydotwcrnri .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -384,13 +384,13 @@ Balancing Weight
   border-right-color: #D3D3D3;
 }
 
-#hmdhebwdvu .gt_bottom_border {
+#ydotwcrnri .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#hmdhebwdvu .gt_col_headings {
+#ydotwcrnri .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -405,7 +405,7 @@ Balancing Weight
   border-right-color: #D3D3D3;
 }
 
-#hmdhebwdvu .gt_col_heading {
+#ydotwcrnri .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -425,7 +425,7 @@ Balancing Weight
   overflow-x: hidden;
 }
 
-#hmdhebwdvu .gt_column_spanner_outer {
+#ydotwcrnri .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -437,15 +437,15 @@ Balancing Weight
   padding-right: 4px;
 }
 
-#hmdhebwdvu .gt_column_spanner_outer:first-child {
+#ydotwcrnri .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#hmdhebwdvu .gt_column_spanner_outer:last-child {
+#ydotwcrnri .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#hmdhebwdvu .gt_column_spanner {
+#ydotwcrnri .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -457,11 +457,11 @@ Balancing Weight
   width: 100%;
 }
 
-#hmdhebwdvu .gt_spanner_row {
+#ydotwcrnri .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#hmdhebwdvu .gt_group_heading {
+#ydotwcrnri .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -487,7 +487,7 @@ Balancing Weight
   text-align: left;
 }
 
-#hmdhebwdvu .gt_empty_group_heading {
+#ydotwcrnri .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -502,15 +502,15 @@ Balancing Weight
   vertical-align: middle;
 }
 
-#hmdhebwdvu .gt_from_md > :first-child {
+#ydotwcrnri .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#hmdhebwdvu .gt_from_md > :last-child {
+#ydotwcrnri .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#hmdhebwdvu .gt_row {
+#ydotwcrnri .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -529,7 +529,7 @@ Balancing Weight
   overflow-x: hidden;
 }
 
-#hmdhebwdvu .gt_stub {
+#ydotwcrnri .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -542,7 +542,7 @@ Balancing Weight
   padding-right: 5px;
 }
 
-#hmdhebwdvu .gt_stub_row_group {
+#ydotwcrnri .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -556,15 +556,15 @@ Balancing Weight
   vertical-align: top;
 }
 
-#hmdhebwdvu .gt_row_group_first td {
+#ydotwcrnri .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#hmdhebwdvu .gt_row_group_first th {
+#ydotwcrnri .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#hmdhebwdvu .gt_summary_row {
+#ydotwcrnri .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -574,16 +574,16 @@ Balancing Weight
   padding-right: 5px;
 }
 
-#hmdhebwdvu .gt_first_summary_row {
+#ydotwcrnri .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#hmdhebwdvu .gt_first_summary_row.thick {
+#ydotwcrnri .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#hmdhebwdvu .gt_last_summary_row {
+#ydotwcrnri .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -593,7 +593,7 @@ Balancing Weight
   border-bottom-color: #D3D3D3;
 }
 
-#hmdhebwdvu .gt_grand_summary_row {
+#ydotwcrnri .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -603,7 +603,7 @@ Balancing Weight
   padding-right: 5px;
 }
 
-#hmdhebwdvu .gt_first_grand_summary_row {
+#ydotwcrnri .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -613,7 +613,7 @@ Balancing Weight
   border-top-color: #D3D3D3;
 }
 
-#hmdhebwdvu .gt_last_grand_summary_row_top {
+#ydotwcrnri .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -623,11 +623,11 @@ Balancing Weight
   border-bottom-color: #D3D3D3;
 }
 
-#hmdhebwdvu .gt_striped {
+#ydotwcrnri .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#hmdhebwdvu .gt_table_body {
+#ydotwcrnri .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -636,7 +636,7 @@ Balancing Weight
   border-bottom-color: #D3D3D3;
 }
 
-#hmdhebwdvu .gt_footnotes {
+#ydotwcrnri .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -650,7 +650,7 @@ Balancing Weight
   border-right-color: #D3D3D3;
 }
 
-#hmdhebwdvu .gt_footnote {
+#ydotwcrnri .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -659,7 +659,7 @@ Balancing Weight
   padding-right: 5px;
 }
 
-#hmdhebwdvu .gt_sourcenotes {
+#ydotwcrnri .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -673,7 +673,7 @@ Balancing Weight
   border-right-color: #D3D3D3;
 }
 
-#hmdhebwdvu .gt_sourcenote {
+#ydotwcrnri .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -681,72 +681,72 @@ Balancing Weight
   padding-right: 5px;
 }
 
-#hmdhebwdvu .gt_left {
+#ydotwcrnri .gt_left {
   text-align: left;
 }
 
-#hmdhebwdvu .gt_center {
+#ydotwcrnri .gt_center {
   text-align: center;
 }
 
-#hmdhebwdvu .gt_right {
+#ydotwcrnri .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#hmdhebwdvu .gt_font_normal {
+#ydotwcrnri .gt_font_normal {
   font-weight: normal;
 }
 
-#hmdhebwdvu .gt_font_bold {
+#ydotwcrnri .gt_font_bold {
   font-weight: bold;
 }
 
-#hmdhebwdvu .gt_font_italic {
+#ydotwcrnri .gt_font_italic {
   font-style: italic;
 }
 
-#hmdhebwdvu .gt_super {
+#ydotwcrnri .gt_super {
   font-size: 65%;
 }
 
-#hmdhebwdvu .gt_footnote_marks {
+#ydotwcrnri .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#hmdhebwdvu .gt_asterisk {
+#ydotwcrnri .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#hmdhebwdvu .gt_indent_1 {
+#ydotwcrnri .gt_indent_1 {
   text-indent: 5px;
 }
 
-#hmdhebwdvu .gt_indent_2 {
+#ydotwcrnri .gt_indent_2 {
   text-indent: 10px;
 }
 
-#hmdhebwdvu .gt_indent_3 {
+#ydotwcrnri .gt_indent_3 {
   text-indent: 15px;
 }
 
-#hmdhebwdvu .gt_indent_4 {
+#ydotwcrnri .gt_indent_4 {
   text-indent: 20px;
 }
 
-#hmdhebwdvu .gt_indent_5 {
+#ydotwcrnri .gt_indent_5 {
   text-indent: 25px;
 }
 
-#hmdhebwdvu .katex-display {
+#ydotwcrnri .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#hmdhebwdvu div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#ydotwcrnri div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -758,7 +758,7 @@ Balancing Weight
 <th id="CBD" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">CBD</th>
 <th id="a取引年" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">取引年</th>
 <th id="a事例割合" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">事例割合</th>
-<th id="aターゲット" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">ターゲット</th>
+<th id="aターゲットとなる割合" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">ターゲットとなる割合</th>
 <th id="Balancing-Weight" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Balancing Weight</th>
 </tr>
 </thead>
@@ -768,7 +768,7 @@ Balancing Weight
 <td class="gt_row gt_right" headers="CBD">0</td>
 <td class="gt_row gt_right" headers="取引年">2021</td>
 <td class="gt_row gt_right" headers="事例割合">0.784</td>
-<td class="gt_row gt_right" headers="ターゲット">0.782</td>
+<td class="gt_row gt_right" headers="ターゲットとなる割合">0.782</td>
 <td class="gt_row gt_right" headers="Balancing Weight">0.997</td>
 </tr>
 <tr class="even">
@@ -776,7 +776,7 @@ Balancing Weight
 <td class="gt_row gt_right" headers="CBD">1</td>
 <td class="gt_row gt_right" headers="取引年">2021</td>
 <td class="gt_row gt_right" headers="事例割合">0.216</td>
-<td class="gt_row gt_right" headers="ターゲット">0.218</td>
+<td class="gt_row gt_right" headers="ターゲットとなる割合">0.218</td>
 <td class="gt_row gt_right" headers="Balancing Weight">1.010</td>
 </tr>
 <tr class="odd">
@@ -784,7 +784,7 @@ Balancing Weight
 <td class="gt_row gt_right" headers="CBD" style="background-color: #ADD8E6">0</td>
 <td class="gt_row gt_right" headers="取引年" style="background-color: #ADD8E6">2022</td>
 <td class="gt_row gt_right" headers="事例割合" style="background-color: #ADD8E6">0.779</td>
-<td class="gt_row gt_right" headers="ターゲット" style="background-color: #ADD8E6">0.782</td>
+<td class="gt_row gt_right" headers="ターゲットとなる割合" style="background-color: #ADD8E6">0.782</td>
 <td class="gt_row gt_right" headers="Balancing Weight" style="background-color: #ADD8E6">1.003</td>
 </tr>
 <tr class="even">
@@ -792,7 +792,7 @@ Balancing Weight
 <td class="gt_row gt_right" headers="CBD" style="background-color: #ADD8E6">1</td>
 <td class="gt_row gt_right" headers="取引年" style="background-color: #ADD8E6">2022</td>
 <td class="gt_row gt_right" headers="事例割合" style="background-color: #ADD8E6">0.221</td>
-<td class="gt_row gt_right" headers="ターゲット" style="background-color: #ADD8E6">0.218</td>
+<td class="gt_row gt_right" headers="ターゲットとなる割合" style="background-color: #ADD8E6">0.218</td>
 <td class="gt_row gt_right" headers="Balancing Weight" style="background-color: #ADD8E6">0.989</td>
 </tr>
 </tbody>
@@ -803,8 +803,8 @@ Balancing Weight
 </div>
 <p>2022年と2021年を結合したデータ全体のうち、CBDに立地する物件割合は<span class="math inline">\(21.8\%\)</span> 、それ以外が <span class="math inline">\(78.2\%\)</span> であったので、ターゲットして設定しています。</p>
 <p>Balancing weightsを用いると、バランス後の平均値は以下のように計算できます</p>
-<p><span class="math display">\[2021年のバランス後の平均値 =2021年の(\omega(X_i)\times Y_i)の平均値\]</span></p>
-<p><span class="math display">\[2022年のバランス後の平均値 =2022年の(\omega(X_i)\times Y_i)の平均値\]</span></p>
+<p><span class="math display">\[2021年のバランス後の平均値 =2021年の(\omega(X_i,2021)\times Y_i)の平均値\]</span></p>
+<p><span class="math display">\[2022年のバランス後の平均値 =2022年の(\omega(X_i,2022)\times Y_i)の平均値\]</span></p>
 </section>
 <section id="母集団の推定方法" class="level2" data-number="3.2">
 <h2 data-number="3.2" class="anchored" data-anchor-id="母集団の推定方法"><span class="header-section-number">3.2</span> 母集団の推定方法</h2>
@@ -837,7 +837,7 @@ Balancing Weight
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">D =</span> dplyr<span class="sc">::</span><span class="fu">if_else</span>(</span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    LargeDistrict <span class="sc">==</span> <span class="st">"中心6区"</span>,<span class="dv">1</span>,<span class="dv">0</span></span>
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>) <span class="co"># Dの定義</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="balancing-weight-1" class="level3" data-number="3.3.2">
@@ -865,8 +865,8 @@ Balancing Weight
  - covariates: Size</code></pre>
 </div>
 </div>
-<p>number of obs.において、元々の事例数 (6378) と balanced weightを計算できた事例数 (6378) を表示しています。 事例は現状しておらず、 この理由は、Sizeが完全に一致する事例が、<span class="math inline">\(D=1\)</span> または <span class="math inline">\(D=0\)</span> のどちらかしか存在しない場合が多いためです。</p>
-<p>Balanced weightが算出できた事例について、バランス後の平均差を推定すると以下となります。</p>
+<p>number of obs.において、元々の事例数 (6378) と balanced weightを計算できた事例数 (6378) を表示しています。 事例数は減少しておらず、Balancing Weightを計算できない事例が存在しないことを確認できます。</p>
+<p>バランス後の平均差を推定すると以下となります。</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>estimatr<span class="sc">::</span><span class="fu">lm_robust</span>(</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  Price <span class="sc">~</span> D,</span>
@@ -915,23 +915,23 @@ D           20.94057  1.2529064  16.7136 2.084367e-61 18.48446 23.39669 6376</co
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">10</span>) <span class="sc">|&gt;</span> </span>
 <span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  gt<span class="sc">::</span><span class="fu">gt</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="medzjjnydx" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#medzjjnydx table {
+<div id="roxqzufrpf" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#roxqzufrpf table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#medzjjnydx thead, #medzjjnydx tbody, #medzjjnydx tfoot, #medzjjnydx tr, #medzjjnydx td, #medzjjnydx th {
+#roxqzufrpf thead, #roxqzufrpf tbody, #roxqzufrpf tfoot, #roxqzufrpf tr, #roxqzufrpf td, #roxqzufrpf th {
   border-style: none;
 }
 
-#medzjjnydx p {
+#roxqzufrpf p {
   margin: 0;
   padding: 0;
 }
 
-#medzjjnydx .gt_table {
+#roxqzufrpf .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -957,12 +957,12 @@ D           20.94057  1.2529064  16.7136 2.084367e-61 18.48446 23.39669 6376</co
   border-left-color: #D3D3D3;
 }
 
-#medzjjnydx .gt_caption {
+#roxqzufrpf .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#medzjjnydx .gt_title {
+#roxqzufrpf .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -974,7 +974,7 @@ D           20.94057  1.2529064  16.7136 2.084367e-61 18.48446 23.39669 6376</co
   border-bottom-width: 0;
 }
 
-#medzjjnydx .gt_subtitle {
+#roxqzufrpf .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -986,7 +986,7 @@ D           20.94057  1.2529064  16.7136 2.084367e-61 18.48446 23.39669 6376</co
   border-top-width: 0;
 }
 
-#medzjjnydx .gt_heading {
+#roxqzufrpf .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -998,13 +998,13 @@ D           20.94057  1.2529064  16.7136 2.084367e-61 18.48446 23.39669 6376</co
   border-right-color: #D3D3D3;
 }
 
-#medzjjnydx .gt_bottom_border {
+#roxqzufrpf .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#medzjjnydx .gt_col_headings {
+#roxqzufrpf .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1019,7 +1019,7 @@ D           20.94057  1.2529064  16.7136 2.084367e-61 18.48446 23.39669 6376</co
   border-right-color: #D3D3D3;
 }
 
-#medzjjnydx .gt_col_heading {
+#roxqzufrpf .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1039,7 +1039,7 @@ D           20.94057  1.2529064  16.7136 2.084367e-61 18.48446 23.39669 6376</co
   overflow-x: hidden;
 }
 
-#medzjjnydx .gt_column_spanner_outer {
+#roxqzufrpf .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1051,15 +1051,15 @@ D           20.94057  1.2529064  16.7136 2.084367e-61 18.48446 23.39669 6376</co
   padding-right: 4px;
 }
 
-#medzjjnydx .gt_column_spanner_outer:first-child {
+#roxqzufrpf .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#medzjjnydx .gt_column_spanner_outer:last-child {
+#roxqzufrpf .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#medzjjnydx .gt_column_spanner {
+#roxqzufrpf .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1071,11 +1071,11 @@ D           20.94057  1.2529064  16.7136 2.084367e-61 18.48446 23.39669 6376</co
   width: 100%;
 }
 
-#medzjjnydx .gt_spanner_row {
+#roxqzufrpf .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#medzjjnydx .gt_group_heading {
+#roxqzufrpf .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1101,7 +1101,7 @@ D           20.94057  1.2529064  16.7136 2.084367e-61 18.48446 23.39669 6376</co
   text-align: left;
 }
 
-#medzjjnydx .gt_empty_group_heading {
+#roxqzufrpf .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1116,15 +1116,15 @@ D           20.94057  1.2529064  16.7136 2.084367e-61 18.48446 23.39669 6376</co
   vertical-align: middle;
 }
 
-#medzjjnydx .gt_from_md > :first-child {
+#roxqzufrpf .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#medzjjnydx .gt_from_md > :last-child {
+#roxqzufrpf .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#medzjjnydx .gt_row {
+#roxqzufrpf .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1143,7 +1143,7 @@ D           20.94057  1.2529064  16.7136 2.084367e-61 18.48446 23.39669 6376</co
   overflow-x: hidden;
 }
 
-#medzjjnydx .gt_stub {
+#roxqzufrpf .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1156,7 +1156,7 @@ D           20.94057  1.2529064  16.7136 2.084367e-61 18.48446 23.39669 6376</co
   padding-right: 5px;
 }
 
-#medzjjnydx .gt_stub_row_group {
+#roxqzufrpf .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1170,15 +1170,15 @@ D           20.94057  1.2529064  16.7136 2.084367e-61 18.48446 23.39669 6376</co
   vertical-align: top;
 }
 
-#medzjjnydx .gt_row_group_first td {
+#roxqzufrpf .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#medzjjnydx .gt_row_group_first th {
+#roxqzufrpf .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#medzjjnydx .gt_summary_row {
+#roxqzufrpf .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1188,16 +1188,16 @@ D           20.94057  1.2529064  16.7136 2.084367e-61 18.48446 23.39669 6376</co
   padding-right: 5px;
 }
 
-#medzjjnydx .gt_first_summary_row {
+#roxqzufrpf .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#medzjjnydx .gt_first_summary_row.thick {
+#roxqzufrpf .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#medzjjnydx .gt_last_summary_row {
+#roxqzufrpf .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1207,7 +1207,7 @@ D           20.94057  1.2529064  16.7136 2.084367e-61 18.48446 23.39669 6376</co
   border-bottom-color: #D3D3D3;
 }
 
-#medzjjnydx .gt_grand_summary_row {
+#roxqzufrpf .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1217,7 +1217,7 @@ D           20.94057  1.2529064  16.7136 2.084367e-61 18.48446 23.39669 6376</co
   padding-right: 5px;
 }
 
-#medzjjnydx .gt_first_grand_summary_row {
+#roxqzufrpf .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1227,7 +1227,7 @@ D           20.94057  1.2529064  16.7136 2.084367e-61 18.48446 23.39669 6376</co
   border-top-color: #D3D3D3;
 }
 
-#medzjjnydx .gt_last_grand_summary_row_top {
+#roxqzufrpf .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1237,11 +1237,11 @@ D           20.94057  1.2529064  16.7136 2.084367e-61 18.48446 23.39669 6376</co
   border-bottom-color: #D3D3D3;
 }
 
-#medzjjnydx .gt_striped {
+#roxqzufrpf .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#medzjjnydx .gt_table_body {
+#roxqzufrpf .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1250,7 +1250,7 @@ D           20.94057  1.2529064  16.7136 2.084367e-61 18.48446 23.39669 6376</co
   border-bottom-color: #D3D3D3;
 }
 
-#medzjjnydx .gt_footnotes {
+#roxqzufrpf .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1264,7 +1264,7 @@ D           20.94057  1.2529064  16.7136 2.084367e-61 18.48446 23.39669 6376</co
   border-right-color: #D3D3D3;
 }
 
-#medzjjnydx .gt_footnote {
+#roxqzufrpf .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -1273,7 +1273,7 @@ D           20.94057  1.2529064  16.7136 2.084367e-61 18.48446 23.39669 6376</co
   padding-right: 5px;
 }
 
-#medzjjnydx .gt_sourcenotes {
+#roxqzufrpf .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1287,7 +1287,7 @@ D           20.94057  1.2529064  16.7136 2.084367e-61 18.48446 23.39669 6376</co
   border-right-color: #D3D3D3;
 }
 
-#medzjjnydx .gt_sourcenote {
+#roxqzufrpf .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1295,72 +1295,72 @@ D           20.94057  1.2529064  16.7136 2.084367e-61 18.48446 23.39669 6376</co
   padding-right: 5px;
 }
 
-#medzjjnydx .gt_left {
+#roxqzufrpf .gt_left {
   text-align: left;
 }
 
-#medzjjnydx .gt_center {
+#roxqzufrpf .gt_center {
   text-align: center;
 }
 
-#medzjjnydx .gt_right {
+#roxqzufrpf .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#medzjjnydx .gt_font_normal {
+#roxqzufrpf .gt_font_normal {
   font-weight: normal;
 }
 
-#medzjjnydx .gt_font_bold {
+#roxqzufrpf .gt_font_bold {
   font-weight: bold;
 }
 
-#medzjjnydx .gt_font_italic {
+#roxqzufrpf .gt_font_italic {
   font-style: italic;
 }
 
-#medzjjnydx .gt_super {
+#roxqzufrpf .gt_super {
   font-size: 65%;
 }
 
-#medzjjnydx .gt_footnote_marks {
+#roxqzufrpf .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#medzjjnydx .gt_asterisk {
+#roxqzufrpf .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#medzjjnydx .gt_indent_1 {
+#roxqzufrpf .gt_indent_1 {
   text-indent: 5px;
 }
 
-#medzjjnydx .gt_indent_2 {
+#roxqzufrpf .gt_indent_2 {
   text-indent: 10px;
 }
 
-#medzjjnydx .gt_indent_3 {
+#roxqzufrpf .gt_indent_3 {
   text-indent: 15px;
 }
 
-#medzjjnydx .gt_indent_4 {
+#roxqzufrpf .gt_indent_4 {
   text-indent: 20px;
 }
 
-#medzjjnydx .gt_indent_5 {
+#roxqzufrpf .gt_indent_5 {
   text-indent: 25px;
 }
 
-#medzjjnydx .katex-display {
+#roxqzufrpf .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#medzjjnydx div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#roxqzufrpf div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -1512,30 +1512,26 @@ D           20.94057  1.2529064  16.7136 2.084367e-61 18.48446 23.39669 6376</co
 <section id="応用上の課題" class="level2" data-number="3.4">
 <h2 data-number="3.4" class="anchored" data-anchor-id="応用上の課題"><span class="header-section-number">3.4</span> 応用上の課題</h2>
 <p>Exact matchingやStratified Estimationは、非常に直感的な推定方法ですが、<span class="math inline">\(X\)</span> の組み合わせが増えると、実行不可能です。 例えば<span class="math inline">\(X\)</span>に、両親の年収や資産などの連続変数が含まれている場合は、<span class="math inline">\(X\)</span>の組み合わせが非常に大きくなり、Balancing weightsを計算することは事実上不可能となります。</p>
-<p>例えば、Size, Tenure (築年数), StationDistance (駅からの距離)、District (立地) について、バランスさせるようにWeightは、以下で計算を試みることができますが、エラーが表示されます。</p>
+<p>例えば、Size, Tenure (築年数), StationDistance (駅からの距離)、District (立地) について、Balancing Weightsは、以下で計算を試みることができますが、エラーが表示されます。</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>Match <span class="ot">=</span> MatchIt<span class="sc">::</span><span class="fu">matchit</span>(</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  D <span class="sc">~</span> Size <span class="sc">+</span> Tenure <span class="sc">+</span> StationDistance <span class="sc">+</span> District, <span class="co"># D ~ Xを指定</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  D <span class="sc">~</span> Size <span class="sc">+</span> Tenure <span class="sc">+</span> StationDistance, <span class="co"># D ~ Xを指定</span></span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  Data, <span class="co"># 用いるデータの指定</span></span>
 <span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">method =</span> <span class="st">"exact"</span>, <span class="co"># Balanced weightを計算するために、exact matchingを実行</span></span>
 <span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">target =</span> <span class="st">"ATE"</span> <span class="co"># サンプル全体のXの分布をターゲット</span></span>
 <span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-error">
-<pre><code>Error in `MatchIt::matchit()`:
-! No exact matches were found.</code></pre>
-</div>
 </div>
 <p>このエラーは、これら4つの属性が全く同じ事例は、中心6区かそれ以外 のどちらからしか存在しないことを意味しています。</p>
 <p>もしDistrictのバランスを諦めれば、Balancing Weight自体は計算できます。</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>Match <span class="ot">=</span> MatchIt<span class="sc">::</span><span class="fu">matchit</span>(</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  D <span class="sc">~</span> Size <span class="sc">+</span> Tenure <span class="sc">+</span> StationDistance, <span class="co"># D ~ Xを指定</span></span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  Data, <span class="co"># 用いるデータの指定</span></span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">method =</span> <span class="st">"exact"</span>, <span class="co"># Balanced weightを計算するために、exact matchingを実行</span></span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">target =</span> <span class="st">"ATE"</span> <span class="co"># サンプル全体のXの分布をターゲット</span></span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>Match</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>Match <span class="ot">=</span> MatchIt<span class="sc">::</span><span class="fu">matchit</span>(</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  D <span class="sc">~</span> Size <span class="sc">+</span> Tenure <span class="sc">+</span> StationDistance, <span class="co"># D ~ Xを指定</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  Data, <span class="co"># 用いるデータの指定</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">method =</span> <span class="st">"exact"</span>, <span class="co"># Balanced weightを計算するために、exact matchingを実行</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">target =</span> <span class="st">"ATE"</span> <span class="co"># サンプル全体のXの分布をターゲット</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>Match</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>A `matchit` object
  - method: Exact matching
@@ -1544,8 +1540,8 @@ D           20.94057  1.2529064  16.7136 2.084367e-61 18.48446 23.39669 6376</co
  - covariates: Size, Tenure, StationDistance</code></pre>
 </div>
 </div>
-<p>ただしWeightを計算できたのたのは、6378事例の内、1702事例のみです。 このような大幅な事例減少は、分析のTargetからデータを大きく乖離させ、ミスリードな推定結果を生み出す要因となります。</p>
-<p>この問題を解決するために、次節以降で紹介する、OLSや傾向スコアの逆数(Inverse probability weights)などの「近似的なバランス法」の活用が有用です。</p>
+<p>ただしWeightを計算できたのたのは、6378事例の内、1702事例のみです。 このような大幅な事例減少は、分析のターゲットとなる分布からデータを大きく乖離させ、ミスリードな推定結果を生み出す要因となります。</p>
+<p>この問題を解決するために、次節以降で紹介する、OLS (<a href="04OLS.html" class="quarto-xref"><span>Chapter 4</span></a>) や機械学習 (<a href="05R.html" class="quarto-xref"><span>Chapter 5</span></a>) などを用いた「近似的なバランス法」の活用が有用です。</p>
 
 
 <div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">

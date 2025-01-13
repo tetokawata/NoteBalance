@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>5&nbsp; 機械学習の活用: 残差回帰 – バランス後の母平均差の推定 (ver 0.1)</title>
+<title>5&nbsp; 機械学習の活用: 残差回帰 – バランス後の母平均差の推定 (ver 0.1.1)</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -179,7 +179,7 @@ window.Quarto = {
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
-      <a href="./">バランス後の母平均差の推定 (ver 0.1)</a> 
+      <a href="./">バランス後の母平均差の推定 (ver 0.1.1)</a> 
     </div>
       </div>
         <div class="mt-2 flex-shrink-0 align-items-center">
@@ -279,8 +279,8 @@ window.Quarto = {
 </header>
 
 
-<p><span class="math inline">\(X\)</span> の数が多い場合、OLSを用いた分布の特徴のバランスは、難しくなります。 これはどのような特徴をバランスさせるのか、研究者の裁量の余地が大きくなりすぎるためです。 推定結果が、研究者が定める推定式の定式化に強く依存してしまいます。 このような研究者による推定式のの定式化に起因する推定結果のブレは、Model Uncertainly <span class="citation" data-cites="varian2014big">(<a href="Referemce.html#ref-varian2014big" role="doc-biblioref">Varian 2014</a>)</span> とも呼ばれ、分析の信頼性を脅かす大きな要因となっています。</p>
-<p>このような問題への対応として、機械学習の有効活用が注目されて来ました <span class="citation" data-cites="varian2014big urminsky2019double">(<a href="Referemce.html#ref-varian2014big" role="doc-biblioref">Varian 2014</a>; <a href="Referemce.html#ref-urminsky2019double" role="doc-biblioref">Urminsky, Hansen, and Chernozhukov 2019</a>)</span>。 近年、機械学習の中でも教師付き学習の手法を、バランス後の比較に応用する方法について理解が急速に進みました。 その中で教師付き学習 (より一般にはノンパラメトリック/データ適合的な推定) が持つ弱点である「収束の遅さ」<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>を補完する方法が開発されています。 このような方法を用いることで、信頼区間の近似計算など、母集団への含意がより明確な推定が可能となります。</p>
+<p><span class="math inline">\(X\)</span> の数が多い場合、OLSを用いた分布の特徴のバランスは、難しくなります。 これはどのような特徴をバランスさせるのか、研究者の裁量の余地が大きくなりすぎるためです。 このような研究者による推定式の定式化に起因する推定結果のブレは、Model Uncertainly <span class="citation" data-cites="varian2014big">(<a href="Referemce.html#ref-varian2014big" role="doc-biblioref">Varian 2014</a>)</span> とも呼ばれ、分析の信頼性を脅かす大きな要因となっています。</p>
+<p>このような問題への対応として、機械学習を有効活用した、よりデータ主導のアプローチが注目されて来ました <span class="citation" data-cites="varian2014big urminsky2019double">(<a href="Referemce.html#ref-varian2014big" role="doc-biblioref">Varian 2014</a>; <a href="Referemce.html#ref-urminsky2019double" role="doc-biblioref">Urminsky, Hansen, and Chernozhukov 2019</a>)</span>。 近年、機械学習の中でも教師付き学習の手法を、バランス後の比較に応用する方法について理解が急速に進みました。 その中で教師付き学習 (より一般にはノンパラメトリック/データ適合的な推定) が持つ弱点である「収束の遅さ」<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>を補完する方法が開発されています。 このような方法を用いることで、信頼区間の近似計算など、母集団への含意がより明確な推定が可能となります。</p>
 <p>本章は、OLSの直接的な拡張と解釈できる <strong>残差回帰</strong> への応用を紹介します<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>。</p>
 <section id="olsの一般化" class="level2" data-number="5.1">
 <h2 data-number="5.1" class="anchored" data-anchor-id="olsの一般化"><span class="header-section-number">5.1</span> OLSの一般化</h2>
@@ -311,20 +311,20 @@ FWL(Frisch–Waugh–Lovell) 定理
 <div class="callout-body-container callout-body">
 <ol start="0" type="1">
 <li><p>Y/D/Xを設定</p></li>
-<li><p>前データを用いて、<span class="math inline">\(Y\)</span> , <span class="math inline">\(D\)</span> の平均値の推定値 <span class="math inline">\(f_Y(X), f_D(X)\)</span>を <span class="math inline">\(Y\sim\beta_0 + \beta_1X_1 +.. + \beta_LX_L\)</span> および <span class="math inline">\(D\sim\beta_0 + \beta_1X_1 +.. + \beta_LX_L\)</span> をOLS推定することで算出</p></li>
+<li><p>全データを用いて、<span class="math inline">\(Y\)</span> , <span class="math inline">\(D\)</span> の平均値の推定値 <span class="math inline">\(f_Y(X), f_D(X)\)</span>を <span class="math inline">\(Y\sim\beta_0 + \beta_1X_1 +.. + \beta_LX_L\)</span> および <span class="math inline">\(D\sim\beta_0 + \beta_1X_1 +.. + \beta_LX_L\)</span> をOLS推定することで算出</p></li>
 <li><p>残差 <span class="math inline">\(Y - f_Y(X)\)</span> と <span class="math inline">\(D - f_D(X)\)</span> を計算</p></li>
 <li><p>残差同士を回帰する: <span class="math inline">\(Y - f_Y(X)\sim D - f_D(X)\)</span></p></li>
 </ol>
 </div>
 </div>
-<p><span class="math inline">\(X\)</span> が多い場合、 Step 1.が大きな問題を抱えます。 一般にパラメタ <span class="math inline">\((\beta_0..\beta_L)\)</span> の数が、事例数に近い値になると、 平均値の推定値は<span class="math inline">\(Y\)</span>,<span class="math inline">\(D\)</span>の実際の値に限りなく近づいていきます。 このような現象は、過剰適合、あるいは過学習と呼ばれる減少が発生します。</p>
+<p><span class="math inline">\(X\)</span> が多い場合、 Step 1.が大きな問題を抱えます。 一般にパラメタ <span class="math inline">\((\beta_0..\beta_L)\)</span> の数が、事例数に近い値になると、 平均値の推定値は<span class="math inline">\(Y\)</span>,<span class="math inline">\(D\)</span>の実際の値に限りなく近づいていきます。 このような現象は、過剰適合、あるいは過学習と呼ばれています。</p>
 <p>機械学習の応用では、Step 1.を<span class="math inline">\(Y\)</span> と <span class="math inline">\(D\)</span> を<span class="math inline">\(X\)</span>から予測する問題と捉えます。 このような予測問題においては、OLSも含めたさまざまな推定手法を用いることができます。</p>
 </section>
 <section id="教師付き学習の応用" class="level3" data-number="5.2.2">
 <h3 data-number="5.2.2" class="anchored" data-anchor-id="教師付き学習の応用"><span class="header-section-number">5.2.2</span> 教師付き学習の応用</h3>
-<p>ある一つの連続/カテゴリー変数 <span class="math inline">\(Y\)</span> や <span class="math inline">\(D\)</span> と潜在的に大量の変数 <span class="math inline">\(X\)</span> の関係性の推定は、教師付き学習の中心的な研究課題です。 中でも、(X内での) <span class="math inline">\(Y\)</span> や <span class="math inline">\(D\)</span> の平均値の推定については、膨大な研究成果が蓄積されています<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a>。</p>
-<p>一般に教師付き学習は、ある結果変数の予測を目的としています。 予測の精度を平均二乗誤差で測定する場合、理論上最善の予測値は、(X内での)母平均であることが容易に証明できます。 このため、(X内での)母平均を近似できるモデルの推定が、教師付き学習の実質的な目標となります。 この性質を利用することで、既存の機械学習の方法で推定された予測モデルを、平均値を近似するモデルとして利用することができます。</p>
-<p>予測モデルを推定する際には、<a href="#sec-Estimation_R" class="quarto-xref"><span>Section 5.3</span></a> で議論する優れた推定上の性質を達成するために、交差推定を活用することが、一般に推奨されます。</p>
+<p>ある一つの連続/カテゴリー変数 <span class="math inline">\(Y\)</span> や <span class="math inline">\(D\)</span> と(大量の)変数 <span class="math inline">\(X\)</span> の関係性の推定は、教師付き学習の中心的な研究課題です。 中でも、(<span class="math inline">\(X\)</span>内での) <span class="math inline">\(Y\)</span> や <span class="math inline">\(D\)</span> の平均値の推定については、膨大な研究成果が蓄積されています<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a>。</p>
+<p>一般に教師付き学習は、ある結果変数の予測を目的としています。 予測の精度を平均二乗誤差で測定する場合、理論上最善の予測値は、(<span class="math inline">\(X\)</span>内での)母平均であることが容易に証明できます。 このため、(<span class="math inline">\(X\)</span>内での)母平均を近似できるモデルの推定が、教師付き学習の実質的な目標となります。 この性質を利用することで、既存の機械学習の方法で推定された予測モデルを、平均値を近似するモデルとして利用することができます。</p>
+<p>予測モデルを推定する際には、<a href="#sec-Estimation_R" class="quarto-xref"><span>Section 5.3</span></a> で議論する優れた推定上の性質を達成するために、交差推定を活用することが、一般に推奨されます <span class="citation" data-cites="naimi2023challenges">(<a href="Referemce.html#ref-naimi2023challenges" role="doc-biblioref">Naimi, Mishler, and Kennedy 2023</a>)</span>。</p>
 <div class="callout callout-style-default callout-important callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -342,6 +342,7 @@ FWL(Frisch–Waugh–Lovell) 定理
 </ol>
 </div>
 </div>
+<p>推定に用いるアルゴリズムとしては、複数の予測モデルを組み合わせるStacking法が推奨されます<span class="citation" data-cites="ahrens2024model naimi2023challenges">(<a href="Referemce.html#ref-ahrens2024model" role="doc-biblioref">Ahrens et al. 2024</a>; <a href="Referemce.html#ref-naimi2023challenges" role="doc-biblioref">Naimi, Mishler, and Kennedy 2023</a>)</span>。 これは多くの社会分析において、高い予測性能を期待できるアルゴリズムを事前に選択することが困難であるためです。</p>
 <p>交差推定を活用した、残差回帰の具体的な推定手順は以下となります。</p>
 <div class="callout callout-style-default callout-important callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -356,12 +357,14 @@ FWL(Frisch–Waugh–Lovell) 定理
 <ol start="0" type="1">
 <li><p>Y/D/Xおよび予測に使用するアルゴリズムを設定</p></li>
 <li><p>交差推定を用いて、YとDを予測するモデル <span class="math inline">\(f_Y(X)\)</span> と <span class="math inline">\(f_D(X)\)</span> を推定する</p></li>
-<li><p>残差 <span class="math inline">\(Y - f_Y(X)\)</span> と <span class="math inline">\(D - f_D(X)\)</span> を計算する</p></li>
+<li><p>残差 <span class="math inline">\(Y - f_Y(X)\)</span> と <span class="math inline">\(D - f_D(X)\)</span> を計算する</p>
+<ul>
+<li>予測誤差とも解釈できます。</li>
+</ul></li>
 <li><p>残差同士を回帰する: <span class="math inline">\(Y - f_Y(X)\sim D - f_D(X)\)</span></p></li>
 </ol>
 </div>
 </div>
-<p>社会科学における実際の応用では、複数の予測モデルを組み合わせるStacking法が推奨されます<span class="citation" data-cites="ahrens2024model">(<a href="Referemce.html#ref-ahrens2024model" role="doc-biblioref">Ahrens et al. 2024</a>)</span>。</p>
 </section>
 </section>
 <section id="sec-Estimation_R" class="level2" data-number="5.3">
@@ -373,7 +376,7 @@ FWL(Frisch–Waugh–Lovell) 定理
 <p>機械学習を活用した残差回帰は、OLSの持つ幾つかの問題点を改善します。</p>
 <p>十分な事例数があれば、「母集団上で<span class="math inline">\(X\)</span>を完全にバランスさせた後に計算した平均差」を近似するため、負の荷重問題は生じません。</p>
 <p>定式化そのものではなく、推定方法を選ぶため、Researcher degrees of freedom を適切に軽減できる可能性があります<span class="citation" data-cites="urminsky2019double ludwig2019augmenting">(<a href="Referemce.html#ref-urminsky2019double" role="doc-biblioref">Urminsky, Hansen, and Chernozhukov 2019</a>; <a href="Referemce.html#ref-ludwig2019augmenting" role="doc-biblioref">Ludwig, Mullainathan, and Spiess 2019</a>)</span> 。 特に複数の推定方法を組み合わせるStacking法とシード値の適切な管理<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a>によっては、研究者への依存度を低下させられます。</p>
-<p>しかしながら、Balanceのターゲットの解釈が容易ではないことが知られています。 母集団上での残差回帰は、<span class="math inline">\(X\)</span>を完全にバランスさせますが、そのターゲットは、以下となります。</p>
+<p>問題点としては、ターゲットの解釈が容易ではないことが知られています。 母集団上での残差回帰は、<span class="math inline">\(X\)</span>を完全にバランスさせますが、そのターゲットは、以下となります。</p>
 <p><span class="math display">\[\frac{(X内での)D=1の割合\times (X内での)D=0 の割合}{(X内での)D=1の割合\times (X内での)D=0 の割合の平均値}\]</span></p>
 <p>このようなターゲットは、Overlap Weightとも呼ばれています。</p>
 <p>Overlap Weightをターゲットとすると、<span class="math inline">\(D\)</span>のばらつきが大きいグループの平均値を、最終的な比較結果に強く反映します。 <span class="math inline">\(D\)</span>のばらつきが無いグループ (<span class="math inline">\(D=0\)</span> または <span class="math inline">\(D=1\)</span> しか存在しない) の加重は0であり、最終的な比較結果に一才の影響を与えません。 このためOverlapの仮定 (<a href="01Intro.html#imp-Overlap" class="quarto-xref">Important&nbsp;<span>1.1</span></a>) を「必ず」満たすことできます。</p>
@@ -445,6 +448,13 @@ FWL(Frisch–Waugh–Lovell) 定理
 D_r            3.730      0.328   11.38 5.01e-30</code></pre>
 </div>
 </div>
+<p>summary関数は、推定値 (Estimate)、標準誤差 (Std. Error)、t値 (t value)、 p値 (Pr(&gt;|t|)) を報告しています。 バランス後の平均差は、D_rです。</p>
+<p>95<span class="math inline">\(\%\)</span>信頼区間は以下のように計算できます。</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 3.088172 4.372682</code></pre>
+</div>
+</div>
 
 
 <div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
@@ -457,11 +467,29 @@ Chernozhukov, Victor, Denis Chetverikov, Mert Demirer, Esther Duflo, Christian H
 <div id="ref-chernozhukov2024applied" class="csl-entry" role="listitem">
 Chernozhukov, Victor, Christian Hansen, Nathan Kallus, Martin Spindler, and Vasilis Syrgkanis. 2024. <span>“Applied Causal Inference Powered by ML and AI.”</span> <em>arXiv Preprint arXiv:2403.02467</em>.
 </div>
+<div id="ref-diaz2020machine" class="csl-entry" role="listitem">
+Dı́az, Iván. 2020. <span>“Machine Learning in the Estimation of Causal Effects: Targeted Minimum Loss-Based Estimation and Double/Debiased Machine Learning.”</span> <em>Biostatistics</em> 21 (2): 353–58.
+</div>
+<div id="ref-fisher2021visually" class="csl-entry" role="listitem">
+Fisher, Aaron, and Edward H Kennedy. 2021. <span>“Visually Communicating and Teaching Intuition for Influence Functions.”</span> <em>The American Statistician</em> 75 (2): 162–72.
+</div>
+<div id="ref-hines2022demystifying" class="csl-entry" role="listitem">
+Hines, Oliver, Oliver Dukes, Karla Diaz-Ordaz, and Stijn Vansteelandt. 2022. <span>“Demystifying Statistical Learning Based on Efficient Influence Functions.”</span> <em>The American Statistician</em> 76 (3): 292–304.
+</div>
+<div id="ref-ichimura2022influence" class="csl-entry" role="listitem">
+Ichimura, Hidehiko, and Whitney K Newey. 2022. <span>“The Influence Function of Semiparametric Estimators.”</span> <em>Quantitative Economics</em> 13 (1): 29–61.
+</div>
 <div id="ref-james2013introduction" class="csl-entry" role="listitem">
 James, Gareth, Daniela Witten, Trevor Hastie, Robert Tibshirani, et al. 2021. <em>An Introduction to Statistical Learning</em>. Vol. 112. Springer.
 </div>
+<div id="ref-kennedy2024semiparametric" class="csl-entry" role="listitem">
+Kennedy, Edward H. 2024. <span>“Semiparametric Doubly Robust Targeted Double Machine Learning: A Review.”</span> <em>Handbook of Statistical Methods for Precision Medicine</em>, 207–36.
+</div>
 <div id="ref-ludwig2019augmenting" class="csl-entry" role="listitem">
 Ludwig, Jens, Sendhil Mullainathan, and Jann Spiess. 2019. <span>“Augmenting Pre-Analysis Plans with Machine Learning.”</span> In <em>Aea Papers and Proceedings</em>, 109:71–76. American Economic Association 2014 Broadway, Suite 305, Nashville, TN 37203.
+</div>
+<div id="ref-naimi2023challenges" class="csl-entry" role="listitem">
+Naimi, Ashley I, Alan E Mishler, and Edward H Kennedy. 2023. <span>“Challenges in Obtaining Valid Causal Effect Estimates with Machine Learning Algorithms.”</span> <em>American Journal of Epidemiology</em> 192 (9): 1536–44.
 </div>
 <div id="ref-naimi2024pseudo" class="csl-entry" role="listitem">
 Naimi, Ashley I, Ya-Hui Yu, and Lisa M Bodnar. 2024. <span>“Pseudo-Random Number Generator Influences on Average Treatment Effect Estimates Obtained with Machine Learning.”</span> <em>Epidemiology</em> 35 (6): 779–86.
@@ -494,7 +522,7 @@ Zivich, Paul N. 2024. <span>“Commentary: The Seedy Side of Causal Effect Estim
 <hr>
 <ol>
 <li id="fn1"><p>「収束」の具体的な定義に関心がある方は、<a href="https://en.wikipedia.org/wiki/Rate_of_convergence">wikipediaの記事</a>などを参照ください。<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn2"><p>機械学習は、より幅広い推定方法に応用できます。一般的な入門としては、<a href="https://causalml-book.org/"><span class="citation" data-cites="chernozhukov2024applied">Chernozhukov et al. (<span>2024</span>)</span></a>を推奨します。他の入門資料としても、<a href=""><span class="citation" data-cites="wager2024causal">Wager (<span>2024</span>)</span></a>、<a href="https://alejandroschuler.github.io/mci/introduction-to-modern-causal-inference.html"><span class="citation" data-cites="schulerintroduction">Schuler and Laan (<span>2024</span>)</span></a>などの優れた教材が利用できます。<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>機械学習は、より幅広い推定方法に応用できます。一般的な入門としては、<a href="https://causalml-book.org/"><span class="citation" data-cites="chernozhukov2024applied">Chernozhukov et al. (<span>2024</span>)</span></a>を推奨します。他の入門資料としても、<a href="https://web.stanford.edu/~swager/causal_inf_book.pdf"><span class="citation" data-cites="wager2024causal">Wager (<span>2024</span>)</span></a>、<a href="https://alejandroschuler.github.io/mci/introduction-to-modern-causal-inference.html"><span class="citation" data-cites="schulerintroduction">Schuler and Laan (<span>2024</span>)</span></a>、<span class="citation" data-cites="ichimura2022influence">Ichimura and Newey (<a href="Referemce.html#ref-ichimura2022influence" role="doc-biblioref">2022</a>)</span>、<span class="citation" data-cites="fisher2021visually">Fisher and Kennedy (<a href="Referemce.html#ref-fisher2021visually" role="doc-biblioref">2021</a>)</span>、<span class="citation" data-cites="hines2022demystifying">Hines et al. (<a href="Referemce.html#ref-hines2022demystifying" role="doc-biblioref">2022</a>)</span>、<span class="citation" data-cites="kennedy2024semiparametric">Kennedy (<a href="Referemce.html#ref-kennedy2024semiparametric" role="doc-biblioref">2024</a>)</span> などの優れた教材が利用できます。簡潔な入門としては、<span class="citation" data-cites="diaz2020machine">Dı́az (<a href="Referemce.html#ref-diaz2020machine" role="doc-biblioref">2020</a>)</span> がお勧めです。<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn3"><p>パラメタと事例数、推定精度の詳細な関係性については、<a href="https://causalml-book.org/"><span class="citation" data-cites="chernozhukov2024applied">Chernozhukov et al. (<span>2024</span>)</span></a> の1章とその引用文献を参照ください。<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn4"><p>詳細は、<span class="citation" data-cites="james2013introduction">James et al. (<a href="Referemce.html#ref-james2013introduction" role="doc-biblioref">2021</a>)</span> などを参照ください<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn5"><p><span class="citation" data-cites="naimi2024pseudo">Naimi, Yu, and Bodnar (<a href="Referemce.html#ref-naimi2024pseudo" role="doc-biblioref">2024</a>)</span>, <span class="citation" data-cites="schader2024don">Schader et al. (<a href="Referemce.html#ref-schader2024don" role="doc-biblioref">2024</a>)</span>; <span class="citation" data-cites="zivich2024commentary">Zivich (<a href="Referemce.html#ref-zivich2024commentary" role="doc-biblioref">2024</a>)</span><a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
