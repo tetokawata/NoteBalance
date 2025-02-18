@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.6.39">
+<meta name="generator" content="quarto-1.6.40">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>4&nbsp; OLSによる特徴のバランス – バランス後の母平均差の推定 (ver 0.1.1)</title>
+<title>4&nbsp; OLSによる特徴のバランス – バランス後の母平均差の推定 (ver 0.2)</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -84,14 +84,14 @@ div.csl-indent {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./05R.html" rel="next">
+<link href="./05Entropy.html" rel="next">
 <link href="./03BalanceWeight.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-e26003cea8cd680ca0c55a263523d882.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-549806ee2085284f45b00abea8c6df48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="site_libs/bootstrap/bootstrap-626149efe8f5d16e1d391ba177679bf0.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
@@ -179,7 +179,7 @@ window.Quarto = {
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
-      <a href="./">バランス後の母平均差の推定 (ver 0.1.1)</a> 
+      <a href="./">バランス後の母平均差の推定 (ver 0.2)</a> 
     </div>
       </div>
         <div class="mt-2 flex-shrink-0 align-items-center">
@@ -221,8 +221,14 @@ window.Quarto = {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./05R.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">機械学習の活用: 残差回帰</span></span></a>
+  <a href="./05Entropy.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">明示的なBalancing Weightの算出</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./06R.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">機械学習の活用: 残差回帰</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -285,7 +291,7 @@ window.Quarto = {
 </header>
 
 
-<p><span class="math inline">\(X\)</span> の組み合わせが多く、Balancing weightsを計算することが困難な場合、<span class="math inline">\(X\)</span>の分布を近似的にバランスさせることが有力です。</p>
+<p><span class="math inline">\(X\)</span> の組み合わせが多く、Balancing weightsを計算することが困難な場合、<span class="math inline">\(X\)</span>の分布を近似的なバランスが有力です。</p>
 <p>本節では代表的な統計手法であるOLS（重回帰）が、近似的なBalancing weightsを暗黙のうちに計算する手法であることを紹介します。 OLSは分布の特徴を、研究者が定める定式化に応じて、柔軟にBalanceできることが利点ですが、予期せぬ挙動を示しやすいことに注意が必要です。</p>
 <section id="olsによる平均値のバランス" class="level2" data-number="4.1">
 <h2 data-number="4.1" class="anchored" data-anchor-id="olsによる平均値のバランス"><span class="header-section-number">4.1</span> OLSによる平均値のバランス</h2>
@@ -303,22 +309,19 @@ OLSの性質 <span class="citation" data-cites="chattopadhyay2023implied">(<a hr
 <ul>
 <li><span class="math inline">\(Y\sim D + X_1 + .. + X_L\)</span> をOLSで推定し算出される <span class="math inline">\(D\)</span> の係数値は、以下の方法で計算される値と完全に一致する</li>
 </ul>
-<p><span class="math display">\[\beta_D=D=1における(\omega(x,1)\times Y)の平均値\]</span></p>
-<p><span class="math display">\[-D=0における(\omega(x,0)\times Y)の平均値\]</span></p>
-<ul>
-<li><p><span class="math inline">\(\omega(x,d)\)</span>は、OLSが暗黙のうちに算出する近似的なBalancing Weightsであり、以下の性質を持ちます。</p>
-<ul>
-<li>すべての<span class="math inline">\(X_l\)</span> について</li>
-</ul></li>
-</ul>
+<ol type="1">
+<li>すべての<span class="math inline">\(X_l\)</span> について、以下を満たす <span class="math inline">\(\omega(x,d)\)</span> を探す。</li>
+</ol>
 <p><span class="math display">\[D=1における(\omega(x,1)\times X_l)の平均値\]</span></p>
 <p><span class="math display">\[=D=0における(\omega(x,0)\times X_l)の平均値\]</span></p>
-<ul>
-<li>上記を満たす<span class="math inline">\(\omega(x,d)\)</span> の中で、最小の分散を持つBalancing Weights</li>
-</ul>
+<ol start="2" type="1">
+<li><p>1.を満たす<span class="math inline">\(\omega(x,d)\)</span> の中で、最小の分散を持つ <span class="math inline">\(\omega(x,d)\)</span> をBalancing Weightsとする</p></li>
+<li><p><span class="math inline">\(\beta_D\)</span> を以下のように計算する。 <span class="math display">\[\beta_D=D=1における(\omega(x,1)\times Y)の平均値\]</span></p></li>
+</ol>
+<p><span class="math display">\[-D=0における(\omega(x,0)\times Y)の平均値\]</span></p>
 </div>
 </div>
-<p>重回帰による推定は、<span class="math inline">\(D\)</span>間で<span class="math inline">\(X\)</span> の平均値をバランスさせた上で、平均値を比較しています。 また「母集団におけるOLSの結果」の推定に悪影響を与える、Weightの分散も可能な限り削減しています。</p>
+<p>重回帰による推定は、<span class="math inline">\(D\)</span>間で<span class="math inline">\(X\)</span> の平均値をバランスさせた上で、平均値を比較しています。 また「母集団におけるOLSの結果」の推論に悪影響を与える、Weightの分散も可能な限り削減しています。</p>
 <section id="例" class="level3" data-number="4.1.1">
 <h3 data-number="4.1.1" class="anchored" data-anchor-id="例"><span class="header-section-number">4.1.1</span> 例</h3>
 <p>部屋の広さ (Size) と 築年数 (Tenure) をバランスさせた後に、2022(<span class="math inline">\(D=1\)</span>)/2021(<span class="math inline">\(D=0\)</span>)年の平均取引価格差を推定します。 <span class="math inline">\(Price\sim D + Size + Tenure\)</span> をOLSで推定したとします。</p>
@@ -337,7 +340,7 @@ OLSの性質 <span class="citation" data-cites="chattopadhyay2023implied">(<a hr
 </div>
 </div>
 </div>
-<p>赤点 (Unadjusted) は、バランス前の単純平均差を表します。 価格が大きく上昇していますが、取引物件の部屋の広さは狭くなり、築年数は古くなっています。 青点 (Adjusted)は、OLSによる暗黙のバランス後の差を示しています。 SizeやTenureの平均値は完全にバランスしており、結果平均取引価格差も上昇しています。 Tenure2やSize2は、築年数や部屋の広さの二乗項(分散)、Tenure_Sizeは交差項(共分散)を示しており、これらについてはOLSを行ったとしてもバランスしていません。</p>
+<p>赤点 (Unadjusted) は、バランス前の単純平均差を表します。 価格が大きく上昇していますが、取引物件の部屋の広さは狭くなり、築年数は古くなっています。 青点 (Adjusted)は、OLSによる暗黙のバランス後の差を示しています。 SizeやTenureの平均値は完全にバランスしており、結果平均取引価格差も上昇しています。 Tenure2やSize2は、築年数や部屋の広さの二乗項(分散)、Tenure_Sizeは交差項(共分散)を示しており、これらについてはバランスしていません。</p>
 </section>
 </section>
 <section id="olsによる分散や共分散のバランス" class="level2" data-number="4.2">
@@ -380,10 +383,10 @@ OLSの性質 <span class="citation" data-cites="chattopadhyay2023implied">(<a hr
 </section>
 <section id="実践への示唆" class="level2" data-number="4.4">
 <h2 data-number="4.4" class="anchored" data-anchor-id="実践への示唆"><span class="header-section-number">4.4</span> 実践への示唆</h2>
-<p>実践における課題は、<span class="math inline">\(X\)</span> について適切な複雑さを持つモデルを設定することです。 しかしながら適切な複雑性は、母集団の特徴や事例数などに依存しており、一般に確実な解決は困難です。 ただし過去の実践の問題点、および実践上の示唆を得ることはできます。</p>
+<p>実践における課題は、<span class="math inline">\(X\)</span> について適切な複雑さを持つモデルを設定することです。 しかしながら適切な複雑性は、母集団の特徴や事例数などに依存しており、一般 な解決は困難です。 ただし過去の実践の問題点、および実践上の示唆を得ることはできます。</p>
 <p>多くの研究で<span class="math inline">\(X\)</span>の二乗項や交差項を導入<strong>しない</strong>推定が行われてきました。 しかしながらこのような推定は、平均値のみのバランスにとどまり、不十分な可能性が高いと考えられます。 例えば、NBER Summer Institute 2018における、<a href="https://github.com/demirermert/MLInference">Esther Dufloのチュートリアル</a> では、連続変数については二乗項、および全変数について交差項を導入した推定を行なっています。</p>
-<p>複雑な推定を行う問題点としては、推定誤差の拡大です。 この問題は、事例数が少ない小規模データを用いた推定において深刻です。 しかしながら現代的な分析環境のもとでは、1000事例を超えるデータを用いた推定が一般的になっています。 このため、バランスさせたい<span class="math inline">\(X\)</span>の数が少ない場合、その二乗項や交差項を加えたとしても、悪影響は小さいと考えられます。 少なくとも小規模事例を用いた推定よりも、より複雑なモデルを推定すべきであると考えられます。</p>
-<p>バランスさせたい変数 <span class="math inline">\(X\)</span> の数が多い場合、二乗項や交差項を導入するとモデルが爆発的に複雑化し、OLSでは推定できなくなります。 このような場合は、<a href="https://github.com/demirermert/MLInference">Esther Dufloのチュートリアル</a> や <a href="05R.html" class="quarto-xref"><span>Chapter 5</span></a> で議論する通り、機械学習を応用が有力です。</p>
+<p>複雑な推定は、母集団における推定結果の推論を困難にします。 この問題は、事例数が少ない小規模データを用いた推定において深刻です。 しかしながら現代的な分析環境のもとでは、1000事例を超えるデータを用いた推定が一般的になっています。 このため、バランスさせたい<span class="math inline">\(X\)</span>の数が少ない場合、その二乗項や交差項を加えたとしても、悪影響は小さいと考えられます。 少なくとも小規模事例を用いた推定よりも、より複雑なモデルを推定すべきであると考えられます。</p>
+<p>バランスさせたい変数 <span class="math inline">\(X\)</span> の数が多い場合、二乗項や交差項を導入するとモデルが爆発的に複雑化し、OLSでは推定できなくなります。 このような場合は、<a href="https://github.com/demirermert/MLInference">Esther Dufloのチュートリアル</a> や <a href="06R.html" class="quarto-xref"><span>Chapter 6</span></a> で議論する通り、機械学習を応用が有力です。</p>
 </section>
 <section id="応用上の課題" class="level2" data-number="4.5">
 <h2 data-number="4.5" class="anchored" data-anchor-id="応用上の課題"><span class="header-section-number">4.5</span> 応用上の課題</h2>
@@ -391,7 +394,7 @@ OLSの性質 <span class="citation" data-cites="chattopadhyay2023implied">(<a hr
 <section id="researcher-degrees-of-freedom" class="level3" data-number="4.5.1">
 <h3 data-number="4.5.1" class="anchored" data-anchor-id="researcher-degrees-of-freedom"><span class="header-section-number">4.5.1</span> Researcher degrees of freedom</h3>
 <p>OLSにおいては、分布の特徴をどこまでバランスさせるのかが問題となります。 事例数が十分あれば、3乗項などの特徴もバランスさせることが可能です。 しかしながら事例数が少ない場合、大量のモーメントをバランスさせると、推定誤差が大きくなってしまいます。 このため十分な根拠を持った推定モデルの定式化が困難になります。</p>
-<p>この問題に対して、<a href="05R.html" class="quarto-xref"><span>Chapter 5</span></a> では機械学習を用いた改善方法を紹介します。</p>
+<p>この問題に対して、<a href="06R.html" class="quarto-xref"><span>Chapter 6</span></a> では機械学習を用いた改善方法を紹介します。</p>
 </section>
 <section id="ターゲットの解釈の難しさ" class="level3" data-number="4.5.2">
 <h3 data-number="4.5.2" class="anchored" data-anchor-id="ターゲットの解釈の難しさ"><span class="header-section-number">4.5.2</span> ターゲットの解釈の難しさ</h3>
@@ -1001,8 +1004,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./05R.html" class="pagination-link" aria-label="機械学習の活用: 残差回帰">
-        <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">機械学習の活用: 残差回帰</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./05Entropy.html" class="pagination-link" aria-label="明示的なBalancing Weightの算出">
+        <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">明示的なBalancing Weightの算出</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.6.39">
+<meta name="generator" content="quarto-1.6.40">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Reference – バランス後の母平均差の推定 (ver 0.1.1)</title>
+<title>Reference – バランス後の母平均差の推定 (ver 0.2)</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -49,13 +49,13 @@ div.csl-indent {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./05R.html" rel="prev">
+<link href="./06R.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-e26003cea8cd680ca0c55a263523d882.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-549806ee2085284f45b00abea8c6df48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="site_libs/bootstrap/bootstrap-626149efe8f5d16e1d391ba177679bf0.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
@@ -114,7 +114,7 @@ div.csl-indent {
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
-      <a href="./">バランス後の母平均差の推定 (ver 0.1.1)</a> 
+      <a href="./">バランス後の母平均差の推定 (ver 0.2)</a> 
     </div>
       </div>
         <div class="mt-2 flex-shrink-0 align-items-center">
@@ -156,8 +156,14 @@ div.csl-indent {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./05R.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">機械学習の活用: 残差回帰</span></span></a>
+  <a href="./05Entropy.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">明示的なBalancing Weightの算出</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./06R.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">機械学習の活用: 残差回帰</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -232,6 +238,12 @@ Implied Weights of Linear Regression for Causal Inference.”</span>
 Chattopadhyay, Ambarish, and José R. Zubizarreta. 2024. <em>Harvard Data
 Science Review</em> 6 (1).
 </div>
+<div id="ref-chen2022debiased" class="csl-entry" role="listitem">
+Chen, Qizhao, Vasilis Syrgkanis, and Morgane Austern. 2022.
+<span>“Debiased Machine Learning Without Sample-Splitting for Stable
+Estimators.”</span> <em>Advances in Neural Information Processing
+Systems</em> 35: 3096–3109.
+</div>
 <div id="ref-chernozhukov2018double" class="csl-entry" role="listitem">
 Chernozhukov, Victor, Denis Chetverikov, Mert Demirer, Esther Duflo,
 Christian Hansen, Whitney Newey, and James Robins. 2018.
@@ -267,6 +279,11 @@ Machine Learning.”</span> <em>Biostatistics</em> 21 (2): 353–58.
 Fisher, Aaron, and Edward H Kennedy. 2021. <span>“Visually Communicating
 and Teaching Intuition for Influence Functions.”</span> <em>The American
 Statistician</em> 75 (2): 162–72.
+</div>
+<div id="ref-gelman2024causal" class="csl-entry" role="listitem">
+Gelman, Andrew, Jessica Hullman, and Lauren Kennedy. 2024. <span>“Causal
+Quartets: Different Ways to Attain the Same Average Treatment
+Effect.”</span> <em>The American Statistician</em> 78 (3): 267–72.
 </div>
 <div id="ref-greifer2024weightit" class="csl-entry" role="listitem">
 Greifer, Noah. 2024. <em>WeightIt: Weighting for Covariate Balance in
@@ -803,8 +820,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./05R.html" class="pagination-link" aria-label="機械学習の活用: 残差回帰">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">機械学習の活用: 残差回帰</span></span>
+      <a href="./06R.html" class="pagination-link" aria-label="機械学習の活用: 残差回帰">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">機械学習の活用: 残差回帰</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">

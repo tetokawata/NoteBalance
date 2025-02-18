@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.6.39">
+<meta name="generator" content="quarto-1.6.40">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>3&nbsp; Balancing Weight – バランス後の母平均差の推定 (ver 0.1.1)</title>
+<title>3&nbsp; Balancing Weight – バランス後の母平均差の推定 (ver 0.2)</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -91,7 +91,7 @@ div.csl-indent {
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-e26003cea8cd680ca0c55a263523d882.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-549806ee2085284f45b00abea8c6df48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="site_libs/bootstrap/bootstrap-626149efe8f5d16e1d391ba177679bf0.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
@@ -179,7 +179,7 @@ window.Quarto = {
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
-      <a href="./">バランス後の母平均差の推定 (ver 0.1.1)</a> 
+      <a href="./">バランス後の母平均差の推定 (ver 0.2)</a> 
     </div>
       </div>
         <div class="mt-2 flex-shrink-0 align-items-center">
@@ -221,8 +221,14 @@ window.Quarto = {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./05R.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">機械学習の活用: 残差回帰</span></span></a>
+  <a href="./05Entropy.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">明示的なBalancing Weightの算出</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./06R.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">機械学習の活用: 残差回帰</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -1541,7 +1547,7 @@ D           20.94057  1.2529064  16.7136 2.084367e-61 18.48446 23.39669 6376</co
 </div>
 </div>
 <p>ただしWeightを計算できたのたのは、6378事例の内、1702事例のみです。 このような大幅な事例減少は、分析のターゲットとなる分布からデータを大きく乖離させ、ミスリードな推定結果を生み出す要因となります。</p>
-<p>この問題を解決するために、次節以降で紹介する、OLS (<a href="04OLS.html" class="quarto-xref"><span>Chapter 4</span></a>) や機械学習 (<a href="05R.html" class="quarto-xref"><span>Chapter 5</span></a>) などを用いた「近似的なバランス法」の活用が有用です。</p>
+<p>この問題を解決するために、次節以降で紹介する、OLS (<a href="04OLS.html" class="quarto-xref"><span>Chapter 4</span></a>) や機械学習 (<a href="06R.html" class="quarto-xref"><span>Chapter 6</span></a>) などを用いた「近似的なバランス法」の活用が有用です。</p>
 
 
 <div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">

@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.6.39">
+<meta name="generator" content="quarto-1.6.40">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>1&nbsp; バランス後の比較 – バランス後の母平均差の推定 (ver 0.1.1)</title>
+<title>1&nbsp; バランス後の比較 – バランス後の母平均差の推定 (ver 0.2)</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,7 +20,27 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -37,7 +57,7 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-e26003cea8cd680ca0c55a263523d882.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-549806ee2085284f45b00abea8c6df48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="site_libs/bootstrap/bootstrap-626149efe8f5d16e1d391ba177679bf0.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
@@ -125,7 +145,7 @@ window.Quarto = {
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
-      <a href="./">バランス後の母平均差の推定 (ver 0.1.1)</a> 
+      <a href="./">バランス後の母平均差の推定 (ver 0.2)</a> 
     </div>
       </div>
         <div class="mt-2 flex-shrink-0 align-items-center">
@@ -167,8 +187,14 @@ window.Quarto = {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./05R.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">機械学習の活用: 残差回帰</span></span></a>
+  <a href="./05Entropy.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">明示的なBalancing Weightの算出</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./06R.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">機械学習の活用: 残差回帰</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -223,7 +249,7 @@ window.Quarto = {
 </header>
 
 
-<p>バランス後の比較 (Balanced Comparison) では、グループ<span class="math inline">\(D\)</span>の間で、<span class="math inline">\(X\)</span>についての<strong>差を解消した後に</strong>、<span class="math inline">\(Y\)</span>についての平均差を推定します。 このような比較は、格差分析や因果効果の肝となります。</p>
+<p>典型的なバランス後の比較 (Balanced Comparison)分析 では、グループ<span class="math inline">\(D\)</span>の間で、<span class="math inline">\(X\)</span>についての<strong>差を解消した後に</strong>、<span class="math inline">\(Y\)</span>についての平均差を推定します <a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>。 このような比較は、格差分析や因果効果の肝となります。</p>
 <p>まず実例から紹介します。</p>
 <section id="不動産市場の年次比較" class="level2" data-number="1.1">
 <h2 data-number="1.1" class="anchored" data-anchor-id="不動産市場の年次比較"><span class="header-section-number">1.1</span> 不動産市場の年次比較</h2>
@@ -242,23 +268,23 @@ window.Quarto = {
 <p>以下では実際のデータを用いて、取引年と立地(CBD であれば1、それ以外であれば0)ごとに、平均取引価格を示しています。 また各取引年における取引事例の立地割合も算出しています。</p>
 <div class="cell">
 <div class="cell-output-display">
-<div id="gblmldjzbh" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#gblmldjzbh table {
+<div id="aqcwyyifjq" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#aqcwyyifjq table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#gblmldjzbh thead, #gblmldjzbh tbody, #gblmldjzbh tfoot, #gblmldjzbh tr, #gblmldjzbh td, #gblmldjzbh th {
+#aqcwyyifjq thead, #aqcwyyifjq tbody, #aqcwyyifjq tfoot, #aqcwyyifjq tr, #aqcwyyifjq td, #aqcwyyifjq th {
   border-style: none;
 }
 
-#gblmldjzbh p {
+#aqcwyyifjq p {
   margin: 0;
   padding: 0;
 }
 
-#gblmldjzbh .gt_table {
+#aqcwyyifjq .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -284,12 +310,12 @@ window.Quarto = {
   border-left-color: #D3D3D3;
 }
 
-#gblmldjzbh .gt_caption {
+#aqcwyyifjq .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#gblmldjzbh .gt_title {
+#aqcwyyifjq .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -301,7 +327,7 @@ window.Quarto = {
   border-bottom-width: 0;
 }
 
-#gblmldjzbh .gt_subtitle {
+#aqcwyyifjq .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -313,7 +339,7 @@ window.Quarto = {
   border-top-width: 0;
 }
 
-#gblmldjzbh .gt_heading {
+#aqcwyyifjq .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -325,13 +351,13 @@ window.Quarto = {
   border-right-color: #D3D3D3;
 }
 
-#gblmldjzbh .gt_bottom_border {
+#aqcwyyifjq .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#gblmldjzbh .gt_col_headings {
+#aqcwyyifjq .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -346,7 +372,7 @@ window.Quarto = {
   border-right-color: #D3D3D3;
 }
 
-#gblmldjzbh .gt_col_heading {
+#aqcwyyifjq .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -366,7 +392,7 @@ window.Quarto = {
   overflow-x: hidden;
 }
 
-#gblmldjzbh .gt_column_spanner_outer {
+#aqcwyyifjq .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -378,15 +404,15 @@ window.Quarto = {
   padding-right: 4px;
 }
 
-#gblmldjzbh .gt_column_spanner_outer:first-child {
+#aqcwyyifjq .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#gblmldjzbh .gt_column_spanner_outer:last-child {
+#aqcwyyifjq .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#gblmldjzbh .gt_column_spanner {
+#aqcwyyifjq .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -398,11 +424,11 @@ window.Quarto = {
   width: 100%;
 }
 
-#gblmldjzbh .gt_spanner_row {
+#aqcwyyifjq .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#gblmldjzbh .gt_group_heading {
+#aqcwyyifjq .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -428,7 +454,7 @@ window.Quarto = {
   text-align: left;
 }
 
-#gblmldjzbh .gt_empty_group_heading {
+#aqcwyyifjq .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -443,15 +469,15 @@ window.Quarto = {
   vertical-align: middle;
 }
 
-#gblmldjzbh .gt_from_md > :first-child {
+#aqcwyyifjq .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#gblmldjzbh .gt_from_md > :last-child {
+#aqcwyyifjq .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#gblmldjzbh .gt_row {
+#aqcwyyifjq .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -470,7 +496,7 @@ window.Quarto = {
   overflow-x: hidden;
 }
 
-#gblmldjzbh .gt_stub {
+#aqcwyyifjq .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -483,7 +509,7 @@ window.Quarto = {
   padding-right: 5px;
 }
 
-#gblmldjzbh .gt_stub_row_group {
+#aqcwyyifjq .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -497,15 +523,15 @@ window.Quarto = {
   vertical-align: top;
 }
 
-#gblmldjzbh .gt_row_group_first td {
+#aqcwyyifjq .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#gblmldjzbh .gt_row_group_first th {
+#aqcwyyifjq .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#gblmldjzbh .gt_summary_row {
+#aqcwyyifjq .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -515,16 +541,16 @@ window.Quarto = {
   padding-right: 5px;
 }
 
-#gblmldjzbh .gt_first_summary_row {
+#aqcwyyifjq .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#gblmldjzbh .gt_first_summary_row.thick {
+#aqcwyyifjq .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#gblmldjzbh .gt_last_summary_row {
+#aqcwyyifjq .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -534,7 +560,7 @@ window.Quarto = {
   border-bottom-color: #D3D3D3;
 }
 
-#gblmldjzbh .gt_grand_summary_row {
+#aqcwyyifjq .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -544,7 +570,7 @@ window.Quarto = {
   padding-right: 5px;
 }
 
-#gblmldjzbh .gt_first_grand_summary_row {
+#aqcwyyifjq .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -554,7 +580,7 @@ window.Quarto = {
   border-top-color: #D3D3D3;
 }
 
-#gblmldjzbh .gt_last_grand_summary_row_top {
+#aqcwyyifjq .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -564,11 +590,11 @@ window.Quarto = {
   border-bottom-color: #D3D3D3;
 }
 
-#gblmldjzbh .gt_striped {
+#aqcwyyifjq .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#gblmldjzbh .gt_table_body {
+#aqcwyyifjq .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -577,7 +603,7 @@ window.Quarto = {
   border-bottom-color: #D3D3D3;
 }
 
-#gblmldjzbh .gt_footnotes {
+#aqcwyyifjq .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -591,7 +617,7 @@ window.Quarto = {
   border-right-color: #D3D3D3;
 }
 
-#gblmldjzbh .gt_footnote {
+#aqcwyyifjq .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -600,7 +626,7 @@ window.Quarto = {
   padding-right: 5px;
 }
 
-#gblmldjzbh .gt_sourcenotes {
+#aqcwyyifjq .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -614,7 +640,7 @@ window.Quarto = {
   border-right-color: #D3D3D3;
 }
 
-#gblmldjzbh .gt_sourcenote {
+#aqcwyyifjq .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -622,72 +648,72 @@ window.Quarto = {
   padding-right: 5px;
 }
 
-#gblmldjzbh .gt_left {
+#aqcwyyifjq .gt_left {
   text-align: left;
 }
 
-#gblmldjzbh .gt_center {
+#aqcwyyifjq .gt_center {
   text-align: center;
 }
 
-#gblmldjzbh .gt_right {
+#aqcwyyifjq .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#gblmldjzbh .gt_font_normal {
+#aqcwyyifjq .gt_font_normal {
   font-weight: normal;
 }
 
-#gblmldjzbh .gt_font_bold {
+#aqcwyyifjq .gt_font_bold {
   font-weight: bold;
 }
 
-#gblmldjzbh .gt_font_italic {
+#aqcwyyifjq .gt_font_italic {
   font-style: italic;
 }
 
-#gblmldjzbh .gt_super {
+#aqcwyyifjq .gt_super {
   font-size: 65%;
 }
 
-#gblmldjzbh .gt_footnote_marks {
+#aqcwyyifjq .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#gblmldjzbh .gt_asterisk {
+#aqcwyyifjq .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#gblmldjzbh .gt_indent_1 {
+#aqcwyyifjq .gt_indent_1 {
   text-indent: 5px;
 }
 
-#gblmldjzbh .gt_indent_2 {
+#aqcwyyifjq .gt_indent_2 {
   text-indent: 10px;
 }
 
-#gblmldjzbh .gt_indent_3 {
+#aqcwyyifjq .gt_indent_3 {
   text-indent: 15px;
 }
 
-#gblmldjzbh .gt_indent_4 {
+#aqcwyyifjq .gt_indent_4 {
   text-indent: 20px;
 }
 
-#gblmldjzbh .gt_indent_5 {
+#aqcwyyifjq .gt_indent_5 {
   text-indent: 25px;
 }
 
-#gblmldjzbh .katex-display {
+#aqcwyyifjq .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#gblmldjzbh div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#aqcwyyifjq div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -793,23 +819,23 @@ window.Quarto = {
 <p>バランス後の平均値の計算例として、以下ではターゲットを取引年にかかわらず、「CBDが0.25, その他が0.75」と設定し、Exampleに適用します。</p>
 <div class="cell">
 <div class="cell-output-display">
-<div id="cgabbesxaw" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#cgabbesxaw table {
+<div id="zclfwtlfrw" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#zclfwtlfrw table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#cgabbesxaw thead, #cgabbesxaw tbody, #cgabbesxaw tfoot, #cgabbesxaw tr, #cgabbesxaw td, #cgabbesxaw th {
+#zclfwtlfrw thead, #zclfwtlfrw tbody, #zclfwtlfrw tfoot, #zclfwtlfrw tr, #zclfwtlfrw td, #zclfwtlfrw th {
   border-style: none;
 }
 
-#cgabbesxaw p {
+#zclfwtlfrw p {
   margin: 0;
   padding: 0;
 }
 
-#cgabbesxaw .gt_table {
+#zclfwtlfrw .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -835,12 +861,12 @@ window.Quarto = {
   border-left-color: #D3D3D3;
 }
 
-#cgabbesxaw .gt_caption {
+#zclfwtlfrw .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#cgabbesxaw .gt_title {
+#zclfwtlfrw .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -852,7 +878,7 @@ window.Quarto = {
   border-bottom-width: 0;
 }
 
-#cgabbesxaw .gt_subtitle {
+#zclfwtlfrw .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -864,7 +890,7 @@ window.Quarto = {
   border-top-width: 0;
 }
 
-#cgabbesxaw .gt_heading {
+#zclfwtlfrw .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -876,13 +902,13 @@ window.Quarto = {
   border-right-color: #D3D3D3;
 }
 
-#cgabbesxaw .gt_bottom_border {
+#zclfwtlfrw .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#cgabbesxaw .gt_col_headings {
+#zclfwtlfrw .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -897,7 +923,7 @@ window.Quarto = {
   border-right-color: #D3D3D3;
 }
 
-#cgabbesxaw .gt_col_heading {
+#zclfwtlfrw .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -917,7 +943,7 @@ window.Quarto = {
   overflow-x: hidden;
 }
 
-#cgabbesxaw .gt_column_spanner_outer {
+#zclfwtlfrw .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -929,15 +955,15 @@ window.Quarto = {
   padding-right: 4px;
 }
 
-#cgabbesxaw .gt_column_spanner_outer:first-child {
+#zclfwtlfrw .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#cgabbesxaw .gt_column_spanner_outer:last-child {
+#zclfwtlfrw .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#cgabbesxaw .gt_column_spanner {
+#zclfwtlfrw .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -949,11 +975,11 @@ window.Quarto = {
   width: 100%;
 }
 
-#cgabbesxaw .gt_spanner_row {
+#zclfwtlfrw .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#cgabbesxaw .gt_group_heading {
+#zclfwtlfrw .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -979,7 +1005,7 @@ window.Quarto = {
   text-align: left;
 }
 
-#cgabbesxaw .gt_empty_group_heading {
+#zclfwtlfrw .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -994,15 +1020,15 @@ window.Quarto = {
   vertical-align: middle;
 }
 
-#cgabbesxaw .gt_from_md > :first-child {
+#zclfwtlfrw .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#cgabbesxaw .gt_from_md > :last-child {
+#zclfwtlfrw .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#cgabbesxaw .gt_row {
+#zclfwtlfrw .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1021,7 +1047,7 @@ window.Quarto = {
   overflow-x: hidden;
 }
 
-#cgabbesxaw .gt_stub {
+#zclfwtlfrw .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1034,7 +1060,7 @@ window.Quarto = {
   padding-right: 5px;
 }
 
-#cgabbesxaw .gt_stub_row_group {
+#zclfwtlfrw .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1048,15 +1074,15 @@ window.Quarto = {
   vertical-align: top;
 }
 
-#cgabbesxaw .gt_row_group_first td {
+#zclfwtlfrw .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#cgabbesxaw .gt_row_group_first th {
+#zclfwtlfrw .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#cgabbesxaw .gt_summary_row {
+#zclfwtlfrw .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1066,16 +1092,16 @@ window.Quarto = {
   padding-right: 5px;
 }
 
-#cgabbesxaw .gt_first_summary_row {
+#zclfwtlfrw .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#cgabbesxaw .gt_first_summary_row.thick {
+#zclfwtlfrw .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#cgabbesxaw .gt_last_summary_row {
+#zclfwtlfrw .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1085,7 +1111,7 @@ window.Quarto = {
   border-bottom-color: #D3D3D3;
 }
 
-#cgabbesxaw .gt_grand_summary_row {
+#zclfwtlfrw .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1095,7 +1121,7 @@ window.Quarto = {
   padding-right: 5px;
 }
 
-#cgabbesxaw .gt_first_grand_summary_row {
+#zclfwtlfrw .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1105,7 +1131,7 @@ window.Quarto = {
   border-top-color: #D3D3D3;
 }
 
-#cgabbesxaw .gt_last_grand_summary_row_top {
+#zclfwtlfrw .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1115,11 +1141,11 @@ window.Quarto = {
   border-bottom-color: #D3D3D3;
 }
 
-#cgabbesxaw .gt_striped {
+#zclfwtlfrw .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#cgabbesxaw .gt_table_body {
+#zclfwtlfrw .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1128,7 +1154,7 @@ window.Quarto = {
   border-bottom-color: #D3D3D3;
 }
 
-#cgabbesxaw .gt_footnotes {
+#zclfwtlfrw .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1142,7 +1168,7 @@ window.Quarto = {
   border-right-color: #D3D3D3;
 }
 
-#cgabbesxaw .gt_footnote {
+#zclfwtlfrw .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -1151,7 +1177,7 @@ window.Quarto = {
   padding-right: 5px;
 }
 
-#cgabbesxaw .gt_sourcenotes {
+#zclfwtlfrw .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1165,7 +1191,7 @@ window.Quarto = {
   border-right-color: #D3D3D3;
 }
 
-#cgabbesxaw .gt_sourcenote {
+#zclfwtlfrw .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1173,72 +1199,72 @@ window.Quarto = {
   padding-right: 5px;
 }
 
-#cgabbesxaw .gt_left {
+#zclfwtlfrw .gt_left {
   text-align: left;
 }
 
-#cgabbesxaw .gt_center {
+#zclfwtlfrw .gt_center {
   text-align: center;
 }
 
-#cgabbesxaw .gt_right {
+#zclfwtlfrw .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#cgabbesxaw .gt_font_normal {
+#zclfwtlfrw .gt_font_normal {
   font-weight: normal;
 }
 
-#cgabbesxaw .gt_font_bold {
+#zclfwtlfrw .gt_font_bold {
   font-weight: bold;
 }
 
-#cgabbesxaw .gt_font_italic {
+#zclfwtlfrw .gt_font_italic {
   font-style: italic;
 }
 
-#cgabbesxaw .gt_super {
+#zclfwtlfrw .gt_super {
   font-size: 65%;
 }
 
-#cgabbesxaw .gt_footnote_marks {
+#zclfwtlfrw .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#cgabbesxaw .gt_asterisk {
+#zclfwtlfrw .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#cgabbesxaw .gt_indent_1 {
+#zclfwtlfrw .gt_indent_1 {
   text-indent: 5px;
 }
 
-#cgabbesxaw .gt_indent_2 {
+#zclfwtlfrw .gt_indent_2 {
   text-indent: 10px;
 }
 
-#cgabbesxaw .gt_indent_3 {
+#zclfwtlfrw .gt_indent_3 {
   text-indent: 15px;
 }
 
-#cgabbesxaw .gt_indent_4 {
+#zclfwtlfrw .gt_indent_4 {
   text-indent: 20px;
 }
 
-#cgabbesxaw .gt_indent_5 {
+#zclfwtlfrw .gt_indent_5 {
   text-indent: 25px;
 }
 
-#cgabbesxaw .katex-display {
+#zclfwtlfrw .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#cgabbesxaw div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#zclfwtlfrw div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -1340,6 +1366,17 @@ Important&nbsp;1.1: Overlapの仮定
 <p>多くの応用で活用できる、より実践的な推定方法が求められます。 このような推定手法は、Balancing Weight (<a href="03BalanceWeight.html" class="quarto-xref"><span>Chapter 3</span></a>) を実質的に推定していると解釈できます。 <a href="02Weight.html" class="quarto-xref"><span>Chapter 2</span></a> ではBalancing Weightを理解するための準備として、一般的なWeightを紹介します。</p>
 
 
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
+<div id="ref-gelman2024causal" class="csl-entry" role="listitem">
+Gelman, Andrew, Jessica Hullman, and Lauren Kennedy. 2024. <span>“Causal Quartets: Different Ways to Attain the Same Average Treatment Effect.”</span> <em>The American Statistician</em> 78 (3): 267–72.
+</div>
+</div>
+</section>
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn1"><p><span class="citation" data-cites="gelman2024causal">Gelman, Hullman, and Kennedy (<a href="Referemce.html#ref-gelman2024causal" role="doc-biblioref">2024</a>)</span><a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
 </section>
 
 </main> <!-- /main -->
