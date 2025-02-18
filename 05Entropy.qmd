@@ -1,0 +1,121 @@
+# 明示的なBalancing Weightの算出 {#sec-Entropy}
+
+@hainmueller2012entropy や @zubizarreta2015stable では、Balancing Weightを明示的な"最小化問題"の解として算出します。
+このようなアプローチは、満たすべき条件(負の荷重が生じない/サンプル平均にバランスするなど）を課した上で、Balancing Weightが算出できます。
+このためOLSによる暗黙のBalancing weightに比べて、より透明性の高い分析が可能です。
+
+## 算出方法
+
+Balancing Weightについて、以下のような制約を貸します。
+
+1. 全ての$X_l$について、その加重平均をデータ全体の平均値に一致させる: $$D=1における(\omega(x,1)\times X_l)の平均値$$ $$= D=0における(\omega(x,1)\times X_l)の平均値$$ $$= X_lのデータ全体での平均値$$ 
+
+2. 全てのWeightは非負の値をとる: $$\omega(x,d)\ge 0$$
+
+上記の制約を満たす$\omega(d,x)$ のなかで、最もばらつきが小さいものをBalancing Weightとします。
+ばらつきの測定方法は、いくつかの提案があります。
+
+- @hainmueller2012entropy : $\omega(x,d)$ のentropy divergence $\omega(x,d)\log(\omega(x,d)/q)$
+
+    - $q$ はbase weightであり、例えば $q=1/事例数$ が用いられる
+
+- @zubizarreta2015stable : $\omega(x,d)$ の分散
+
+特にentropy divergenceを用いる @hainmueller2012entropy の方法は、実際の計算も早く実用的です。
+以下では、実際の実装方法を紹介します。
+
+## Rによる実践例
+
+- $D$と$X$の交差項を含めたモデルのOLS推定、およびその性質の診断は、以下のパッケージを用いて実装できます。
+
+    - readr (tidyverseに同梱): データの読み込み
+    
+    - WeightIt: entroy weightの計算
+    
+        - [Repository](https://ngreifer.github.io/WeightIt/index.html)
+        
+    - marginaleffects: WeightItパッケージが計算するWeightを用いた推定
+    
+        - [Repository](https://marginaleffects.com/)
+
+
+### 準備
+
+データを取得します。
+$D$ として、立地が中心6区か否かで、1/0となる変数を定義します。
+
+```{r}
+#| echo: true
+
+Data = readr::read_csv("Public.csv") # データ読み込み
+
+Data = dplyr::mutate(
+  Data,
+  D = dplyr::if_else(
+    LargeDistrict == "中心6区",1,0
+  ) # 2022年に取引されれば1、2021年に取引されていれば0
+)
+```
+
+ベンチマークとして、一切のバランスを行わない単純差、およびOLSによるバランスを行った結果を示します。
+
+```{r}
+estimatr::lm_robust(Price ~ D, Data)
+
+estimatr::lm_robust(Price ~ D + (Size + Tenure + StationDistance)**2 +
+    I(Size^2) + I(Tenure^2) + I(StationDistance^2), Data)
+```
+
+
+バランス前では中心6区の物件の方が、20.9 [18.5,23.4] 販売価格が平均的に高い傾向があります。
+この傾向は、部屋の広さや築年数、駅からの距離の平均値/分散/共分散をバランスさせても、大きくは変わりませんでした。
+
+### Entropy Weightによるバランス
+
+$D$ 間でSize,Tenure,StationDistanceの平均値をバランスさせ、Priceの平均値を比較します。
+まずWeightItパッケージを用いて、Entropy Weightを計算します。
+また比較のためにlmwパッケージを用いて、OLS Weightも計算します。
+
+```{r}
+#| echo: true
+#| 
+
+Entropy = WeightIt::weightit(
+  D ~ (Size + Tenure + StationDistance)**2 +
+    I(Size^2) + I(Tenure^2) + I(StationDistance^2),  # 平均、分散、共分散をバランス
+  data = Data,
+  method = "ebal", # Entropy Weightを計算
+  estimand = "ATE") 
+
+OLS = lmw::lmw(
+  ~ D + I(Size^2) + I(Tenure^2) + I(StationDistance^2) +
+    (Size + Tenure + StationDistance)**2,
+  Data
+)
+boxplot(Entropy$weights,OLS$weights)
+```
+
+OLSを用いると負のBalancing weightが発生していることが確認できます。
+対してEntropy weightでは、そのようなweightは生じません。
+
+```{r}
+#| echo: true
+OLS$weights |> summary()
+
+Entropy$weights |> summary()
+```
+
+Entropy Weightを用いたバランス後の平均差は、marginaleffectsパッケージのavg_comparison関数を用いて、以下のように計算できます。
+
+```{r}
+#| echo: true
+WeightIt::lm_weightit(
+  Price ~ D*(I(Size^2) + I(Tenure^2) + I(StationDistance^2) +
+    (Size + Tenure + StationDistance)**2),
+  data = Data,
+  weightit = Entropy
+  ) |> 
+  marginaleffects::avg_comparisons(variables = "D")
+```
+
+引き続き20前後の平均価格差が算出されました。

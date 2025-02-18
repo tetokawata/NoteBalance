@@ -31,7 +31,7 @@ Balancing weightは、前章で導入したWeightの一種であり、$D$間で�
 
 - Balancing weight $\omega(x,d)$は、$D$間での$X$の分布の乖離を調整するために導入され、以下のように定義する。 $$D=1における事例割合\times \omega(x,1)$$ $$= D=0における事例割合\times \omega(x,0)$$ $$=ターゲットとなる割合$$
 
-- 定義式を変形すると $$\omega(x,d)=\frac{ターゲット}{D=dにおける事例割合}$$
+- 定義式を変形すると $$\omega(x,d)=\frac{ターゲットとなる割合}{(D=d)グループにおける割合}$$
 
   - ターゲットに比べて過大な事例割合が過大なグループに対しては小さい、過小なグループに対しては大きなWeightを付与する。
   
@@ -55,7 +55,7 @@ Data |>
     .by = c("CBD","取引年")
   ) |> 
   mutate(
-    ターゲット = n()/nrow(Data),
+    ターゲットとなる割合 = n()/nrow(Data),
     .by = c("CBD")
   ) |> 
   distinct(
@@ -63,7 +63,7 @@ Data |>
     CBD,
     取引年,
     事例割合,
-    ターゲット
+    ターゲットとなる割合
   ) |> 
   mutate(
     事例割合 = (事例割合/sum(事例割合)),
@@ -73,7 +73,7 @@ Data |>
     取引年,
     CBD) |> 
   mutate(
-    `Balancing Weight` = ターゲット/事例割合
+    `Balancing Weight` = ターゲットとなる割合/事例割合
   ) |> 
   gt::gt() |>
   gt::fmt_number(
@@ -91,9 +91,9 @@ Data |>
 
 Balancing weightsを用いると、バランス後の平均値は以下のように計算できます
 
-$$2021年のバランス後の平均値 =2021年の(\omega(X_i)\times Y_i)の平均値$$
+$$2021年のバランス後の平均値 =2021年の(\omega(X_i,2021)\times Y_i)の平均値$$
 
-$$2022年のバランス後の平均値 =2022年の(\omega(X_i)\times Y_i)の平均値$$
+$$2022年のバランス後の平均値 =2022年の(\omega(X_i,2022)\times Y_i)の平均値$$
 
 ## 母集団の推定方法
 
@@ -136,7 +136,7 @@ Data = dplyr::mutate(
   D = dplyr::if_else(
     LargeDistrict == "中心6区",1,0
   )
-)
+) # Dの定義
 ```
 
 ### Balancing Weight
@@ -163,10 +163,9 @@ Match # Balance weightの特徴を表示
 ```
 
 number of obs.において、元々の事例数 (6378) と balanced weightを計算できた事例数 (6378) を表示しています。
-事例は現状しておらず、
-この理由は、Sizeが完全に一致する事例が、$D=1$ または $D=0$ のどちらかしか存在しない場合が多いためです。
+事例数は減少しておらず、Balancing Weightを計算できない事例が存在しないことを確認できます。
 
-Balanced weightが算出できた事例について、バランス後の平均差を推定すると以下となります。
+バランス後の平均差を推定すると以下となります。
 
 
 ```{r}
@@ -225,7 +224,7 @@ Exact matchingやStratified Estimationは、非常に直感的な推定方法で
 #| error: true
 
 Match = MatchIt::matchit(
-  D ~ Size + Tenure + StationDistance + District, # D ~ Xを指定
+  D ~ Size + Tenure + StationDistance, # D ~ Xを指定
   Data, # 用いるデータの指定
   method = "exact", # Balanced weightを計算するために、exact matchingを実行
   target = "ATE" # サンプル全体のXの分布をターゲット
@@ -249,6 +248,6 @@ Match
 ```
 
 ただしWeightを計算できたのたのは、6378事例の内、1702事例のみです。
-このような大幅な事例減少は、分析のTargetからデータを大きく乖離させ、ミスリードな推定結果を生み出す要因となります。
+このような大幅な事例減少は、分析のターゲットとなる分布からデータを大きく乖離させ、ミスリードな推定結果を生み出す要因となります。
 
-この問題を解決するために、次節以降で紹介する、OLSや傾向スコアの逆数(Inverse probability weights)などの「近似的なバランス法」の活用が有用です。
+この問題を解決するために、次節以降で紹介する、OLS (@sec-Moment) や機械学習 (@sec-RLeaner) などを用いた「近似的なバランス法」の活用が有用です。

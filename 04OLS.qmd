@@ -1,9 +1,9 @@
 # OLSによる特徴のバランス {#sec-Moment}
 
-$X$ の組み合わせが多く、Balancing weightsを計算することが困難な場合、$X$の分布を近似的にバランスさせることが有力です。
+$X$ の組み合わせが多く、Balancing weightsを計算することが困難な場合、$X$の分布を近似的なバランスが有力です。
 
 本節では代表的な統計手法であるOLS（重回帰）が、近似的なBalancing weightsを暗黙のうちに計算する手法であることを紹介します。
-OLSは分布の特徴を、研究者が定める定式化に応じて、柔軟にBalanceされることができます。
+OLSは分布の特徴を、研究者が定める定式化に応じて、柔軟にBalanceできることが利点ですが、予期せぬ挙動を示しやすいことに注意が必要です。
 
 ```{r}
 library(tidyverse)
@@ -17,41 +17,38 @@ Data = arrow::read_parquet("Data/Data.parquet") |>
             .default = 0
         ),
     Tenure = TradeYear - BuildYear,
-    Tenure2 = Tenure*Tenure,
-    Size2 = Size*Size,
-    Tenure_Size = Tenure*Size
+    `Tenureの二乗` = Tenure*Tenure,
+    `Sizeの二乗` = Size*Size,
+    `TenureとSizeの交差項` = Tenure*Size
   )
 ```
 
 ## OLSによる平均値のバランス
 
 近年の研究により、線型モデルのOLS推定は、近似的な Balanceを達成することが確認されています [@chattopadhyay2023implied]。
-
-本ノートでは以下、$D=\{0,1\}$を前提とします。
+本ノートでは、$D=\{0,1\}$を前提とし、その議論の骨子を紹介します。
 
 ::: {.callout-important}
 ### OLSの性質 [@chattopadhyay2023implied]
 
 - $Y\sim D + X_1 + .. + X_L$ をOLSで推定し算出される $D$ の係数値は、以下の方法で計算される値と完全に一致する
 
-$$\beta_D=D=1における(\omega(x,1)\times Y)の平均値$$
-
-$$-D=0における(\omega(x,0)\times Y)の平均値$$
-
-- $\omega(x,d)$は、OLSが暗黙のうちに算出する近似的なBalancing Weightsであり、以下の性質を持ちます。
-
-    - すべての$X_l$ について
+1. すべての$X_l$ について、以下を満たす $\omega(x,d)$ を探す。
 
 $$D=1における(\omega(x,1)\times X_l)の平均値$$
 
 $$=D=0における(\omega(x,0)\times X_l)の平均値$$
 
-  - 上記を満たす$\omega(x,d)$ の中で、最小の分散を持つWeights
+2. 1.を満たす$\omega(x,d)$ の中で、最小の分散を持つ $\omega(x,d)$ をBalancing Weightsとする
+
+3. $\beta_D$ を以下のように計算する。 $$\beta_D=D=1における(\omega(x,1)\times Y)の平均値$$
+
+$$-D=0における(\omega(x,0)\times Y)の平均値$$
 
 :::
 
 重回帰による推定は、$D$間で$X$ の平均値をバランスさせた上で、平均値を比較しています。
-また「母集団におけるOLSの結果」の推定に悪影響を与える、Weightの分散も可能な限り削減しています。
+また「母集団におけるOLSの結果」の推論に悪影響を与える、Weightの分散も可能な限り削減しています。
 
 ### 例
 
@@ -69,7 +66,7 @@ estimatr::lm_robust(
 
 この推定によって得られる $D$ の係数値は、以下のようなバランスを達成するBalancing Weightsを用いた平均差と一致します。
 
-```{r}
+```{r, dev='ragg_png'}
 Data |> 
   mutate(
     Weight = lmw::lmw(
@@ -80,7 +77,7 @@ Data |>
       as.numeric()
   ) |> 
   cobalt::bal.tab(
-    D ~ Price + Size + Tenure + Tenure2 + Size2 + Tenure_Size,  
+    D ~ Price + Size + Tenure + `Tenureの二乗` + `Sizeの二乗` + `TenureとSizeの交差項`,  
     data = _,
     weights = "Weight"
   ) |> 
@@ -91,7 +88,7 @@ Data |>
 価格が大きく上昇していますが、取引物件の部屋の広さは狭くなり、築年数は古くなっています。
 青点 (Adjusted)は、OLSによる暗黙のバランス後の差を示しています。
 SizeやTenureの平均値は完全にバランスしており、結果平均取引価格差も上昇しています。
-Tenure2やSize2は、築年数や部屋の広さの二乗項(分散)、Tenure_Sizeは交差項(共分散)を示しており、これらについてはOLSを行ったとしてもバランスしていません。
+Tenure2やSize2は、築年数や部屋の広さの二乗項(分散)、Tenure_Sizeは交差項(共分散)を示しており、これらについてはバランスしていません。
 
 ## OLSによる分散や共分散のバランス
 
@@ -117,18 +114,18 @@ estimatr::lm_robust(
 これは各変数の分散や共分散をバランスを意味します。
 結果、以下の図の通り、分散や共分散もBalanceします。
 
-```{r}
+```{r, dev='ragg_png'}
 Data |> 
   mutate(
     Weight = lmw::lmw(
-      ~ D + Size + Tenure + Tenure2 + Size2 + Tenure_Size,
-      data = pick(D,Size,Tenure,Tenure2,Size2,Tenure_Size)
+      ~ D + Size + Tenure + `Tenureの二乗` + `Sizeの二乗` + `TenureとSizeの交差項`,
+      data = pick(D,Size,Tenure,`Tenureの二乗`, `Sizeの二乗`,`TenureとSizeの交差項`)
       ) |> 
         magrittr::extract2("weights") |> 
       as.numeric()
   ) |> 
   cobalt::bal.tab(
-    D ~ Price + Size + Tenure + Tenure2 + Size2 + Tenure_Size,  
+    D ~ Price + Size + Tenure + `Tenureの二乗` + `Sizeの二乗` + `TenureとSizeの交差項`,  
     data = _,
     weights = "Weight"
   ) |> 
@@ -140,7 +137,6 @@ Data |>
 推定するパラメタ ($\beta_0,..,\beta_L$) に比べて事例数が十分に大きければ、データ上のOLSの結果は、「母集団におけるOLSの結果」の優れた推定値です^[詳細に関心がある読者は、@chernozhukov2024applied の１章などを参照ください。]。
 特に近似的に計算される信頼区間を用いれば、母集団におけるOLSの結果を、定量的に議論できます。
 
-実際に、バランス前/後の平均差は、通常のOLS推定によって得られる$D$の係数値となります。
 以下では一切の$X$をバランスさせないケース、SizeとTenureの平均値のみをバランスさせるケース、平均に加えて分散と共分散もバランスさせたケースの推定結果を、$95\%$ 信頼区間とともに比較しています。
 
 ```{r,dev='ragg_png'}
@@ -178,18 +174,19 @@ dotwhisker::dwplot(
 ## 実践への示唆
 
 実践における課題は、$X$ について適切な複雑さを持つモデルを設定することです。
-しかしながら適切な複雑性は、母集団の特徴や事例数などに依存しており、一般に確実な解決は困難です。
+しかしながら適切な複雑性は、母集団の特徴や事例数などに依存しており、一般
+な解決は困難です。
 ただし過去の実践の問題点、および実践上の示唆を得ることはできます。
 
 多くの研究で$X$の二乗項や交差項を導入**しない**推定が行われてきました。
 しかしながらこのような推定は、平均値のみのバランスにとどまり、不十分な可能性が高いと考えられます。
-例えば、NBER Summer Institute 2018における、[Esther Dufloのチュートリアル](https://github.com/demirermert/MLInference) では、連続変数については二乗項、およびオプショナルな選択肢として全変数について交差項を導入した推定を行なっています。
+例えば、NBER Summer Institute 2018における、[Esther Dufloのチュートリアル](https://github.com/demirermert/MLInference) では、連続変数については二乗項、および全変数について交差項を導入した推定を行なっています。
 
-複雑な推定を行う問題点としては、推定誤差の拡大です。
+複雑な推定は、母集団における推定結果の推論を困難にします。
 この問題は、事例数が少ない小規模データを用いた推定において深刻です。
 しかしながら現代的な分析環境のもとでは、1000事例を超えるデータを用いた推定が一般的になっています。
-このような状況では、モデル多少の複雑化の悪影響は小さいと考えられる。
-少なくともかつての小規模事例を用いた推定よりも、より複雑なモデルを推定すべ機であると考えられます。
+このため、バランスさせたい$X$の数が少ない場合、その二乗項や交差項を加えたとしても、悪影響は小さいと考えられます。
+少なくとも小規模事例を用いた推定よりも、より複雑なモデルを推定すべきであると考えられます。
 
 バランスさせたい変数 $X$ の数が多い場合、二乗項や交差項を導入するとモデルが爆発的に複雑化し、OLSでは推定できなくなります。
 このような場合は、[Esther Dufloのチュートリアル](https://github.com/demirermert/MLInference) や @sec-RLeaner で議論する通り、機械学習を応用が有力です。
@@ -233,7 +230,7 @@ Control groupは、$D=0$ (2021年)、Treatment groupは、$D=1$ (2022年)の値�
 ### 負の荷重
 
 Balancing weightsは、正の値を取ることが望まれます。
-しかしながらOLSが生成するWeightは、負の値を取る可能性があり、ミスリーデイングな推定結果をもたらす可能性があります。
+しかしながらOLSが生成するWeightは、負の値を取る可能性があり、ミスリードな推定結果をもたらす可能性があります。
 
 lmw packageは、OLSが生成するweightsの値を計算します。
 例えばhist関数により、ヒストグラムとして可視化できます。
@@ -305,13 +302,12 @@ $D$ 間でSize,Tenure,StationDistanceの平均値をバランスさせ、Price�
 #| 
 Model = estimatr::lm_robust(
   Price ~ D + Size + Tenure + StationDistance,
-  Data)
+  Data) # OLS推定
 
 dotwhisker::dwplot(
-  Model,
-  vars_order = "D"
-  ) +
-  theme_bw()
+  list(平均値のみ = Model),
+  vars_order = "D") + # 信頼区間の可視化
+  theme_bw() # 背景を白地化
 ```
 
 $D$ の係数値は3.29であり、20.06ほど中心6区の物件の方が平均取引価格が高いことがわかります。
@@ -328,7 +324,7 @@ ModelLong = estimatr::lm_robust(
   Data)
 ```
 
-バランスをしない単純比較も含めて、推定結果を比較すると以下のようになる。
+バランスをしない単純比較も含めて、推定結果を比較すると以下のようになります。
 
 ```{r, dev='ragg_png'}
 #| echo: true
@@ -347,6 +343,8 @@ dotwhisker::dwplot(
   ) +
   theme_bw()
 ```
+
+バランスすることで、推定値が大きくなり、信頼区間が縮小する(推定精度が改善する)ことが確認できます。
 
 #### Balanced Weight
 
