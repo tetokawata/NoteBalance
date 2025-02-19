@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>4&nbsp; OLSによる特徴のバランス – バランス後の母平均差の推定 (ver 0.2)</title>
+<title>4&nbsp; OLSによる特徴のバランス – 格差/因果/比較分析 (ver 0.2)</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -179,7 +179,7 @@ window.Quarto = {
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
-      <a href="./">バランス後の母平均差の推定 (ver 0.2)</a> 
+      <a href="./">格差/因果/比較分析 (ver 0.2)</a> 
     </div>
       </div>
         <div class="mt-2 flex-shrink-0 align-items-center">
@@ -259,7 +259,6 @@ window.Quarto = {
   <li><a href="#researcher-degrees-of-freedom" id="toc-researcher-degrees-of-freedom" class="nav-link" data-scroll-target="#researcher-degrees-of-freedom"><span class="header-section-number">4.5.1</span> Researcher degrees of freedom</a></li>
   <li><a href="#ターゲットの解釈の難しさ" id="toc-ターゲットの解釈の難しさ" class="nav-link" data-scroll-target="#ターゲットの解釈の難しさ"><span class="header-section-number">4.5.2</span> ターゲットの解釈の難しさ</a></li>
   <li><a href="#負の荷重" id="toc-負の荷重" class="nav-link" data-scroll-target="#負の荷重"><span class="header-section-number">4.5.3</span> 負の荷重</a></li>
-  <li><a href="#解決策" id="toc-解決策" class="nav-link" data-scroll-target="#解決策"><span class="header-section-number">4.5.4</span> 解決策</a></li>
   </ul></li>
   <li><a href="#rによる実践例" id="toc-rによる実践例" class="nav-link" data-scroll-target="#rによる実践例"><span class="header-section-number">4.6</span> Rによる実践例</a>
   <ul class="collapse">
@@ -411,6 +410,7 @@ OLSの性質 <span class="citation" data-cites="chattopadhyay2023implied">(<a hr
 </div>
 <p>黒丸はOLSによるバランス後、ばつ印はバランス前の平均値を示しています。 Control groupは、<span class="math inline">\(D=0\)</span> (2021年)、Treatment groupは、<span class="math inline">\(D=1\)</span> (2022年)の値です。 0線は、サンプル平均を示しています。</p>
 <p>同図からバランス前は、2022年についてはSizeがサンプル平均よりも小さく、Tenureは長くなっています。 黒丸を見るとOLSによるバランス後は、2022年と2021年の間で平均差がなくなることが確認できます。 ただし０線からは乖離しており、サンプル平均とは一致していないことが確認できます。</p>
+<p>この問題の解決としては、サンプル平均にバランスさせることを明示的に要求したBalancing Weightの算出 (<a href="05Entropy.html" class="quarto-xref"><span>Chapter 5</span></a>) が有力です。</p>
 </section>
 <section id="負の荷重" class="level3" data-number="4.5.3">
 <h3 data-number="4.5.3" class="anchored" data-anchor-id="負の荷重"><span class="header-section-number">4.5.3</span> 負の荷重</h3>
@@ -426,10 +426,7 @@ OLSの性質 <span class="citation" data-cites="chattopadhyay2023implied">(<a hr
 </div>
 </div>
 <p>本応用例では、負のweightsは発生していないことが確認できました。</p>
-</section>
-<section id="解決策" class="level3" data-number="4.5.4">
-<h3 data-number="4.5.4" class="anchored" data-anchor-id="解決策"><span class="header-section-number">4.5.4</span> 解決策</h3>
-<p>ターゲットの解釈や負の荷重問題を解決する有力な方法は、Entropy weights <span class="citation" data-cites="hainmueller2012entropy">(<a href="Referemce.html#ref-hainmueller2012entropy" role="doc-biblioref">Hainmueller 2012</a>)</span> や Stable weights <span class="citation" data-cites="zubizarreta2015stable">(<a href="Referemce.html#ref-zubizarreta2015stable" role="doc-biblioref">Zubizarreta 2015</a>)</span> などを利用することです。 これらの手法では、サンプル平均との一致や正の値を取ることを条件として課した上で、weightを計算します。 このためOLSが持つ問題点の多くを克服しており、より信頼できるバランス後の比較分析が可能です。 これらの手法は <a href="https://ngreifer.github.io/WeightIt/">WeightIt package</a> <span class="citation" data-cites="greifer2024weightit">(<a href="Referemce.html#ref-greifer2024weightit" role="doc-biblioref">Greifer 2024</a>)</span> で容易に実装できます。</p>
+<p>負のweightsが発生しない方法としては、明示的なBalancing Weightの算出 (<a href="05Entropy.html" class="quarto-xref"><span>Chapter 5</span></a>) や機械学習を活用した柔軟な推定 (<a href="06R.html" class="quarto-xref"><span>Chapter 6</span></a>)が有力です。</p>
 </section>
 </section>
 <section id="rによる実践例" class="level2" data-number="4.6">
@@ -477,7 +474,7 @@ OLSの性質 <span class="citation" data-cites="chattopadhyay2023implied">(<a hr
 <span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>dotwhisker<span class="sc">::</span><span class="fu">dwplot</span>(</span>
 <span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">list</span>(平均値のみ <span class="ot">=</span> Model),</span>
 <span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">vars_order =</span> <span class="st">"D"</span>) <span class="sc">+</span> <span class="co"># 信頼区間の可視化</span></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="co"># 背景を白地化</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">theme_bw</span>() <span class="co"># 背景を白地化</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -509,7 +506,7 @@ OLSの性質 <span class="citation" data-cites="chattopadhyay2023implied">(<a hr
 <span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>    ),</span>
 <span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">vars_order =</span> <span class="st">"D"</span></span>
 <span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">theme_bw</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -558,15 +555,6 @@ Chattopadhyay, Ambarish, and José R Zubizarreta. 2023. <span>“On the Implied 
 </div>
 <div id="ref-chernozhukov2024applied" class="csl-entry" role="listitem">
 Chernozhukov, Victor, Christian Hansen, Nathan Kallus, Martin Spindler, and Vasilis Syrgkanis. 2024. <span>“Applied Causal Inference Powered by ML and AI.”</span> <em>arXiv Preprint arXiv:2403.02467</em>.
-</div>
-<div id="ref-greifer2024weightit" class="csl-entry" role="listitem">
-Greifer, Noah. 2024. <em>WeightIt: Weighting for Covariate Balance in Observational Studies</em>. <a href="https://ngreifer.github.io/WeightIt/">https://ngreifer.github.io/WeightIt/</a>.
-</div>
-<div id="ref-hainmueller2012entropy" class="csl-entry" role="listitem">
-Hainmueller, Jens. 2012. <span>“Entropy Balancing for Causal Effects: A Multivariate Reweighting Method to Produce Balanced Samples in Observational Studies.”</span> <em>Political Analysis</em> 20 (1): 25–46.
-</div>
-<div id="ref-zubizarreta2015stable" class="csl-entry" role="listitem">
-Zubizarreta, José R. 2015. <span>“Stable Weights That Balance Covariates for Estimation with Incomplete Outcome Data.”</span> <em>Journal of the American Statistical Association</em> 110 (511): 910–22.
 </div>
 </div>
 </section>
