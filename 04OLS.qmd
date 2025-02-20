@@ -1,9 +1,10 @@
 # OLSによる特徴のバランス {#sec-Moment}
 
-$X$ の組み合わせが多く、Balancing weightsを計算することが困難な場合、$X$の分布を近似的なバランスが有力です。
+$X$ の組み合わせが多く、Balancing weightsを計算することが困難な場合、近似的なバランスが有力な方法となります。
 
 本節では代表的な統計手法であるOLS（重回帰）が、近似的なBalancing weightsを暗黙のうちに計算する手法であることを紹介します。
-OLSは分布の特徴を、研究者が定める定式化に応じて、柔軟にBalanceできることが利点ですが、予期せぬ挙動を示しやすいことに注意が必要です。
+OLSは分布の特徴を、研究者が定める定式化に応じて、要求するBalanceの精度を変更できることが利点です。
+ただし、$D$ 間での$X$の分布の分断が激しい場合、予期せぬ挙動を示しやすいことに注意が必要です。
 
 ```{r}
 library(tidyverse)
@@ -189,7 +190,7 @@ dotwhisker::dwplot(
 少なくとも小規模事例を用いた推定よりも、より複雑なモデルを推定すべきであると考えられます。
 
 バランスさせたい変数 $X$ の数が多い場合、二乗項や交差項を導入するとモデルが爆発的に複雑化し、OLSでは推定できなくなります。
-このような場合は、[Esther Dufloのチュートリアル](https://github.com/demirermert/MLInference) や @sec-RLeaner で議論する通り、機械学習を応用が有力です。
+このような場合は、@sec-RLeaner で議論する通り、機械学習を応用が有力です。
 
 ## 応用上の課題
 
@@ -227,6 +228,8 @@ Control groupは、$D=0$ (2021年)、Treatment groupは、$D=1$ (2022年)の値�
 黒丸を見るとOLSによるバランス後は、2022年と2021年の間で平均差がなくなることが確認できます。
 ただし０線からは乖離しており、サンプル平均とは一致していないことが確認できます。
 
+この問題の解決としては、サンプル平均にバランスさせることを明示的に要求したBalancing Weightの算出 (@sec-Entropy) が有力です。
+
 ### 負の荷重
 
 Balancing weightsは、正の値を取ることが望まれます。
@@ -248,13 +251,7 @@ tibble(Weight = Fit$weights) |>
 
 本応用例では、負のweightsは発生していないことが確認できました。
 
-### 解決策
-
-ターゲットの解釈や負の荷重問題を解決する有力な方法は、Entropy weights [@hainmueller2012entropy] や Stable weights [@zubizarreta2015stable] などを利用することです。
-これらの手法では、サンプル平均との一致や正の値を取ることを条件として課した上で、weightを計算します。
-このためOLSが持つ問題点の多くを克服しており、より信頼できるバランス後の比較分析が可能です。
-これらの手法は [WeightIt package](https://ngreifer.github.io/WeightIt/) [@greifer2024weightit] で容易に実装できます。
-
+負のweightsが発生しない方法としては、明示的なBalancing Weightの算出 (@sec-Entropy) や機械学習を活用した柔軟な推定 (@sec-RLeaner)が有力です。
 
 ## Rによる実践例
 
@@ -282,7 +279,6 @@ $D$ として、取引年が2022か2021かで、1/0となる変数を定義し�
 
 ```{r}
 #| echo: true
-
 Data = readr::read_csv("Public.csv") # データ読み込み
 
 Data = dplyr::mutate(
@@ -297,7 +293,7 @@ Data = dplyr::mutate(
 
 $D$ 間でSize,Tenure,StationDistanceの平均値をバランスさせ、Priceの平均値を比較します。
 
-```{r}
+```{r, dev='ragg_png'}
 #| echo: true
 #| 
 Model = estimatr::lm_robust(
@@ -307,7 +303,7 @@ Model = estimatr::lm_robust(
 dotwhisker::dwplot(
   list(平均値のみ = Model),
   vars_order = "D") + # 信頼区間の可視化
-  theme_bw() # 背景を白地化
+  ggplot2::theme_bw() # 背景を白地化
 ```
 
 $D$ の係数値は3.29であり、20.06ほど中心6区の物件の方が平均取引価格が高いことがわかります。
@@ -341,7 +337,7 @@ dotwhisker::dwplot(
     ),
   vars_order = "D"
   ) +
-  theme_bw()
+  ggplot2::theme_bw()
 ```
 
 バランスすることで、推定値が大きくなり、信頼区間が縮小する(推定精度が改善する)ことが確認できます。

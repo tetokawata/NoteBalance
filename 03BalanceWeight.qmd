@@ -55,7 +55,7 @@ Data |>
     .by = c("CBD","取引年")
   ) |> 
   mutate(
-    ターゲットとなる割合 = n()/nrow(Data),
+    ターゲット割合 = n()/nrow(Data),
     .by = c("CBD")
   ) |> 
   distinct(
@@ -63,17 +63,18 @@ Data |>
     CBD,
     取引年,
     事例割合,
-    ターゲットとなる割合
+    ターゲット割合
   ) |> 
+  rename(中心6区 = CBD) |> 
   mutate(
     事例割合 = (事例割合/sum(事例割合)),
     .by = c("取引年")
   ) |> 
   arrange(
     取引年,
-    CBD) |> 
+    中心6区) |> 
   mutate(
-    `Balancing Weight` = ターゲットとなる割合/事例割合
+    `Weight` = ターゲット割合/事例割合
   ) |> 
   gt::gt() |>
   gt::fmt_number(
@@ -87,7 +88,7 @@ Data |>
     )
 ```
 
-2022年と2021年を結合したデータ全体のうち、CBDに立地する物件割合は$21.8\%$ 、それ以外が $78.2\%$ であったので、ターゲットして設定しています。
+2022年と2021年を結合したデータ全体のうち、中心6区に立地する物件割合は$21.8\%$ 、それ以外が $78.2\%$ であったので、ターゲットして設定しています。
 
 Balancing weightsを用いると、バランス後の平均値は以下のように計算できます
 
@@ -95,159 +96,11 @@ $$2021年のバランス後の平均値 =2021年の(\omega(X_i,2021)\times Y_i)�
 
 $$2022年のバランス後の平均値 =2022年の(\omega(X_i,2022)\times Y_i)の平均値$$
 
-## 母集団の推定方法
-
-$X$の組み合わせの種類に比べて、十分な事例数が存在するのであれば、Balancing weightは、データ上での$X$の割合を用いて計算できます。
-
-この方法はExact MatchingやStratified Estimation [@wager2024causal] として知られる方法による推定結果と完全に一致します。
-例えばExact Matchingは、[MatchIt package](https://kosukeimai.github.io/MatchIt/) [@stuart2011matchit] などを利用して実装できます。
-
-さらに「母集団上で、Exact MatchingやStratified Estimationを行った場合の結果」について、推論することもできます。
-事例全体の数が十分にある場合、信頼区間を近似計算できるためです^[詳細に関心がある読者は、@wager2024causal の２章等を参照ください。]。
-
-
-## Rによる実践例
-
-- 以下のパッケージを使用
-
-    - readr (tidyverseに同梱): データの読み込み
-    
-    - matchit: Exact matchingを含む多様なMatchingを実装
-    
-        - [mannual](https://kosukeimai.github.io/MatchIt/)
-        
-    - estimatr: Robust stnadard errorを計算する
-    
-    - gt: 見やすいテーブルを出力
-
-### 準備
-
-データを取得します。
-$D$ として、中心6区かそれ以外で、1/0となる変数を定義します。
-シンプルな比較分析について信頼区間は、データ分割は不要です。
-
-```{r}
-#| echo: true
-
-Data = readr::read_csv("Public.csv") # データ読み込み
-
-Data = dplyr::mutate(
-  Data,
-  D = dplyr::if_else(
-    LargeDistrict == "中心6区",1,0
-  )
-) # Dの定義
-```
-
-### Balancing Weight
-
-MatchItパッケージ内のmatchti関数を用いて、Balanced weightsを計算します。
-例えば部屋の広さ(Size)についてバランスした平均取引価格とその信頼区間は、以下で計算できます。
-
-```{r}
-#| echo: true
-
-Match = MatchIt::matchit(
-  D ~ Size, # D ~ Xを指定
-  Data, # 用いるデータの指定
-  method = "exact", # Balanced weightを計算するために、exact matchingを実行
-  target = "ATE" # サンプル全体のXの分布をターゲット
-  )
-
-DataWeight = MatchIt::match.data(
-  Match, 
-  drop.unmatched = FALSE # Balance weightが計算できない事例も含む
-  ) # Balance weightを含んだデータを生成 
-
-Match # Balance weightの特徴を表示
-```
-
-number of obs.において、元々の事例数 (6378) と balanced weightを計算できた事例数 (6378) を表示しています。
-事例数は減少しておらず、Balancing Weightを計算できない事例が存在しないことを確認できます。
-
-バランス後の平均差を推定すると以下となります。
-
-
-```{r}
-#| echo: true
-estimatr::lm_robust(
-  Price ~ D,
-   DataWeight,
-   weights = weights # Balancing weightsを使用
-   )
-```
-
-単純比較の結果は以下であり、大きく異なることが確認できます。
-
-```{r}
-#| echo: true
-estimatr::lm_robust(
-  Price ~ D,
-  DataWeight)
-```
-
-Balancing Weightの分布は、以下のように確認できます。
-
-```{r}
-#| echo: true
-DataWeight |> 
-  ggplot(
-    aes(
-      x = weights
-    )
-  ) +
-  geom_histogram() +
-  theme_bw()
-```
-
-一部、非常に大きな値をとるグループがあります。
-Weightsが大きい上位10事例は以下のとおりです。
-
-```{r}
-#| echo: true
-DataWeight |> 
-  arrange(-weights) |> 
-  head(10) |> 
-  gt::gt()
-```
-
-
 ## 応用上の課題
 
-Exact matchingやStratified Estimationは、非常に直感的な推定方法ですが、$X$ の組み合わせが増えると、実行不可能です。
-例えば$X$に、両親の年収や資産などの連続変数が含まれている場合は、$X$の組み合わせが非常に大きくなり、Balancing weightsを計算することは事実上不可能となります。
+$X$の組み合わせの種類に比べて、十分な事例数が存在するのであれば、Balancing weightは、データ上での$X$の割合を用いて計算できます^[この方法はExact MatchingやStratified Estimation [@wager2024causal] として知られる方法による推定結果と完全に一致します。
+例えばExact Matchingは、[MatchIt package](https://kosukeimai.github.io/MatchIt/) [@stuart2011matchit] などを利用して実装できます。]。
 
-例えば、Size, Tenure (築年数), StationDistance (駅からの距離)、District (立地) について、Balancing Weightsは、以下で計算を試みることができますが、エラーが表示されます。
-
-```{r}
-#| echo: true
-#| error: true
-
-Match = MatchIt::matchit(
-  D ~ Size + Tenure + StationDistance, # D ~ Xを指定
-  Data, # 用いるデータの指定
-  method = "exact", # Balanced weightを計算するために、exact matchingを実行
-  target = "ATE" # サンプル全体のXの分布をターゲット
-  )
-```
-
-このエラーは、これら4つの属性が全く同じ事例は、中心6区かそれ以外 のどちらからしか存在しないことを意味しています。
-
-もしDistrictのバランスを諦めれば、Balancing Weight自体は計算できます。
-
-```{r}
-#| echo: true
-Match = MatchIt::matchit(
-  D ~ Size + Tenure + StationDistance, # D ~ Xを指定
-  Data, # 用いるデータの指定
-  method = "exact", # Balanced weightを計算するために、exact matchingを実行
-  target = "ATE" # サンプル全体のXの分布をターゲット
-  )
-
-Match
-```
-
-ただしWeightを計算できたのたのは、6378事例の内、1702事例のみです。
-このような大幅な事例減少は、分析のターゲットとなる分布からデータを大きく乖離させ、ミスリードな推定結果を生み出す要因となります。
-
+しかしながら多くの応用研究では、バランスの対象となる $X$ の数が多く、$D=1$ または $D=0$ のどちらかの事例しか存在しない組み合わせが対象に発生します。
+このような組み合わせについては、Balancing weightsを計算することができず、Balanced comparisonが不可能となります。
 この問題を解決するために、次節以降で紹介する、OLS (@sec-Moment) や機械学習 (@sec-RLeaner) などを用いた「近似的なバランス法」の活用が有用です。

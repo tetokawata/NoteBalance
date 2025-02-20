@@ -20,40 +20,6 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for syntax highlighting */
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
 /* CSS for citations */
 div.csl-bib-body { }
 div.csl-entry {
@@ -222,7 +188,7 @@ window.Quarto = {
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./05Entropy.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">明示的なBalancing Weightの算出</span></span></a>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">直接的なBalancing Weightの算出</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -248,13 +214,7 @@ window.Quarto = {
    
   <ul>
   <li><a href="#balancing-weightの定義" id="toc-balancing-weightの定義" class="nav-link active" data-scroll-target="#balancing-weightの定義"><span class="header-section-number">3.1</span> Balancing Weightの定義</a></li>
-  <li><a href="#母集団の推定方法" id="toc-母集団の推定方法" class="nav-link" data-scroll-target="#母集団の推定方法"><span class="header-section-number">3.2</span> 母集団の推定方法</a></li>
-  <li><a href="#rによる実践例" id="toc-rによる実践例" class="nav-link" data-scroll-target="#rによる実践例"><span class="header-section-number">3.3</span> Rによる実践例</a>
-  <ul class="collapse">
-  <li><a href="#準備" id="toc-準備" class="nav-link" data-scroll-target="#準備"><span class="header-section-number">3.3.1</span> 準備</a></li>
-  <li><a href="#balancing-weight-1" id="toc-balancing-weight-1" class="nav-link" data-scroll-target="#balancing-weight-1"><span class="header-section-number">3.3.2</span> Balancing Weight</a></li>
-  </ul></li>
-  <li><a href="#応用上の課題" id="toc-応用上の課題" class="nav-link" data-scroll-target="#応用上の課題"><span class="header-section-number">3.4</span> 応用上の課題</a></li>
+  <li><a href="#応用上の課題" id="toc-応用上の課題" class="nav-link" data-scroll-target="#応用上の課題"><span class="header-section-number">3.2</span> 応用上の課題</a></li>
   </ul>
 </nav>
     </div>
@@ -307,23 +267,23 @@ Balancing Weight
 <p>先のデータに適用すると、以下のようなBalancing Weightが計算されます。</p>
 <div class="cell">
 <div class="cell-output-display">
-<div id="ydotwcrnri" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#ydotwcrnri table {
+<div id="glbejgvigy" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#glbejgvigy table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#ydotwcrnri thead, #ydotwcrnri tbody, #ydotwcrnri tfoot, #ydotwcrnri tr, #ydotwcrnri td, #ydotwcrnri th {
+#glbejgvigy thead, #glbejgvigy tbody, #glbejgvigy tfoot, #glbejgvigy tr, #glbejgvigy td, #glbejgvigy th {
   border-style: none;
 }
 
-#ydotwcrnri p {
+#glbejgvigy p {
   margin: 0;
   padding: 0;
 }
 
-#ydotwcrnri .gt_table {
+#glbejgvigy .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -349,12 +309,12 @@ Balancing Weight
   border-left-color: #D3D3D3;
 }
 
-#ydotwcrnri .gt_caption {
+#glbejgvigy .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#ydotwcrnri .gt_title {
+#glbejgvigy .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -366,7 +326,7 @@ Balancing Weight
   border-bottom-width: 0;
 }
 
-#ydotwcrnri .gt_subtitle {
+#glbejgvigy .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -378,7 +338,7 @@ Balancing Weight
   border-top-width: 0;
 }
 
-#ydotwcrnri .gt_heading {
+#glbejgvigy .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -390,13 +350,13 @@ Balancing Weight
   border-right-color: #D3D3D3;
 }
 
-#ydotwcrnri .gt_bottom_border {
+#glbejgvigy .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#ydotwcrnri .gt_col_headings {
+#glbejgvigy .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -411,7 +371,7 @@ Balancing Weight
   border-right-color: #D3D3D3;
 }
 
-#ydotwcrnri .gt_col_heading {
+#glbejgvigy .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -431,7 +391,7 @@ Balancing Weight
   overflow-x: hidden;
 }
 
-#ydotwcrnri .gt_column_spanner_outer {
+#glbejgvigy .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -443,15 +403,15 @@ Balancing Weight
   padding-right: 4px;
 }
 
-#ydotwcrnri .gt_column_spanner_outer:first-child {
+#glbejgvigy .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#ydotwcrnri .gt_column_spanner_outer:last-child {
+#glbejgvigy .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#ydotwcrnri .gt_column_spanner {
+#glbejgvigy .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -463,11 +423,11 @@ Balancing Weight
   width: 100%;
 }
 
-#ydotwcrnri .gt_spanner_row {
+#glbejgvigy .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#ydotwcrnri .gt_group_heading {
+#glbejgvigy .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -493,7 +453,7 @@ Balancing Weight
   text-align: left;
 }
 
-#ydotwcrnri .gt_empty_group_heading {
+#glbejgvigy .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -508,15 +468,15 @@ Balancing Weight
   vertical-align: middle;
 }
 
-#ydotwcrnri .gt_from_md > :first-child {
+#glbejgvigy .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#ydotwcrnri .gt_from_md > :last-child {
+#glbejgvigy .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#ydotwcrnri .gt_row {
+#glbejgvigy .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -535,7 +495,7 @@ Balancing Weight
   overflow-x: hidden;
 }
 
-#ydotwcrnri .gt_stub {
+#glbejgvigy .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -548,7 +508,7 @@ Balancing Weight
   padding-right: 5px;
 }
 
-#ydotwcrnri .gt_stub_row_group {
+#glbejgvigy .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -562,15 +522,15 @@ Balancing Weight
   vertical-align: top;
 }
 
-#ydotwcrnri .gt_row_group_first td {
+#glbejgvigy .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#ydotwcrnri .gt_row_group_first th {
+#glbejgvigy .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#ydotwcrnri .gt_summary_row {
+#glbejgvigy .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -580,16 +540,16 @@ Balancing Weight
   padding-right: 5px;
 }
 
-#ydotwcrnri .gt_first_summary_row {
+#glbejgvigy .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#ydotwcrnri .gt_first_summary_row.thick {
+#glbejgvigy .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#ydotwcrnri .gt_last_summary_row {
+#glbejgvigy .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -599,7 +559,7 @@ Balancing Weight
   border-bottom-color: #D3D3D3;
 }
 
-#ydotwcrnri .gt_grand_summary_row {
+#glbejgvigy .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -609,7 +569,7 @@ Balancing Weight
   padding-right: 5px;
 }
 
-#ydotwcrnri .gt_first_grand_summary_row {
+#glbejgvigy .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -619,7 +579,7 @@ Balancing Weight
   border-top-color: #D3D3D3;
 }
 
-#ydotwcrnri .gt_last_grand_summary_row_top {
+#glbejgvigy .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -629,11 +589,11 @@ Balancing Weight
   border-bottom-color: #D3D3D3;
 }
 
-#ydotwcrnri .gt_striped {
+#glbejgvigy .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#ydotwcrnri .gt_table_body {
+#glbejgvigy .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -642,7 +602,7 @@ Balancing Weight
   border-bottom-color: #D3D3D3;
 }
 
-#ydotwcrnri .gt_footnotes {
+#glbejgvigy .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -656,7 +616,7 @@ Balancing Weight
   border-right-color: #D3D3D3;
 }
 
-#ydotwcrnri .gt_footnote {
+#glbejgvigy .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -665,7 +625,7 @@ Balancing Weight
   padding-right: 5px;
 }
 
-#ydotwcrnri .gt_sourcenotes {
+#glbejgvigy .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -679,7 +639,7 @@ Balancing Weight
   border-right-color: #D3D3D3;
 }
 
-#ydotwcrnri .gt_sourcenote {
+#glbejgvigy .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -687,72 +647,72 @@ Balancing Weight
   padding-right: 5px;
 }
 
-#ydotwcrnri .gt_left {
+#glbejgvigy .gt_left {
   text-align: left;
 }
 
-#ydotwcrnri .gt_center {
+#glbejgvigy .gt_center {
   text-align: center;
 }
 
-#ydotwcrnri .gt_right {
+#glbejgvigy .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#ydotwcrnri .gt_font_normal {
+#glbejgvigy .gt_font_normal {
   font-weight: normal;
 }
 
-#ydotwcrnri .gt_font_bold {
+#glbejgvigy .gt_font_bold {
   font-weight: bold;
 }
 
-#ydotwcrnri .gt_font_italic {
+#glbejgvigy .gt_font_italic {
   font-style: italic;
 }
 
-#ydotwcrnri .gt_super {
+#glbejgvigy .gt_super {
   font-size: 65%;
 }
 
-#ydotwcrnri .gt_footnote_marks {
+#glbejgvigy .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#ydotwcrnri .gt_asterisk {
+#glbejgvigy .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#ydotwcrnri .gt_indent_1 {
+#glbejgvigy .gt_indent_1 {
   text-indent: 5px;
 }
 
-#ydotwcrnri .gt_indent_2 {
+#glbejgvigy .gt_indent_2 {
   text-indent: 10px;
 }
 
-#ydotwcrnri .gt_indent_3 {
+#glbejgvigy .gt_indent_3 {
   text-indent: 15px;
 }
 
-#ydotwcrnri .gt_indent_4 {
+#glbejgvigy .gt_indent_4 {
   text-indent: 20px;
 }
 
-#ydotwcrnri .gt_indent_5 {
+#glbejgvigy .gt_indent_5 {
   text-indent: 25px;
 }
 
-#ydotwcrnri .katex-display {
+#glbejgvigy .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#ydotwcrnri div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#glbejgvigy div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -761,45 +721,45 @@ Balancing Weight
 <thead>
 <tr class="gt_col_headings header">
 <th id="a平均価格" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">平均価格</th>
-<th id="CBD" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">CBD</th>
+<th id="a中心6区" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">中心6区</th>
 <th id="a取引年" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">取引年</th>
 <th id="a事例割合" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">事例割合</th>
-<th id="aターゲットとなる割合" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">ターゲットとなる割合</th>
-<th id="Balancing-Weight" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Balancing Weight</th>
+<th id="aターゲット割合" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">ターゲット割合</th>
+<th id="Weight" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Weight</th>
 </tr>
 </thead>
 <tbody class="gt_table_body">
 <tr class="odd">
 <td class="gt_row gt_right" headers="平均価格">37.748</td>
-<td class="gt_row gt_right" headers="CBD">0</td>
+<td class="gt_row gt_right" headers="中心6区">0</td>
 <td class="gt_row gt_right" headers="取引年">2021</td>
 <td class="gt_row gt_right" headers="事例割合">0.784</td>
-<td class="gt_row gt_right" headers="ターゲットとなる割合">0.782</td>
-<td class="gt_row gt_right" headers="Balancing Weight">0.997</td>
+<td class="gt_row gt_right" headers="ターゲット割合">0.782</td>
+<td class="gt_row gt_right" headers="Weight">0.997</td>
 </tr>
 <tr class="even">
 <td class="gt_row gt_right" headers="平均価格">60.474</td>
-<td class="gt_row gt_right" headers="CBD">1</td>
+<td class="gt_row gt_right" headers="中心6区">1</td>
 <td class="gt_row gt_right" headers="取引年">2021</td>
 <td class="gt_row gt_right" headers="事例割合">0.216</td>
-<td class="gt_row gt_right" headers="ターゲットとなる割合">0.218</td>
-<td class="gt_row gt_right" headers="Balancing Weight">1.010</td>
+<td class="gt_row gt_right" headers="ターゲット割合">0.218</td>
+<td class="gt_row gt_right" headers="Weight">1.010</td>
 </tr>
 <tr class="odd">
 <td class="gt_row gt_right" headers="平均価格" style="background-color: #ADD8E6">39.150</td>
-<td class="gt_row gt_right" headers="CBD" style="background-color: #ADD8E6">0</td>
+<td class="gt_row gt_right" headers="中心6区" style="background-color: #ADD8E6">0</td>
 <td class="gt_row gt_right" headers="取引年" style="background-color: #ADD8E6">2022</td>
 <td class="gt_row gt_right" headers="事例割合" style="background-color: #ADD8E6">0.779</td>
-<td class="gt_row gt_right" headers="ターゲットとなる割合" style="background-color: #ADD8E6">0.782</td>
-<td class="gt_row gt_right" headers="Balancing Weight" style="background-color: #ADD8E6">1.003</td>
+<td class="gt_row gt_right" headers="ターゲット割合" style="background-color: #ADD8E6">0.782</td>
+<td class="gt_row gt_right" headers="Weight" style="background-color: #ADD8E6">1.003</td>
 </tr>
 <tr class="even">
 <td class="gt_row gt_right" headers="平均価格" style="background-color: #ADD8E6">64.814</td>
-<td class="gt_row gt_right" headers="CBD" style="background-color: #ADD8E6">1</td>
+<td class="gt_row gt_right" headers="中心6区" style="background-color: #ADD8E6">1</td>
 <td class="gt_row gt_right" headers="取引年" style="background-color: #ADD8E6">2022</td>
 <td class="gt_row gt_right" headers="事例割合" style="background-color: #ADD8E6">0.221</td>
-<td class="gt_row gt_right" headers="ターゲットとなる割合" style="background-color: #ADD8E6">0.218</td>
-<td class="gt_row gt_right" headers="Balancing Weight" style="background-color: #ADD8E6">0.989</td>
+<td class="gt_row gt_right" headers="ターゲット割合" style="background-color: #ADD8E6">0.218</td>
+<td class="gt_row gt_right" headers="Weight" style="background-color: #ADD8E6">0.989</td>
 </tr>
 </tbody>
 </table>
@@ -807,747 +767,15 @@ Balancing Weight
 </div>
 </div>
 </div>
-<p>2022年と2021年を結合したデータ全体のうち、CBDに立地する物件割合は<span class="math inline">\(21.8\%\)</span> 、それ以外が <span class="math inline">\(78.2\%\)</span> であったので、ターゲットして設定しています。</p>
+<p>2022年と2021年を結合したデータ全体のうち、中心6区に立地する物件割合は<span class="math inline">\(21.8\%\)</span> 、それ以外が <span class="math inline">\(78.2\%\)</span> であったので、ターゲットして設定しています。</p>
 <p>Balancing weightsを用いると、バランス後の平均値は以下のように計算できます</p>
 <p><span class="math display">\[2021年のバランス後の平均値 =2021年の(\omega(X_i,2021)\times Y_i)の平均値\]</span></p>
 <p><span class="math display">\[2022年のバランス後の平均値 =2022年の(\omega(X_i,2022)\times Y_i)の平均値\]</span></p>
 </section>
-<section id="母集団の推定方法" class="level2" data-number="3.2">
-<h2 data-number="3.2" class="anchored" data-anchor-id="母集団の推定方法"><span class="header-section-number">3.2</span> 母集団の推定方法</h2>
-<p><span class="math inline">\(X\)</span>の組み合わせの種類に比べて、十分な事例数が存在するのであれば、Balancing weightは、データ上での<span class="math inline">\(X\)</span>の割合を用いて計算できます。</p>
-<p>この方法はExact MatchingやStratified Estimation <span class="citation" data-cites="wager2024causal">(<a href="Referemce.html#ref-wager2024causal" role="doc-biblioref">Wager 2024</a>)</span> として知られる方法による推定結果と完全に一致します。 例えばExact Matchingは、<a href="https://kosukeimai.github.io/MatchIt/">MatchIt package</a> <span class="citation" data-cites="stuart2011matchit">(<a href="Referemce.html#ref-stuart2011matchit" role="doc-biblioref">Stuart et al. 2011</a>)</span> などを利用して実装できます。</p>
-<p>さらに「母集団上で、Exact MatchingやStratified Estimationを行った場合の結果」について、推論することもできます。 事例全体の数が十分にある場合、信頼区間を近似計算できるためです<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>。</p>
-</section>
-<section id="rによる実践例" class="level2" data-number="3.3">
-<h2 data-number="3.3" class="anchored" data-anchor-id="rによる実践例"><span class="header-section-number">3.3</span> Rによる実践例</h2>
-<ul>
-<li><p>以下のパッケージを使用</p>
-<ul>
-<li><p>readr (tidyverseに同梱): データの読み込み</p></li>
-<li><p>matchit: Exact matchingを含む多様なMatchingを実装</p>
-<ul>
-<li><a href="https://kosukeimai.github.io/MatchIt/">mannual</a></li>
-</ul></li>
-<li><p>estimatr: Robust stnadard errorを計算する</p></li>
-<li><p>gt: 見やすいテーブルを出力</p></li>
-</ul></li>
-</ul>
-<section id="準備" class="level3" data-number="3.3.1">
-<h3 data-number="3.3.1" class="anchored" data-anchor-id="準備"><span class="header-section-number">3.3.1</span> 準備</h3>
-<p>データを取得します。 <span class="math inline">\(D\)</span> として、中心6区かそれ以外で、1/0となる変数を定義します。 シンプルな比較分析について信頼区間は、データ分割は不要です。</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>Data <span class="ot">=</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(<span class="st">"Public.csv"</span>) <span class="co"># データ読み込み</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>Data <span class="ot">=</span> dplyr<span class="sc">::</span><span class="fu">mutate</span>(</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  Data,</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">D =</span> dplyr<span class="sc">::</span><span class="fu">if_else</span>(</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    LargeDistrict <span class="sc">==</span> <span class="st">"中心6区"</span>,<span class="dv">1</span>,<span class="dv">0</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>) <span class="co"># Dの定義</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-<section id="balancing-weight-1" class="level3" data-number="3.3.2">
-<h3 data-number="3.3.2" class="anchored" data-anchor-id="balancing-weight-1"><span class="header-section-number">3.3.2</span> Balancing Weight</h3>
-<p>MatchItパッケージ内のmatchti関数を用いて、Balanced weightsを計算します。 例えば部屋の広さ(Size)についてバランスした平均取引価格とその信頼区間は、以下で計算できます。</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>Match <span class="ot">=</span> MatchIt<span class="sc">::</span><span class="fu">matchit</span>(</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  D <span class="sc">~</span> Size, <span class="co"># D ~ Xを指定</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  Data, <span class="co"># 用いるデータの指定</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">method =</span> <span class="st">"exact"</span>, <span class="co"># Balanced weightを計算するために、exact matchingを実行</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">target =</span> <span class="st">"ATE"</span> <span class="co"># サンプル全体のXの分布をターゲット</span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>DataWeight <span class="ot">=</span> MatchIt<span class="sc">::</span><span class="fu">match.data</span>(</span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>  Match, </span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">drop.unmatched =</span> <span class="cn">FALSE</span> <span class="co"># Balance weightが計算できない事例も含む</span></span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>  ) <span class="co"># Balance weightを含んだデータを生成 </span></span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>Match <span class="co"># Balance weightの特徴を表示</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>A `matchit` object
- - method: Exact matching
- - number of obs.: 6378 (original), 6378 (matched)
- - target estimand: ATT
- - covariates: Size</code></pre>
-</div>
-</div>
-<p>number of obs.において、元々の事例数 (6378) と balanced weightを計算できた事例数 (6378) を表示しています。 事例数は減少しておらず、Balancing Weightを計算できない事例が存在しないことを確認できます。</p>
-<p>バランス後の平均差を推定すると以下となります。</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>estimatr<span class="sc">::</span><span class="fu">lm_robust</span>(</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  Price <span class="sc">~</span> D,</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>   DataWeight,</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>   <span class="at">weights =</span> weights <span class="co"># Balancing weightsを使用</span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>   )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>            Estimate Std. Error  t value     Pr(&gt;|t|) CI Lower CI Upper   DF
-(Intercept) 36.83243  0.3625188 101.6014 0.000000e+00 36.12177 37.54309 6376
-D           22.14787  1.2648841  17.5098 4.392756e-67 19.66827 24.62746 6376</code></pre>
-</div>
-</div>
-<p>単純比較の結果は以下であり、大きく異なることが確認できます。</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>estimatr<span class="sc">::</span><span class="fu">lm_robust</span>(</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  Price <span class="sc">~</span> D,</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  DataWeight)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>            Estimate Std. Error  t value     Pr(&gt;|t|) CI Lower CI Upper   DF
-(Intercept) 38.03972  0.3182179 119.5399 0.000000e+00 37.41591 38.66354 6376
-D           20.94057  1.2529064  16.7136 2.084367e-61 18.48446 23.39669 6376</code></pre>
-</div>
-</div>
-<p>Balancing Weightの分布は、以下のように確認できます。</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>DataWeight <span class="sc">|&gt;</span> </span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>      <span class="at">x =</span> weights</span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>() <span class="sc">+</span></span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="03BalanceWeight_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-<p>一部、非常に大きな値をとるグループがあります。 Weightsが大きい上位10事例は以下のとおりです。</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>DataWeight <span class="sc">|&gt;</span> </span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="sc">-</span>weights) <span class="sc">|&gt;</span> </span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">10</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  gt<span class="sc">::</span><span class="fu">gt</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div id="roxqzufrpf" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#roxqzufrpf table {
-  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-#roxqzufrpf thead, #roxqzufrpf tbody, #roxqzufrpf tfoot, #roxqzufrpf tr, #roxqzufrpf td, #roxqzufrpf th {
-  border-style: none;
-}
-
-#roxqzufrpf p {
-  margin: 0;
-  padding: 0;
-}
-
-#roxqzufrpf .gt_table {
-  display: table;
-  border-collapse: collapse;
-  line-height: normal;
-  margin-left: auto;
-  margin-right: auto;
-  color: #333333;
-  font-size: 16px;
-  font-weight: normal;
-  font-style: normal;
-  background-color: #FFFFFF;
-  width: auto;
-  border-top-style: solid;
-  border-top-width: 2px;
-  border-top-color: #A8A8A8;
-  border-right-style: none;
-  border-right-width: 2px;
-  border-right-color: #D3D3D3;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #A8A8A8;
-  border-left-style: none;
-  border-left-width: 2px;
-  border-left-color: #D3D3D3;
-}
-
-#roxqzufrpf .gt_caption {
-  padding-top: 4px;
-  padding-bottom: 4px;
-}
-
-#roxqzufrpf .gt_title {
-  color: #333333;
-  font-size: 125%;
-  font-weight: initial;
-  padding-top: 4px;
-  padding-bottom: 4px;
-  padding-left: 5px;
-  padding-right: 5px;
-  border-bottom-color: #FFFFFF;
-  border-bottom-width: 0;
-}
-
-#roxqzufrpf .gt_subtitle {
-  color: #333333;
-  font-size: 85%;
-  font-weight: initial;
-  padding-top: 3px;
-  padding-bottom: 5px;
-  padding-left: 5px;
-  padding-right: 5px;
-  border-top-color: #FFFFFF;
-  border-top-width: 0;
-}
-
-#roxqzufrpf .gt_heading {
-  background-color: #FFFFFF;
-  text-align: center;
-  border-bottom-color: #FFFFFF;
-  border-left-style: none;
-  border-left-width: 1px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 1px;
-  border-right-color: #D3D3D3;
-}
-
-#roxqzufrpf .gt_bottom_border {
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-}
-
-#roxqzufrpf .gt_col_headings {
-  border-top-style: solid;
-  border-top-width: 2px;
-  border-top-color: #D3D3D3;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  border-left-style: none;
-  border-left-width: 1px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 1px;
-  border-right-color: #D3D3D3;
-}
-
-#roxqzufrpf .gt_col_heading {
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: normal;
-  text-transform: inherit;
-  border-left-style: none;
-  border-left-width: 1px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 1px;
-  border-right-color: #D3D3D3;
-  vertical-align: bottom;
-  padding-top: 5px;
-  padding-bottom: 6px;
-  padding-left: 5px;
-  padding-right: 5px;
-  overflow-x: hidden;
-}
-
-#roxqzufrpf .gt_column_spanner_outer {
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: normal;
-  text-transform: inherit;
-  padding-top: 0;
-  padding-bottom: 0;
-  padding-left: 4px;
-  padding-right: 4px;
-}
-
-#roxqzufrpf .gt_column_spanner_outer:first-child {
-  padding-left: 0;
-}
-
-#roxqzufrpf .gt_column_spanner_outer:last-child {
-  padding-right: 0;
-}
-
-#roxqzufrpf .gt_column_spanner {
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  vertical-align: bottom;
-  padding-top: 5px;
-  padding-bottom: 5px;
-  overflow-x: hidden;
-  display: inline-block;
-  width: 100%;
-}
-
-#roxqzufrpf .gt_spanner_row {
-  border-bottom-style: hidden;
-}
-
-#roxqzufrpf .gt_group_heading {
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: initial;
-  text-transform: inherit;
-  border-top-style: solid;
-  border-top-width: 2px;
-  border-top-color: #D3D3D3;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  border-left-style: none;
-  border-left-width: 1px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 1px;
-  border-right-color: #D3D3D3;
-  vertical-align: middle;
-  text-align: left;
-}
-
-#roxqzufrpf .gt_empty_group_heading {
-  padding: 0.5px;
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: initial;
-  border-top-style: solid;
-  border-top-width: 2px;
-  border-top-color: #D3D3D3;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  vertical-align: middle;
-}
-
-#roxqzufrpf .gt_from_md > :first-child {
-  margin-top: 0;
-}
-
-#roxqzufrpf .gt_from_md > :last-child {
-  margin-bottom: 0;
-}
-
-#roxqzufrpf .gt_row {
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-  margin: 10px;
-  border-top-style: solid;
-  border-top-width: 1px;
-  border-top-color: #D3D3D3;
-  border-left-style: none;
-  border-left-width: 1px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 1px;
-  border-right-color: #D3D3D3;
-  vertical-align: middle;
-  overflow-x: hidden;
-}
-
-#roxqzufrpf .gt_stub {
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: initial;
-  text-transform: inherit;
-  border-right-style: solid;
-  border-right-width: 2px;
-  border-right-color: #D3D3D3;
-  padding-left: 5px;
-  padding-right: 5px;
-}
-
-#roxqzufrpf .gt_stub_row_group {
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: initial;
-  text-transform: inherit;
-  border-right-style: solid;
-  border-right-width: 2px;
-  border-right-color: #D3D3D3;
-  padding-left: 5px;
-  padding-right: 5px;
-  vertical-align: top;
-}
-
-#roxqzufrpf .gt_row_group_first td {
-  border-top-width: 2px;
-}
-
-#roxqzufrpf .gt_row_group_first th {
-  border-top-width: 2px;
-}
-
-#roxqzufrpf .gt_summary_row {
-  color: #333333;
-  background-color: #FFFFFF;
-  text-transform: inherit;
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-}
-
-#roxqzufrpf .gt_first_summary_row {
-  border-top-style: solid;
-  border-top-color: #D3D3D3;
-}
-
-#roxqzufrpf .gt_first_summary_row.thick {
-  border-top-width: 2px;
-}
-
-#roxqzufrpf .gt_last_summary_row {
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-}
-
-#roxqzufrpf .gt_grand_summary_row {
-  color: #333333;
-  background-color: #FFFFFF;
-  text-transform: inherit;
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-}
-
-#roxqzufrpf .gt_first_grand_summary_row {
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-  border-top-style: double;
-  border-top-width: 6px;
-  border-top-color: #D3D3D3;
-}
-
-#roxqzufrpf .gt_last_grand_summary_row_top {
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-  border-bottom-style: double;
-  border-bottom-width: 6px;
-  border-bottom-color: #D3D3D3;
-}
-
-#roxqzufrpf .gt_striped {
-  background-color: rgba(128, 128, 128, 0.05);
-}
-
-#roxqzufrpf .gt_table_body {
-  border-top-style: solid;
-  border-top-width: 2px;
-  border-top-color: #D3D3D3;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-}
-
-#roxqzufrpf .gt_footnotes {
-  color: #333333;
-  background-color: #FFFFFF;
-  border-bottom-style: none;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  border-left-style: none;
-  border-left-width: 2px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 2px;
-  border-right-color: #D3D3D3;
-}
-
-#roxqzufrpf .gt_footnote {
-  margin: 0px;
-  font-size: 90%;
-  padding-top: 4px;
-  padding-bottom: 4px;
-  padding-left: 5px;
-  padding-right: 5px;
-}
-
-#roxqzufrpf .gt_sourcenotes {
-  color: #333333;
-  background-color: #FFFFFF;
-  border-bottom-style: none;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  border-left-style: none;
-  border-left-width: 2px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 2px;
-  border-right-color: #D3D3D3;
-}
-
-#roxqzufrpf .gt_sourcenote {
-  font-size: 90%;
-  padding-top: 4px;
-  padding-bottom: 4px;
-  padding-left: 5px;
-  padding-right: 5px;
-}
-
-#roxqzufrpf .gt_left {
-  text-align: left;
-}
-
-#roxqzufrpf .gt_center {
-  text-align: center;
-}
-
-#roxqzufrpf .gt_right {
-  text-align: right;
-  font-variant-numeric: tabular-nums;
-}
-
-#roxqzufrpf .gt_font_normal {
-  font-weight: normal;
-}
-
-#roxqzufrpf .gt_font_bold {
-  font-weight: bold;
-}
-
-#roxqzufrpf .gt_font_italic {
-  font-style: italic;
-}
-
-#roxqzufrpf .gt_super {
-  font-size: 65%;
-}
-
-#roxqzufrpf .gt_footnote_marks {
-  font-size: 75%;
-  vertical-align: 0.4em;
-  position: initial;
-}
-
-#roxqzufrpf .gt_asterisk {
-  font-size: 100%;
-  vertical-align: 0;
-}
-
-#roxqzufrpf .gt_indent_1 {
-  text-indent: 5px;
-}
-
-#roxqzufrpf .gt_indent_2 {
-  text-indent: 10px;
-}
-
-#roxqzufrpf .gt_indent_3 {
-  text-indent: 15px;
-}
-
-#roxqzufrpf .gt_indent_4 {
-  text-indent: 20px;
-}
-
-#roxqzufrpf .gt_indent_5 {
-  text-indent: 25px;
-}
-
-#roxqzufrpf .katex-display {
-  display: inline-flex !important;
-  margin-bottom: 0.75em !important;
-}
-
-#roxqzufrpf div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
-  height: 0px !important;
-}
-</style>
-
-<table class="gt_table caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
-<thead>
-<tr class="gt_col_headings header">
-<th id="Price" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Price</th>
-<th id="District" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col">District</th>
-<th id="Size" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Size</th>
-<th id="Tenure" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Tenure</th>
-<th id="TradeYear" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">TradeYear</th>
-<th id="StationDistance" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">StationDistance</th>
-<th id="LargeDistrict" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col">LargeDistrict</th>
-<th id="D" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">D</th>
-<th id="weights" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">weights</th>
-<th id="subclass" class="gt_col_heading gt_columns_bottom_border gt_center" data-quarto-table-cell-role="th" scope="col">subclass</th>
-</tr>
-</thead>
-<tbody class="gt_table_body">
-<tr class="odd">
-<td class="gt_row gt_right" headers="Price">86</td>
-<td class="gt_row gt_left" headers="District">大田区</td>
-<td class="gt_row gt_right" headers="Size">120</td>
-<td class="gt_row gt_right" headers="Tenure">32</td>
-<td class="gt_row gt_right" headers="TradeYear">2021</td>
-<td class="gt_row gt_right" headers="StationDistance">6</td>
-<td class="gt_row gt_left" headers="LargeDistrict">その他</td>
-<td class="gt_row gt_right" headers="D">0</td>
-<td class="gt_row gt_right" headers="weights">4.651185</td>
-<td class="gt_row gt_center" headers="subclass">20</td>
-</tr>
-<tr class="even">
-<td class="gt_row gt_right" headers="Price">110</td>
-<td class="gt_row gt_left" headers="District">世田谷区</td>
-<td class="gt_row gt_right" headers="Size">120</td>
-<td class="gt_row gt_right" headers="Tenure">32</td>
-<td class="gt_row gt_right" headers="TradeYear">2021</td>
-<td class="gt_row gt_right" headers="StationDistance">3</td>
-<td class="gt_row gt_left" headers="LargeDistrict">その他</td>
-<td class="gt_row gt_right" headers="D">0</td>
-<td class="gt_row gt_right" headers="weights">4.651185</td>
-<td class="gt_row gt_center" headers="subclass">20</td>
-</tr>
-<tr class="odd">
-<td class="gt_row gt_right" headers="Price">78</td>
-<td class="gt_row gt_left" headers="District">世田谷区</td>
-<td class="gt_row gt_right" headers="Size">120</td>
-<td class="gt_row gt_right" headers="Tenure">26</td>
-<td class="gt_row gt_right" headers="TradeYear">2022</td>
-<td class="gt_row gt_right" headers="StationDistance">4</td>
-<td class="gt_row gt_left" headers="LargeDistrict">その他</td>
-<td class="gt_row gt_right" headers="D">0</td>
-<td class="gt_row gt_right" headers="weights">4.651185</td>
-<td class="gt_row gt_center" headers="subclass">20</td>
-</tr>
-<tr class="even">
-<td class="gt_row gt_right" headers="Price">72</td>
-<td class="gt_row gt_left" headers="District">文京区</td>
-<td class="gt_row gt_right" headers="Size">115</td>
-<td class="gt_row gt_right" headers="Tenure">33</td>
-<td class="gt_row gt_right" headers="TradeYear">2021</td>
-<td class="gt_row gt_right" headers="StationDistance">7</td>
-<td class="gt_row gt_left" headers="LargeDistrict">その他</td>
-<td class="gt_row gt_right" headers="D">0</td>
-<td class="gt_row gt_right" headers="weights">2.325592</td>
-<td class="gt_row gt_center" headers="subclass">19</td>
-</tr>
-<tr class="odd">
-<td class="gt_row gt_right" headers="Price">230</td>
-<td class="gt_row gt_left" headers="District">台東区</td>
-<td class="gt_row gt_right" headers="Size">105</td>
-<td class="gt_row gt_right" headers="Tenure">2</td>
-<td class="gt_row gt_right" headers="TradeYear">2021</td>
-<td class="gt_row gt_right" headers="StationDistance">4</td>
-<td class="gt_row gt_left" headers="LargeDistrict">その他</td>
-<td class="gt_row gt_right" headers="D">0</td>
-<td class="gt_row gt_right" headers="weights">2.325592</td>
-<td class="gt_row gt_center" headers="subclass">17</td>
-</tr>
-<tr class="even">
-<td class="gt_row gt_right" headers="Price">88</td>
-<td class="gt_row gt_left" headers="District">江東区</td>
-<td class="gt_row gt_right" headers="Size">110</td>
-<td class="gt_row gt_right" headers="Tenure">17</td>
-<td class="gt_row gt_right" headers="TradeYear">2022</td>
-<td class="gt_row gt_right" headers="StationDistance">6</td>
-<td class="gt_row gt_left" headers="LargeDistrict">その他</td>
-<td class="gt_row gt_right" headers="D">0</td>
-<td class="gt_row gt_right" headers="weights">2.325592</td>
-<td class="gt_row gt_center" headers="subclass">22</td>
-</tr>
-<tr class="odd">
-<td class="gt_row gt_right" headers="Price">54</td>
-<td class="gt_row gt_left" headers="District">目黒区</td>
-<td class="gt_row gt_right" headers="Size">110</td>
-<td class="gt_row gt_right" headers="Tenure">53</td>
-<td class="gt_row gt_right" headers="TradeYear">2022</td>
-<td class="gt_row gt_right" headers="StationDistance">3</td>
-<td class="gt_row gt_left" headers="LargeDistrict">その他</td>
-<td class="gt_row gt_right" headers="D">0</td>
-<td class="gt_row gt_right" headers="weights">2.325592</td>
-<td class="gt_row gt_center" headers="subclass">22</td>
-</tr>
-<tr class="even">
-<td class="gt_row gt_right" headers="Price">50</td>
-<td class="gt_row gt_left" headers="District">目黒区</td>
-<td class="gt_row gt_right" headers="Size">105</td>
-<td class="gt_row gt_right" headers="Tenure">20</td>
-<td class="gt_row gt_right" headers="TradeYear">2022</td>
-<td class="gt_row gt_right" headers="StationDistance">13</td>
-<td class="gt_row gt_left" headers="LargeDistrict">その他</td>
-<td class="gt_row gt_right" headers="D">0</td>
-<td class="gt_row gt_right" headers="weights">2.325592</td>
-<td class="gt_row gt_center" headers="subclass">17</td>
-</tr>
-<tr class="odd">
-<td class="gt_row gt_right" headers="Price">49</td>
-<td class="gt_row gt_left" headers="District">大田区</td>
-<td class="gt_row gt_right" headers="Size">105</td>
-<td class="gt_row gt_right" headers="Tenure">19</td>
-<td class="gt_row gt_right" headers="TradeYear">2021</td>
-<td class="gt_row gt_right" headers="StationDistance">21</td>
-<td class="gt_row gt_left" headers="LargeDistrict">その他</td>
-<td class="gt_row gt_right" headers="D">0</td>
-<td class="gt_row gt_right" headers="weights">2.325592</td>
-<td class="gt_row gt_center" headers="subclass">17</td>
-</tr>
-<tr class="even">
-<td class="gt_row gt_right" headers="Price">70</td>
-<td class="gt_row gt_left" headers="District">大田区</td>
-<td class="gt_row gt_right" headers="Size">105</td>
-<td class="gt_row gt_right" headers="Tenure">30</td>
-<td class="gt_row gt_right" headers="TradeYear">2021</td>
-<td class="gt_row gt_right" headers="StationDistance">7</td>
-<td class="gt_row gt_left" headers="LargeDistrict">その他</td>
-<td class="gt_row gt_right" headers="D">0</td>
-<td class="gt_row gt_right" headers="weights">2.325592</td>
-<td class="gt_row gt_center" headers="subclass">17</td>
-</tr>
-</tbody>
-</table>
-
-</div>
-</div>
-</div>
-</section>
-</section>
-<section id="応用上の課題" class="level2" data-number="3.4">
-<h2 data-number="3.4" class="anchored" data-anchor-id="応用上の課題"><span class="header-section-number">3.4</span> 応用上の課題</h2>
-<p>Exact matchingやStratified Estimationは、非常に直感的な推定方法ですが、<span class="math inline">\(X\)</span> の組み合わせが増えると、実行不可能です。 例えば<span class="math inline">\(X\)</span>に、両親の年収や資産などの連続変数が含まれている場合は、<span class="math inline">\(X\)</span>の組み合わせが非常に大きくなり、Balancing weightsを計算することは事実上不可能となります。</p>
-<p>例えば、Size, Tenure (築年数), StationDistance (駅からの距離)、District (立地) について、Balancing Weightsは、以下で計算を試みることができますが、エラーが表示されます。</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>Match <span class="ot">=</span> MatchIt<span class="sc">::</span><span class="fu">matchit</span>(</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  D <span class="sc">~</span> Size <span class="sc">+</span> Tenure <span class="sc">+</span> StationDistance, <span class="co"># D ~ Xを指定</span></span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  Data, <span class="co"># 用いるデータの指定</span></span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">method =</span> <span class="st">"exact"</span>, <span class="co"># Balanced weightを計算するために、exact matchingを実行</span></span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">target =</span> <span class="st">"ATE"</span> <span class="co"># サンプル全体のXの分布をターゲット</span></span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>このエラーは、これら4つの属性が全く同じ事例は、中心6区かそれ以外 のどちらからしか存在しないことを意味しています。</p>
-<p>もしDistrictのバランスを諦めれば、Balancing Weight自体は計算できます。</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>Match <span class="ot">=</span> MatchIt<span class="sc">::</span><span class="fu">matchit</span>(</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  D <span class="sc">~</span> Size <span class="sc">+</span> Tenure <span class="sc">+</span> StationDistance, <span class="co"># D ~ Xを指定</span></span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  Data, <span class="co"># 用いるデータの指定</span></span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">method =</span> <span class="st">"exact"</span>, <span class="co"># Balanced weightを計算するために、exact matchingを実行</span></span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">target =</span> <span class="st">"ATE"</span> <span class="co"># サンプル全体のXの分布をターゲット</span></span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>Match</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>A `matchit` object
- - method: Exact matching
- - number of obs.: 6378 (original), 1702 (matched)
- - target estimand: ATT
- - covariates: Size, Tenure, StationDistance</code></pre>
-</div>
-</div>
-<p>ただしWeightを計算できたのたのは、6378事例の内、1702事例のみです。 このような大幅な事例減少は、分析のターゲットとなる分布からデータを大きく乖離させ、ミスリードな推定結果を生み出す要因となります。</p>
-<p>この問題を解決するために、次節以降で紹介する、OLS (<a href="04OLS.html" class="quarto-xref"><span>Chapter 4</span></a>) や機械学習 (<a href="06R.html" class="quarto-xref"><span>Chapter 6</span></a>) などを用いた「近似的なバランス法」の活用が有用です。</p>
+<section id="応用上の課題" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="応用上の課題"><span class="header-section-number">3.2</span> 応用上の課題</h2>
+<p><span class="math inline">\(X\)</span>の組み合わせの種類に比べて、十分な事例数が存在するのであれば、Balancing weightは、データ上での<span class="math inline">\(X\)</span>の割合を用いて計算できます<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>。</p>
+<p>しかしながら多くの応用研究では、バランスの対象となる <span class="math inline">\(X\)</span> の数が多く、<span class="math inline">\(D=1\)</span> または <span class="math inline">\(D=0\)</span> のどちらかの事例しか存在しない組み合わせが対象に発生します。 このような組み合わせについては、Balancing weightsを計算することができず、Balanced comparisonが不可能となります。 この問題を解決するために、次節以降で紹介する、OLS (<a href="04OLS.html" class="quarto-xref"><span>Chapter 4</span></a>) や機械学習 (<a href="06R.html" class="quarto-xref"><span>Chapter 6</span></a>) などを用いた「近似的なバランス法」の活用が有用です。</p>
 
 
 <div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
@@ -1569,7 +797,7 @@ Wager, Stefan. 2024. <span>“Causal Inference: A Statistical Learning Approach.
 <hr>
 <ol>
 <li id="fn1"><p>因果推論の文脈では、平均効果 (Average Treatment Effect) と呼ばれています。<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn2"><p>詳細に関心がある読者は、<span class="citation" data-cites="wager2024causal">Wager (<a href="Referemce.html#ref-wager2024causal" role="doc-biblioref">2024</a>)</span> の２章等を参照ください。<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>この方法はExact MatchingやStratified Estimation <span class="citation" data-cites="wager2024causal">(<a href="Referemce.html#ref-wager2024causal" role="doc-biblioref">Wager 2024</a>)</span> として知られる方法による推定結果と完全に一致します。 例えばExact Matchingは、<a href="https://kosukeimai.github.io/MatchIt/">MatchIt package</a> <span class="citation" data-cites="stuart2011matchit">(<a href="Referemce.html#ref-stuart2011matchit" role="doc-biblioref">Stuart et al. 2011</a>)</span> などを利用して実装できます。<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
 

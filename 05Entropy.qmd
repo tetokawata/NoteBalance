@@ -1,12 +1,12 @@
-# 明示的なBalancing Weightの算出 {#sec-Entropy}
+# 直接的なBalancing Weightの算出 {#sec-Entropy}
 
 @hainmueller2012entropy や @zubizarreta2015stable では、Balancing Weightを明示的な"最小化問題"の解として算出します。
 このようなアプローチは、満たすべき条件(負の荷重が生じない/サンプル平均にバランスするなど）を課した上で、Balancing Weightが算出できます。
-このためOLSによる暗黙のBalancing weightに比べて、より透明性の高い分析が可能です。
+このためOLSによる暗黙のBalancingに比べて、より透明性の高い分析が可能です。
 
 ## 算出方法
 
-Balancing Weightについて、以下のような制約を貸します。
+Balancing Weightについて、以下のような制約を課します。
 
 1. 全ての$X_l$について、その加重平均をデータ全体の平均値に一致させる: $$D=1における(\omega(x,1)\times X_l)の平均値$$ $$= D=0における(\omega(x,1)\times X_l)の平均値$$ $$= X_lのデータ全体での平均値$$ 
 
@@ -60,15 +60,41 @@ Data = dplyr::mutate(
 ベンチマークとして、一切のバランスを行わない単純差、およびOLSによるバランスを行った結果を示します。
 
 ```{r}
-estimatr::lm_robust(Price ~ D, Data)
+Model_No = estimatr::lm_robust(Price ~ D, Data)
 
-estimatr::lm_robust(Price ~ D + (Size + Tenure + StationDistance)**2 +
+Model_OLS = estimatr::lm_robust(Price ~ D + (Size + Tenure + StationDistance)**2 +
     I(Size^2) + I(Tenure^2) + I(StationDistance^2), Data)
+
+Model_No |> 
+  generics::tidy() |> 
+  dplyr::mutate(
+    Method = "No Balance"
+  ) |> 
+  dplyr::bind_rows(
+    Model_OLS |> 
+  generics::tidy() |> 
+  dplyr::mutate(
+    Method = "Balance by OLS"
+  )
+  ) |> 
+  dplyr::filter(
+    term == "D"
+  ) |> 
+  ggplot2::ggplot(
+    ggplot2::aes(
+      y = Method,
+      x = estimate,
+      xmin = conf.low,
+      xmax = conf.high
+    )
+  ) +
+  ggplot2::geom_pointrange() +
+  ggplot2::theme_minimal() +
+  ggplot2::geom_vline(
+    xintercept = 0
+  )
 ```
 
-
-バランス前では中心6区の物件の方が、20.9 [18.5,23.4] 販売価格が平均的に高い傾向があります。
-この傾向は、部屋の広さや築年数、駅からの距離の平均値/分散/共分散をバランスさせても、大きくは変わりませんでした。
 
 ### Entropy Weightによるバランス
 
@@ -119,3 +145,59 @@ WeightIt::lm_weightit(
 ```
 
 引き続き20前後の平均価格差が算出されました。
+
+```{r}
+Model_Ent = WeightIt::lm_weightit(
+  Price ~ D*(I(Size^2) + I(Tenure^2) + I(StationDistance^2) +
+    (Size + Tenure + StationDistance)**2),
+  data = Data,
+  weightit = Entropy
+  ) |> 
+  marginaleffects::avg_comparisons(variables = "D")
+
+
+Model_No |> 
+  generics::tidy() |> 
+  dplyr::mutate(
+    Method = "No Balance"
+  ) |> 
+  dplyr::bind_rows(
+    Model_OLS |> 
+  generics::tidy() |> 
+  dplyr::mutate(
+    Method = "Balance by OLS"
+  )
+  ) |> 
+  dplyr::filter(
+    term == "D"
+  )|> 
+  dplyr::bind_rows(
+    tibble::tibble(
+      Method = "Entropy",
+      estimate = Model_Ent$estimate,
+      conf.low = Model_Ent$conf.low,
+      conf.high = Model_Ent$conf.high
+    )
+  ) |> 
+  ggplot2::ggplot(
+    ggplot2::aes(
+      y = Method,
+      x = estimate,
+      xmin = conf.low,
+      xmax = conf.high
+    )
+  ) +
+  ggplot2::geom_pointrange() +
+  ggplot2::theme_minimal() +
+  ggplot2::geom_vline(
+    xintercept = 0
+  )
+```
+
+## 発展
+
+Balancing Weightを直接算出する方法は、近年改めて注目を集めており、さまざまな提案がなされています。
+例えばAuto debiased machine learning [@chernozhukov2022automatic; @chernozhukov2022debiased; @chernozhukov2022riesznet] と呼ばれる手法も、分布をバランスするWeightを機械学習などを用いて直接算出する手法であると解釈できることが知られています [@bruns2023augmented] 。
+Energy Weight [@huling2024energy] も、特徴ではなく分布そのものをバランスするWeightの推定を行なっています。
+
+直接計算する手法は、AIPWなどの間接的な方法に比べて、推定結果が安定しやすいことが利点として挙げられます。

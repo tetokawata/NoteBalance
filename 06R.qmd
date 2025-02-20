@@ -14,7 +14,7 @@ $X$ の数が多い場合、OLSを用いた分布の特徴のバランスは、�
 その中で教師付き学習 (より一般にはノンパラメトリック/データ適合的な推定) が持つ弱点である「収束の遅さ」^[「収束」の具体的な定義に関心がある方は、[wikipediaの記事](https://en.wikipedia.org/wiki/Rate_of_convergence)などを参照ください。]を補完する方法が開発されています。
 このような方法を用いることで、信頼区間の近似計算など、母集団への含意がより明確な推定が可能となります。
 
-本章は、OLSの直接的な拡張と解釈できる **残差回帰** への応用を紹介します^[機械学習は、より幅広い推定方法に応用できます。一般的な入門としては、[@chernozhukov2024applied](https://causalml-book.org/)を推奨します。他の入門資料としても、[@wager2024causal](https://web.stanford.edu/~swager/causal_inf_book.pdf)、[@schulerintroduction](https://alejandroschuler.github.io/mci/introduction-to-modern-causal-inference.html)、@ichimura2022influence、@fisher2021visually、@hines2022demystifying、@kennedy2024semiparametric などの優れた教材が利用できます。簡潔な入門としては、@diaz2020machine がお勧めです。]。
+本章は、OLSの直接的な拡張と解釈できる **残差回帰** への応用を紹介します^[機械学習は、より幅広い推定方法に応用できます。一般的な入門としては、[@chernozhukov2024applied](https://causalml-book.org/)を推奨します。他の入門資料としても、[@wager2024causal](https://web.stanford.edu/~swager/causal_inf_book.pdf)、[@schulerintroduction](https://alejandroschuler.github.io/mci/introduction-to-modern-causal-inference.html)、@ichimura2022influence、@fisher2021visually、@hines2022demystifying、@kennedy2024semiparametric、@renson2025pulling などの優れた教材が利用できます。簡潔な入門としては、@diaz2020machine がお勧めです。]。
 
 ## OLSの一般化
 

@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="川田恵介">
-<meta name="dcterms.date" content="2025-02-19">
+<meta name="dcterms.date" content="2025-02-21">
 
 <title>格差/因果/比較分析 (ver 0.2)</title>
 <style>
@@ -189,7 +189,7 @@ window.Quarto = {
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./05Entropy.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">明示的なBalancing Weightの算出</span></span></a>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">直接的なBalancing Weightの算出</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -241,7 +241,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">February 19, 2025</p>
+      <p class="date">February 21, 2025</p>
     </div>
   </div>
   
@@ -257,16 +257,15 @@ window.Quarto = {
 <h1 class="unnumbered">Preface</h1>
 <p>定量的な比較分析の方法を、Rでの実装とともに紹介します。</p>
 <p>比較分析は、社会における「グループ間の違い」を明らかにすることを目標とします。 本ノートでは、データ上のある変数 <span class="math inline">\(D\)</span> 間での、別の変数 <span class="math inline">\(Y\)</span> の平均値の差を推定する方法を紹介します。 例えば性別 <span class="math inline">\((D)\)</span> 間での賃金 <span class="math inline">\((Y)\)</span> の平均格差を推定します。</p>
-<p>比較分析は、社会/市場を理解するための方法として、中核的な位置を占めています。 例えば、ある職業訓練プログラム <span class="math inline">\((D)\)</span> が就業確率や就業後の賃金 <span class="math inline">\((Y)\)</span>に与える因果的効果を推定を試みます。 このような研究課題では、異なる職業訓練プログラムへの参加者間で、就業状態や賃金の比較が求められます <span class="citation" data-cites="behaghel2014private kallus2023treatment">(<a href="Referemce.html#ref-behaghel2014private" role="doc-biblioref">Behaghel, Crépon, and Gurgand 2014</a>; <a href="Referemce.html#ref-kallus2023treatment" role="doc-biblioref">Kallus 2023</a>)</span>。</p>
-<p>比較分析は格差研究でも重要です。 格差の「世代間」移転を推定するためには、両親の経済/社会状態 <span class="math inline">\((D)\)</span> と子供の経済/社会状況 <span class="math inline">\((Y)\)</span> との関係性を推定します。 例えば、母親の学歴(大学卒/高校卒など)グループ間で、その子供の教育達成度賃金を比較します。</p>
-<p>格差の”要因”を考察するために行われる分解分析も、比較研究の一種です<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>。 <span class="citation" data-cites="vafa2024estimating">Vafa, Athey, and Blei (<a href="Referemce.html#ref-vafa2024estimating" role="doc-biblioref">2024</a>)</span> では、同一の職業経験を有する男女間での賃金格差を推定しています。 男女間での単純な賃金格差と比較することで、職業経験の性別間分断が、賃金格差に与えている影響について示唆を得ることができます。</p>
-<p>以上のような比較研究では、しばしば「背景属性」のバランスが求められます。 例えば2022年と2023年の中古マンション市場の取引価格を比較したいとします。 最も単純な比較方法は、平均取引価格を2023年と2022年で単純比較することですが、物件の他の特徴(部屋の広さ、駅からの距離など)も同時に変化していることが予想されます。 本ノートでは、「もし物件の他の特徴が変化しなかったときの」2023年と2022年で平均取引価格がどの程度変化額を推定する方法を紹介します。</p>
+<p>また<span class="math inline">\(D\)</span>間では、<span class="math inline">\(Y\)</span>以外の違いがあることが一般的です。 研究課題に応じて、これらの違いの一部をバランスさせることが必要となります。 例えば、性別間で見られる職業経験の違いをバランスさせることで、職業経験以外の要因によって生じる男女間格差を推定できます <span class="citation" data-cites="vafa2024estimating">(<a href="Referemce.html#ref-vafa2024estimating" role="doc-biblioref">Vafa, Athey, and Blei 2024</a>)</span>。</p>
+<p>比較分析は、社会/市場を理解するための方法として、中核的な位置を占めています。 例えば、ある職業訓練プログラム <span class="math inline">\((D)\)</span> が就業確率や就業後の賃金 <span class="math inline">\((Y)\)</span>に与える因果的効果を推定を試みます。 このような研究課題では、異なる職業訓練プログラムへの参加者間で、背景属性をバランスさせた上での、就業状態や賃金の比較が求められます <span class="citation" data-cites="behaghel2014private kallus2023treatment">(<a href="Referemce.html#ref-behaghel2014private" role="doc-biblioref">Behaghel, Crépon, and Gurgand 2014</a>; <a href="Referemce.html#ref-kallus2023treatment" role="doc-biblioref">Kallus 2023</a>)</span>。</p>
 <p>本ノートの中心的なコンセプトは、Balancing Weightです。 Balancing Weightは、以下のアプローチを統合的整理できる極めて有益な概念です。</p>
 <ul>
 <li><p>重回帰(OLS)やPenalized Regressionによる調整<span class="citation" data-cites="chattopadhyay2023implied bruns2023augmented">(<a href="Referemce.html#ref-chattopadhyay2023implied" role="doc-biblioref">Chattopadhyay and Zubizarreta 2023</a>; <a href="Referemce.html#ref-bruns2023augmented" role="doc-biblioref">Bruns-Smith et al. 2023</a>)</span></p></li>
-<li><p>傾向スコア(Propensity Score)の活用 <span class="citation" data-cites="imai2014covariate chernozhukov2018double chernozhukov2022locally">(<a href="Referemce.html#ref-imai2014covariate" role="doc-biblioref">Imai and Ratkovic 2014</a>; <a href="Referemce.html#ref-chernozhukov2018double" role="doc-biblioref">Chernozhukov et al. 2018</a>, <a href="Referemce.html#ref-chernozhukov2022locally" role="doc-biblioref">2022</a>)</span></p></li>
+<li><p>傾向スコア(Propensity Score)の活用 <span class="citation" data-cites="imai2014covariate">(<a href="Referemce.html#ref-imai2014covariate" role="doc-biblioref">Imai and Ratkovic 2014</a>)</span></p></li>
+<li><p>機械学習などを用いたDebiased Machine Learning <span class="citation" data-cites="chernozhukov2018double chernozhukov2022locally">(<a href="Referemce.html#ref-chernozhukov2018double" role="doc-biblioref">Chernozhukov et al. 2018</a>; <a href="Referemce.html#ref-chernozhukov2022locally" role="doc-biblioref">Chernozhukov, Escanciano, et al. 2022</a>)</span></p></li>
 <li><p>Entropy Weight <span class="citation" data-cites="hainmueller2012entropy">(<a href="Referemce.html#ref-hainmueller2012entropy" role="doc-biblioref">Hainmueller 2012</a>)</span> やStable Weight <span class="citation" data-cites="zubizarreta2015stable">(<a href="Referemce.html#ref-zubizarreta2015stable" role="doc-biblioref">Zubizarreta 2015</a>)</span>、 Energy Weight <span class="citation" data-cites="huling2024energy">(<a href="Referemce.html#ref-huling2024energy" role="doc-biblioref">Huling and Mak 2024</a>)</span> による調整</p></li>
-<li><p>機械学習などを用いたAuto Double/Debiased Machine Learning/Augmented Balancing Weights <span class="citation" data-cites="chernozhukov2022automatic chernozhukov2022debiased bruns2023augmented">(<a href="Referemce.html#ref-chernozhukov2022automatic" role="doc-biblioref">Chernozhukov, Newey, and Singh 2022a</a>, <a href="Referemce.html#ref-chernozhukov2022debiased" role="doc-biblioref">2022b</a>; <a href="Referemce.html#ref-bruns2023augmented" role="doc-biblioref">Bruns-Smith et al. 2023</a>)</span></p></li>
+<li><p>機械学習などを用いたAuto Debiased Machine Learning/Augmented Balancing Weights <span class="citation" data-cites="chernozhukov2022automatic chernozhukov2022debiased chernozhukov2022riesznet bruns2023augmented">(<a href="Referemce.html#ref-chernozhukov2022automatic" role="doc-biblioref">Chernozhukov, Newey, and Singh 2022a</a>, <a href="Referemce.html#ref-chernozhukov2022debiased" role="doc-biblioref">2022b</a>; <a href="Referemce.html#ref-chernozhukov2022riesznet" role="doc-biblioref">Chernozhukov, Newey, et al. 2022</a>; <a href="Referemce.html#ref-bruns2023augmented" role="doc-biblioref">Bruns-Smith et al. 2023</a>)</span></p></li>
 </ul>
 <p>簡易な入門としては <a href="https://hdsr.mitpress.mit.edu/pub/1ybwbmlw/release/2"><span class="citation" data-cites="Chattopadhyay2024Causation">Chattopadhyay and Zubizarreta (<span>2024</span>)</span></a> 、詳細な入門としては <span class="citation" data-cites="chattopadhyay2020balancing">Chattopadhyay, Hase, and Zubizarreta (<a href="Referemce.html#ref-chattopadhyay2020balancing" role="doc-biblioref">2020</a>)</span> , <span class="citation" data-cites="ben2021balancing">Ben-Michael et al. (<a href="Referemce.html#ref-ben2021balancing" role="doc-biblioref">2021</a>)</span> などを参考にしてください。</p>
 <p>本ノートの構成は以下のとおりです。</p>
@@ -275,8 +274,8 @@ window.Quarto = {
 <li><p><a href="02Weight.html" class="quarto-xref"><span>2&nbsp; Weight</span></a> : 本ノートの中核概念であるBalancing Weightを紹介する準備として、荷重(Weight)を定義します。</p></li>
 <li><p><a href="03BalanceWeight.html" class="quarto-xref"><span>3&nbsp; Balancing Weight</span></a> : Balancing Weightを定義します。またBalancing Weightの直感的な算出方法が、利用できない状況が多いことを指摘します。</p></li>
 <li><p><a href="04OLS.html" class="quarto-xref"><span>4&nbsp; OLSによる特徴のバランス</span></a> : より幅広い状況で算出できる近似的なBalancing Weightを紹介します。また標準的なOLS推定が、暗黙のうちに近似的なBalancing Weightを算出した、バランス後の比較と解釈できることを示します。</p></li>
-<li><p><a href="05Entropy.html" class="quarto-xref"><span>5&nbsp; 明示的なBalancing Weightの算出</span></a> : 近似的なBalancing Weightを、明示的な最適化問題として算出する方法を紹介します。 Entropy weight <span class="citation" data-cites="hainmueller2012entropy">(<a href="Referemce.html#ref-hainmueller2012entropy" role="doc-biblioref">Hainmueller 2012</a>)</span> と呼ばれる代表的な方法は、その計算効率や分析の透明性の高さから、幅広く用いられています。</p></li>
-<li><p><a href="06R.html" class="quarto-xref"><span>6&nbsp; 機械学習の活用: 残差回帰</span></a> : OLSよりもデータ主導のアプローチを紹介します。残差回帰に機械学習を補助的に用いることで、近似的なBalancing Weightを算出した、バランス後の比較を行うことができます。OLSとは異なり、事例数が十分大きかえれば、「母集団上で、完全なBalanceを達成した後の比較分析」、の優れた推定値と見做せることを紹介します。</p></li>
+<li><p><a href="05Entropy.html" class="quarto-xref"><span>5&nbsp; 直接的なBalancing Weightの算出</span></a> : 近似的なBalancing Weightを、明示的な最適化問題として算出する方法を紹介します。 代表的な方法の一つであるEntropy weight <span class="citation" data-cites="hainmueller2012entropy">(<a href="Referemce.html#ref-hainmueller2012entropy" role="doc-biblioref">Hainmueller 2012</a>)</span> は、その計算効率や分析の透明性の高さから、幅広く用いられています。</p></li>
+<li><p><a href="06R.html" class="quarto-xref"><span>6&nbsp; 機械学習の活用: 残差回帰</span></a> : 機械学習を用いた、よりデータ主導のアプローチを紹介します。残差回帰に機械学習を補助的に用いることで、近似的なBalancing Weightを算出した、バランス後の比較を行うことができます。OLSとは異なり、事例数が十分大きければ、「母集団上で、完全なBalanceを達成した後の比較分析」、の優れた推定値と見做せることを紹介します。</p></li>
 </ul>
 
 
@@ -311,6 +310,9 @@ Chernozhukov, Victor, Whitney K Newey, and Rahul Singh. 2022a. <span>“Automati
 <div id="ref-chernozhukov2022debiased" class="csl-entry" role="listitem">
 ———. 2022b. <span>“Debiased Machine Learning of Global and Local Parameters Using Regularized Riesz Representers.”</span> <em>The Econometrics Journal</em> 25 (3): 576–601.
 </div>
+<div id="ref-chernozhukov2022riesznet" class="csl-entry" role="listitem">
+Chernozhukov, Victor, Whitney Newey, Vıctor M Quintas-Martınez, and Vasilis Syrgkanis. 2022. <span>“Riesznet and Forestriesz: Automatic Debiased Machine Learning with Neural Nets and Random Forests.”</span> In <em>International Conference on Machine Learning</em>, 3901–14. PMLR.
+</div>
 <div id="ref-hainmueller2012entropy" class="csl-entry" role="listitem">
 Hainmueller, Jens. 2012. <span>“Entropy Balancing for Causal Effects: A Multivariate Reweighting Method to Produce Balanced Samples in Observational Studies.”</span> <em>Political Analysis</em> 20 (1): 25–46.
 </div>
@@ -323,9 +325,6 @@ Imai, Kosuke, and Marc Ratkovic. 2014. <span>“Covariate Balancing Propensity S
 <div id="ref-kallus2023treatment" class="csl-entry" role="listitem">
 Kallus, Nathan. 2023. <span>“Treatment Effect Risk: Bounds and Inference.”</span> <em>Management Science</em> 69 (8): 4579–90.
 </div>
-<div id="ref-opacic2023disparity" class="csl-entry" role="listitem">
-Opacic, Aleksei, Lai Wei, and Xiang Zhou. 2023. <span>“Disparity Analysis: A Tale of Two Approaches.”</span>
-</div>
 <div id="ref-vafa2024estimating" class="csl-entry" role="listitem">
 Vafa, Keyon, Susan Athey, and David M Blei. 2024. <span>“Estimating Wage Disparities Using Foundation Models.”</span> <em>arXiv Preprint arXiv:2409.09894</em>.
 </div>
@@ -333,12 +332,6 @@ Vafa, Keyon, Susan Athey, and David M Blei. 2024. <span>“Estimating Wage Dispa
 Zubizarreta, José R. 2015. <span>“Stable Weights That Balance Covariates for Estimation with Incomplete Outcome Data.”</span> <em>Journal of the American Statistical Association</em> 110 (511): 910–22.
 </div>
 </div>
-</section>
-<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
-<hr>
-<ol>
-<li id="fn1"><p><span class="citation" data-cites="opacic2023disparity">Opacic, Wei, and Zhou (<a href="Referemce.html#ref-opacic2023disparity" role="doc-biblioref">2023</a>)</span> が、包括的な紹介を行っています。<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-</ol>
 </section>
 
 </main> <!-- /main -->

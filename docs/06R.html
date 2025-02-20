@@ -222,7 +222,7 @@ window.Quarto = {
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./05Entropy.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">明示的なBalancing Weightの算出</span></span></a>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">直接的なBalancing Weightの算出</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -503,6 +503,9 @@ Naimi, Ashley I, Alan E Mishler, and Edward H Kennedy. 2023. <span>“Challenges
 <div id="ref-naimi2024pseudo" class="csl-entry" role="listitem">
 Naimi, Ashley I, Ya-Hui Yu, and Lisa M Bodnar. 2024. <span>“Pseudo-Random Number Generator Influences on Average Treatment Effect Estimates Obtained with Machine Learning.”</span> <em>Epidemiology</em> 35 (6): 779–86.
 </div>
+<div id="ref-renson2025pulling" class="csl-entry" role="listitem">
+Renson, Audrey, Lina Montoya, Dana E Goin, Iván Dı́az, and Rachael K Ross. 2025. <span>“Pulling Back the Curtain: The Road from Statistical Estimand to Machine-Learning Based Estimator for Epidemiologists (No Wizard Required).”</span> <em>arXiv Preprint arXiv:2502.05363</em>.
+</div>
 <div id="ref-schader2024don" class="csl-entry" role="listitem">
 Schader, Lindsey, Weishan Song, Russell Kempker, and David Benkeser. 2024. <span>“Don’t Let Your Analysis Go to Seed: On the Impact of Random Seed on Machine Learning-Based Causal Inference.”</span> <em>Epidemiology</em> 35 (6): 764–78.
 </div>
@@ -531,7 +534,7 @@ Zivich, Paul N. 2024. <span>“Commentary: The Seedy Side of Causal Effect Estim
 <hr>
 <ol>
 <li id="fn1"><p>「収束」の具体的な定義に関心がある方は、<a href="https://en.wikipedia.org/wiki/Rate_of_convergence">wikipediaの記事</a>などを参照ください。<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn2"><p>機械学習は、より幅広い推定方法に応用できます。一般的な入門としては、<a href="https://causalml-book.org/"><span class="citation" data-cites="chernozhukov2024applied">Chernozhukov et al. (<span>2024</span>)</span></a>を推奨します。他の入門資料としても、<a href="https://web.stanford.edu/~swager/causal_inf_book.pdf"><span class="citation" data-cites="wager2024causal">Wager (<span>2024</span>)</span></a>、<a href="https://alejandroschuler.github.io/mci/introduction-to-modern-causal-inference.html"><span class="citation" data-cites="schulerintroduction">Schuler and Laan (<span>2024</span>)</span></a>、<span class="citation" data-cites="ichimura2022influence">Ichimura and Newey (<a href="Referemce.html#ref-ichimura2022influence" role="doc-biblioref">2022</a>)</span>、<span class="citation" data-cites="fisher2021visually">Fisher and Kennedy (<a href="Referemce.html#ref-fisher2021visually" role="doc-biblioref">2021</a>)</span>、<span class="citation" data-cites="hines2022demystifying">Hines et al. (<a href="Referemce.html#ref-hines2022demystifying" role="doc-biblioref">2022</a>)</span>、<span class="citation" data-cites="kennedy2024semiparametric">Kennedy (<a href="Referemce.html#ref-kennedy2024semiparametric" role="doc-biblioref">2024</a>)</span> などの優れた教材が利用できます。簡潔な入門としては、<span class="citation" data-cites="diaz2020machine">Dı́az (<a href="Referemce.html#ref-diaz2020machine" role="doc-biblioref">2020</a>)</span> がお勧めです。<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>機械学習は、より幅広い推定方法に応用できます。一般的な入門としては、<a href="https://causalml-book.org/"><span class="citation" data-cites="chernozhukov2024applied">Chernozhukov et al. (<span>2024</span>)</span></a>を推奨します。他の入門資料としても、<a href="https://web.stanford.edu/~swager/causal_inf_book.pdf"><span class="citation" data-cites="wager2024causal">Wager (<span>2024</span>)</span></a>、<a href="https://alejandroschuler.github.io/mci/introduction-to-modern-causal-inference.html"><span class="citation" data-cites="schulerintroduction">Schuler and Laan (<span>2024</span>)</span></a>、<span class="citation" data-cites="ichimura2022influence">Ichimura and Newey (<a href="Referemce.html#ref-ichimura2022influence" role="doc-biblioref">2022</a>)</span>、<span class="citation" data-cites="fisher2021visually">Fisher and Kennedy (<a href="Referemce.html#ref-fisher2021visually" role="doc-biblioref">2021</a>)</span>、<span class="citation" data-cites="hines2022demystifying">Hines et al. (<a href="Referemce.html#ref-hines2022demystifying" role="doc-biblioref">2022</a>)</span>、<span class="citation" data-cites="kennedy2024semiparametric">Kennedy (<a href="Referemce.html#ref-kennedy2024semiparametric" role="doc-biblioref">2024</a>)</span>、<span class="citation" data-cites="renson2025pulling">Renson et al. (<a href="Referemce.html#ref-renson2025pulling" role="doc-biblioref">2025</a>)</span> などの優れた教材が利用できます。簡潔な入門としては、<span class="citation" data-cites="diaz2020machine">Dı́az (<a href="Referemce.html#ref-diaz2020machine" role="doc-biblioref">2020</a>)</span> がお勧めです。<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn3"><p>パラメタと事例数、推定精度の詳細な関係性については、<a href="https://causalml-book.org/"><span class="citation" data-cites="chernozhukov2024applied">Chernozhukov et al. (<span>2024</span>)</span></a> の1章とその引用文献を参照ください。<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn4"><p>詳細は、<span class="citation" data-cites="james2013introduction">James et al. (<a href="Referemce.html#ref-james2013introduction" role="doc-biblioref">2021</a>)</span> などを参照ください<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn5"><p>交差推定の利点/欠点については、<span class="citation" data-cites="chen2022debiased">Chen, Syrgkanis, and Austern (<a href="Referemce.html#ref-chen2022debiased" role="doc-biblioref">2022</a>)</span> などで重点的に検討されています。<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
@@ -959,8 +962,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./05Entropy.html" class="pagination-link" aria-label="明示的なBalancing Weightの算出">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">明示的なBalancing Weightの算出</span></span>
+      <a href="./05Entropy.html" class="pagination-link" aria-label="直接的なBalancing Weightの算出">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">直接的なBalancing Weightの算出</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">

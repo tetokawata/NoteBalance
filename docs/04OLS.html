@@ -222,7 +222,7 @@ window.Quarto = {
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./05Entropy.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">明示的なBalancing Weightの算出</span></span></a>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">直接的なBalancing Weightの算出</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -290,8 +290,8 @@ window.Quarto = {
 </header>
 
 
-<p><span class="math inline">\(X\)</span> の組み合わせが多く、Balancing weightsを計算することが困難な場合、<span class="math inline">\(X\)</span>の分布を近似的なバランスが有力です。</p>
-<p>本節では代表的な統計手法であるOLS（重回帰）が、近似的なBalancing weightsを暗黙のうちに計算する手法であることを紹介します。 OLSは分布の特徴を、研究者が定める定式化に応じて、柔軟にBalanceできることが利点ですが、予期せぬ挙動を示しやすいことに注意が必要です。</p>
+<p><span class="math inline">\(X\)</span> の組み合わせが多く、Balancing weightsを計算することが困難な場合、近似的なバランスが有力な方法となります。</p>
+<p>本節では代表的な統計手法であるOLS（重回帰）が、近似的なBalancing weightsを暗黙のうちに計算する手法であることを紹介します。 OLSは分布の特徴を、研究者が定める定式化に応じて、要求するBalanceの精度を変更できることが利点です。 ただし、<span class="math inline">\(D\)</span> 間での<span class="math inline">\(X\)</span>の分布の分断が激しい場合、予期せぬ挙動を示しやすいことに注意が必要です。</p>
 <section id="olsによる平均値のバランス" class="level2" data-number="4.1">
 <h2 data-number="4.1" class="anchored" data-anchor-id="olsによる平均値のバランス"><span class="header-section-number">4.1</span> OLSによる平均値のバランス</h2>
 <p>近年の研究により、線型モデルのOLS推定は、近似的な Balanceを達成することが確認されています <span class="citation" data-cites="chattopadhyay2023implied">(<a href="Referemce.html#ref-chattopadhyay2023implied" role="doc-biblioref">Chattopadhyay and Zubizarreta 2023</a>)</span>。 本ノートでは、<span class="math inline">\(D=\{0,1\}\)</span>を前提とし、その議論の骨子を紹介します。</p>
@@ -385,7 +385,7 @@ OLSの性質 <span class="citation" data-cites="chattopadhyay2023implied">(<a hr
 <p>実践における課題は、<span class="math inline">\(X\)</span> について適切な複雑さを持つモデルを設定することです。 しかしながら適切な複雑性は、母集団の特徴や事例数などに依存しており、一般 な解決は困難です。 ただし過去の実践の問題点、および実践上の示唆を得ることはできます。</p>
 <p>多くの研究で<span class="math inline">\(X\)</span>の二乗項や交差項を導入<strong>しない</strong>推定が行われてきました。 しかしながらこのような推定は、平均値のみのバランスにとどまり、不十分な可能性が高いと考えられます。 例えば、NBER Summer Institute 2018における、<a href="https://github.com/demirermert/MLInference">Esther Dufloのチュートリアル</a> では、連続変数については二乗項、および全変数について交差項を導入した推定を行なっています。</p>
 <p>複雑な推定は、母集団における推定結果の推論を困難にします。 この問題は、事例数が少ない小規模データを用いた推定において深刻です。 しかしながら現代的な分析環境のもとでは、1000事例を超えるデータを用いた推定が一般的になっています。 このため、バランスさせたい<span class="math inline">\(X\)</span>の数が少ない場合、その二乗項や交差項を加えたとしても、悪影響は小さいと考えられます。 少なくとも小規模事例を用いた推定よりも、より複雑なモデルを推定すべきであると考えられます。</p>
-<p>バランスさせたい変数 <span class="math inline">\(X\)</span> の数が多い場合、二乗項や交差項を導入するとモデルが爆発的に複雑化し、OLSでは推定できなくなります。 このような場合は、<a href="https://github.com/demirermert/MLInference">Esther Dufloのチュートリアル</a> や <a href="06R.html" class="quarto-xref"><span>Chapter 6</span></a> で議論する通り、機械学習を応用が有力です。</p>
+<p>バランスさせたい変数 <span class="math inline">\(X\)</span> の数が多い場合、二乗項や交差項を導入するとモデルが爆発的に複雑化し、OLSでは推定できなくなります。 このような場合は、<a href="06R.html" class="quarto-xref"><span>Chapter 6</span></a> で議論する通り、機械学習を応用が有力です。</p>
 </section>
 <section id="応用上の課題" class="level2" data-number="4.5">
 <h2 data-number="4.5" class="anchored" data-anchor-id="応用上の課題"><span class="header-section-number">4.5</span> 応用上の課題</h2>
@@ -992,8 +992,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./05Entropy.html" class="pagination-link" aria-label="明示的なBalancing Weightの算出">
-        <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">明示的なBalancing Weightの算出</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./05Entropy.html" class="pagination-link" aria-label="直接的なBalancing Weightの算出">
+        <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">直接的なBalancing Weightの算出</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

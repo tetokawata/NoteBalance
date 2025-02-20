@@ -168,7 +168,7 @@ window.Quarto = {
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./05Entropy.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">明示的なBalancing Weightの算出</span></span></a>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">直接的なBalancing Weightの算出</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -229,26 +229,26 @@ window.Quarto = {
 <section id="データ上の平均値" class="level2" data-number="2.1">
 <h2 data-number="2.1" class="anchored" data-anchor-id="データ上の平均値"><span class="header-section-number">2.1</span> データ上の平均値</h2>
 <p>今、ある「不動産研究所」が調査員を千代田区、文京区、板橋区に派遣し、中古マンションの取引事例を収集したとします。 各調査員は、全く同じ数の事例を収集します。</p>
-<p>以下では、立地(District)ごとに、平均取引価格とデータ全体に対する事例数の割合をまとめています。</p>
+<p>以下では、立地(District)ごとに、平均取引価格とデータ全体に対する事例の割合をまとめています。 全ての区について、同数の事例が収集されていることに注意してください。</p>
 <div class="cell">
 <div class="cell-output-display">
-<div id="njjgdwacec" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#njjgdwacec table {
+<div id="wsfktskxuq" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#wsfktskxuq table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#njjgdwacec thead, #njjgdwacec tbody, #njjgdwacec tfoot, #njjgdwacec tr, #njjgdwacec td, #njjgdwacec th {
+#wsfktskxuq thead, #wsfktskxuq tbody, #wsfktskxuq tfoot, #wsfktskxuq tr, #wsfktskxuq td, #wsfktskxuq th {
   border-style: none;
 }
 
-#njjgdwacec p {
+#wsfktskxuq p {
   margin: 0;
   padding: 0;
 }
 
-#njjgdwacec .gt_table {
+#wsfktskxuq .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -274,12 +274,12 @@ window.Quarto = {
   border-left-color: #D3D3D3;
 }
 
-#njjgdwacec .gt_caption {
+#wsfktskxuq .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#njjgdwacec .gt_title {
+#wsfktskxuq .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -291,7 +291,7 @@ window.Quarto = {
   border-bottom-width: 0;
 }
 
-#njjgdwacec .gt_subtitle {
+#wsfktskxuq .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -303,7 +303,7 @@ window.Quarto = {
   border-top-width: 0;
 }
 
-#njjgdwacec .gt_heading {
+#wsfktskxuq .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -315,13 +315,13 @@ window.Quarto = {
   border-right-color: #D3D3D3;
 }
 
-#njjgdwacec .gt_bottom_border {
+#wsfktskxuq .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#njjgdwacec .gt_col_headings {
+#wsfktskxuq .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -336,7 +336,7 @@ window.Quarto = {
   border-right-color: #D3D3D3;
 }
 
-#njjgdwacec .gt_col_heading {
+#wsfktskxuq .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -356,7 +356,7 @@ window.Quarto = {
   overflow-x: hidden;
 }
 
-#njjgdwacec .gt_column_spanner_outer {
+#wsfktskxuq .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -368,15 +368,15 @@ window.Quarto = {
   padding-right: 4px;
 }
 
-#njjgdwacec .gt_column_spanner_outer:first-child {
+#wsfktskxuq .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#njjgdwacec .gt_column_spanner_outer:last-child {
+#wsfktskxuq .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#njjgdwacec .gt_column_spanner {
+#wsfktskxuq .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -388,11 +388,11 @@ window.Quarto = {
   width: 100%;
 }
 
-#njjgdwacec .gt_spanner_row {
+#wsfktskxuq .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#njjgdwacec .gt_group_heading {
+#wsfktskxuq .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -418,7 +418,7 @@ window.Quarto = {
   text-align: left;
 }
 
-#njjgdwacec .gt_empty_group_heading {
+#wsfktskxuq .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -433,15 +433,15 @@ window.Quarto = {
   vertical-align: middle;
 }
 
-#njjgdwacec .gt_from_md > :first-child {
+#wsfktskxuq .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#njjgdwacec .gt_from_md > :last-child {
+#wsfktskxuq .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#njjgdwacec .gt_row {
+#wsfktskxuq .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -460,7 +460,7 @@ window.Quarto = {
   overflow-x: hidden;
 }
 
-#njjgdwacec .gt_stub {
+#wsfktskxuq .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -473,7 +473,7 @@ window.Quarto = {
   padding-right: 5px;
 }
 
-#njjgdwacec .gt_stub_row_group {
+#wsfktskxuq .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -487,15 +487,15 @@ window.Quarto = {
   vertical-align: top;
 }
 
-#njjgdwacec .gt_row_group_first td {
+#wsfktskxuq .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#njjgdwacec .gt_row_group_first th {
+#wsfktskxuq .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#njjgdwacec .gt_summary_row {
+#wsfktskxuq .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -505,16 +505,16 @@ window.Quarto = {
   padding-right: 5px;
 }
 
-#njjgdwacec .gt_first_summary_row {
+#wsfktskxuq .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#njjgdwacec .gt_first_summary_row.thick {
+#wsfktskxuq .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#njjgdwacec .gt_last_summary_row {
+#wsfktskxuq .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -524,7 +524,7 @@ window.Quarto = {
   border-bottom-color: #D3D3D3;
 }
 
-#njjgdwacec .gt_grand_summary_row {
+#wsfktskxuq .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -534,7 +534,7 @@ window.Quarto = {
   padding-right: 5px;
 }
 
-#njjgdwacec .gt_first_grand_summary_row {
+#wsfktskxuq .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -544,7 +544,7 @@ window.Quarto = {
   border-top-color: #D3D3D3;
 }
 
-#njjgdwacec .gt_last_grand_summary_row_top {
+#wsfktskxuq .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -554,11 +554,11 @@ window.Quarto = {
   border-bottom-color: #D3D3D3;
 }
 
-#njjgdwacec .gt_striped {
+#wsfktskxuq .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#njjgdwacec .gt_table_body {
+#wsfktskxuq .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -567,7 +567,7 @@ window.Quarto = {
   border-bottom-color: #D3D3D3;
 }
 
-#njjgdwacec .gt_footnotes {
+#wsfktskxuq .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -581,7 +581,7 @@ window.Quarto = {
   border-right-color: #D3D3D3;
 }
 
-#njjgdwacec .gt_footnote {
+#wsfktskxuq .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -590,7 +590,7 @@ window.Quarto = {
   padding-right: 5px;
 }
 
-#njjgdwacec .gt_sourcenotes {
+#wsfktskxuq .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -604,7 +604,7 @@ window.Quarto = {
   border-right-color: #D3D3D3;
 }
 
-#njjgdwacec .gt_sourcenote {
+#wsfktskxuq .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -612,72 +612,72 @@ window.Quarto = {
   padding-right: 5px;
 }
 
-#njjgdwacec .gt_left {
+#wsfktskxuq .gt_left {
   text-align: left;
 }
 
-#njjgdwacec .gt_center {
+#wsfktskxuq .gt_center {
   text-align: center;
 }
 
-#njjgdwacec .gt_right {
+#wsfktskxuq .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#njjgdwacec .gt_font_normal {
+#wsfktskxuq .gt_font_normal {
   font-weight: normal;
 }
 
-#njjgdwacec .gt_font_bold {
+#wsfktskxuq .gt_font_bold {
   font-weight: bold;
 }
 
-#njjgdwacec .gt_font_italic {
+#wsfktskxuq .gt_font_italic {
   font-style: italic;
 }
 
-#njjgdwacec .gt_super {
+#wsfktskxuq .gt_super {
   font-size: 65%;
 }
 
-#njjgdwacec .gt_footnote_marks {
+#wsfktskxuq .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#njjgdwacec .gt_asterisk {
+#wsfktskxuq .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#njjgdwacec .gt_indent_1 {
+#wsfktskxuq .gt_indent_1 {
   text-indent: 5px;
 }
 
-#njjgdwacec .gt_indent_2 {
+#wsfktskxuq .gt_indent_2 {
   text-indent: 10px;
 }
 
-#njjgdwacec .gt_indent_3 {
+#wsfktskxuq .gt_indent_3 {
   text-indent: 15px;
 }
 
-#njjgdwacec .gt_indent_4 {
+#wsfktskxuq .gt_indent_4 {
   text-indent: 20px;
 }
 
-#njjgdwacec .gt_indent_5 {
+#wsfktskxuq .gt_indent_5 {
   text-indent: 25px;
 }
 
-#njjgdwacec .katex-display {
+#wsfktskxuq .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#njjgdwacec div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#wsfktskxuq div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -715,7 +715,6 @@ window.Quarto = {
 </div>
 </div>
 </div>
-<p>全ての区について、同数の事例が収集されていることに注意してください。</p>
 <p>繰り返し期待値の法則を用いると、この情報のみからデータ全体の平均取引価格は計算できます。</p>
 <ul>
 <li><span class="math inline">\(平均取引価格\)</span>は</li>
@@ -728,8 +727,8 @@ window.Quarto = {
 </section>
 <section id="ターゲット上の平均値" class="level2" data-number="2.2">
 <h2 data-number="2.2" class="anchored" data-anchor-id="ターゲット上の平均値"><span class="header-section-number">2.2</span> ターゲット上の平均値</h2>
-<p>今研究関心は、「もし<strong>実際の取引履歴をすべて収集したデータ</strong>を用いて計算された平均取引価格」、であるとします。 このような平均値を計算したい仮想的なデータを、バランス後の比較分析と同様に、<strong>ターゲット</strong>と呼びます。</p>
-<p>今、ターゲットの取引割合は、千代田区が0.161、文京区が0.33、板橋区が0.509であることが判明しているとします。 もしデータ上の各区の取引割合を、ターゲットの取引割合と一致させた場合、平均値はどのように変化するでしょうか？</p>
+<p>今研究関心は、「もし<strong>実際の取引履歴をすべて収集したデータ</strong>を用いて計算された平均取引価格」、であるとします。 このような平均値を計算したい仮想的な割合を、バランス後の比較分析と同様に、<strong>ターゲット割合</strong>と呼びます。</p>
+<p>今、ターゲット割合は、千代田区が0.161、文京区が0.33、板橋区が0.509であることが判明しているとします。 もしデータ上の各区の取引割合を、ターゲットの取引割合と一致させた場合、平均値はどのように変化するでしょうか？</p>
 <p>Exampleにおける調整された平均取引価格は、以下のように算出されます。</p>
 <p><span class="math display">\[=\underbrace{66.5}_{千代田区の事例の平均取引価格}\times \underbrace{0.161}_{千代田区の事例の割合}\]</span></p>
 <p><span class="math display">\[+\underbrace{47.3}_{文京区の事例の平均取引価格}\times \underbrace{0.33}_{文京区の事例の割合}\]</span></p>
@@ -744,7 +743,7 @@ window.Quarto = {
 </section>
 <section id="加重平均値" class="level2" data-number="2.3">
 <h2 data-number="2.3" class="anchored" data-anchor-id="加重平均値"><span class="header-section-number">2.3</span> 加重平均値</h2>
-<p>調整を行うための有力な方法は、加重平均値(Weighted mean)を計算することです。 一般に加重平均値は以下のように定義されます。</p>
+<p>ターゲット割合へのバランスを行うための有力な方法は、加重平均(Weighted mean)を計算することです。 一般に加重平均は以下のように定義されます。</p>
 <div class="callout callout-style-default callout-important callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -758,12 +757,9 @@ window.Quarto = {
 <ul>
 <li>調整された平均値</li>
 </ul>
-<p><span class="math display">\[=(\omega\times Y)の平均値\]</span></p>
+<p><span class="math display">\[=(\underbrace{\omega}_{Weight}\times Y)の平均値\]</span></p>
 <ul>
-<li><p><span class="math inline">\(\omega=\)</span> 加重 (Weight)、以下の制約を置く</p>
-<ul>
-<li><span class="math inline">\(\omega の平均値 = 1\)</span></li>
-</ul></li>
+<li>Weightに対して、<span class="math inline">\(\omega の平均値 = 1\)</span> を制約とする。</li>
 </ul>
 </div>
 </div>
@@ -775,23 +771,23 @@ window.Quarto = {
 <p>Exampleに適用すると、以下となります。</p>
 <div class="cell">
 <div class="cell-output-display">
-<div id="mxxxioudip" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#mxxxioudip table {
+<div id="dxcugxlcnh" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#dxcugxlcnh table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#mxxxioudip thead, #mxxxioudip tbody, #mxxxioudip tfoot, #mxxxioudip tr, #mxxxioudip td, #mxxxioudip th {
+#dxcugxlcnh thead, #dxcugxlcnh tbody, #dxcugxlcnh tfoot, #dxcugxlcnh tr, #dxcugxlcnh td, #dxcugxlcnh th {
   border-style: none;
 }
 
-#mxxxioudip p {
+#dxcugxlcnh p {
   margin: 0;
   padding: 0;
 }
 
-#mxxxioudip .gt_table {
+#dxcugxlcnh .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -817,12 +813,12 @@ window.Quarto = {
   border-left-color: #D3D3D3;
 }
 
-#mxxxioudip .gt_caption {
+#dxcugxlcnh .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#mxxxioudip .gt_title {
+#dxcugxlcnh .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -834,7 +830,7 @@ window.Quarto = {
   border-bottom-width: 0;
 }
 
-#mxxxioudip .gt_subtitle {
+#dxcugxlcnh .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -846,7 +842,7 @@ window.Quarto = {
   border-top-width: 0;
 }
 
-#mxxxioudip .gt_heading {
+#dxcugxlcnh .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -858,13 +854,13 @@ window.Quarto = {
   border-right-color: #D3D3D3;
 }
 
-#mxxxioudip .gt_bottom_border {
+#dxcugxlcnh .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#mxxxioudip .gt_col_headings {
+#dxcugxlcnh .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -879,7 +875,7 @@ window.Quarto = {
   border-right-color: #D3D3D3;
 }
 
-#mxxxioudip .gt_col_heading {
+#dxcugxlcnh .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -899,7 +895,7 @@ window.Quarto = {
   overflow-x: hidden;
 }
 
-#mxxxioudip .gt_column_spanner_outer {
+#dxcugxlcnh .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -911,15 +907,15 @@ window.Quarto = {
   padding-right: 4px;
 }
 
-#mxxxioudip .gt_column_spanner_outer:first-child {
+#dxcugxlcnh .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#mxxxioudip .gt_column_spanner_outer:last-child {
+#dxcugxlcnh .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#mxxxioudip .gt_column_spanner {
+#dxcugxlcnh .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -931,11 +927,11 @@ window.Quarto = {
   width: 100%;
 }
 
-#mxxxioudip .gt_spanner_row {
+#dxcugxlcnh .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#mxxxioudip .gt_group_heading {
+#dxcugxlcnh .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -961,7 +957,7 @@ window.Quarto = {
   text-align: left;
 }
 
-#mxxxioudip .gt_empty_group_heading {
+#dxcugxlcnh .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -976,15 +972,15 @@ window.Quarto = {
   vertical-align: middle;
 }
 
-#mxxxioudip .gt_from_md > :first-child {
+#dxcugxlcnh .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#mxxxioudip .gt_from_md > :last-child {
+#dxcugxlcnh .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#mxxxioudip .gt_row {
+#dxcugxlcnh .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1003,7 +999,7 @@ window.Quarto = {
   overflow-x: hidden;
 }
 
-#mxxxioudip .gt_stub {
+#dxcugxlcnh .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1016,7 +1012,7 @@ window.Quarto = {
   padding-right: 5px;
 }
 
-#mxxxioudip .gt_stub_row_group {
+#dxcugxlcnh .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1030,15 +1026,15 @@ window.Quarto = {
   vertical-align: top;
 }
 
-#mxxxioudip .gt_row_group_first td {
+#dxcugxlcnh .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#mxxxioudip .gt_row_group_first th {
+#dxcugxlcnh .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#mxxxioudip .gt_summary_row {
+#dxcugxlcnh .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1048,16 +1044,16 @@ window.Quarto = {
   padding-right: 5px;
 }
 
-#mxxxioudip .gt_first_summary_row {
+#dxcugxlcnh .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#mxxxioudip .gt_first_summary_row.thick {
+#dxcugxlcnh .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#mxxxioudip .gt_last_summary_row {
+#dxcugxlcnh .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1067,7 +1063,7 @@ window.Quarto = {
   border-bottom-color: #D3D3D3;
 }
 
-#mxxxioudip .gt_grand_summary_row {
+#dxcugxlcnh .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1077,7 +1073,7 @@ window.Quarto = {
   padding-right: 5px;
 }
 
-#mxxxioudip .gt_first_grand_summary_row {
+#dxcugxlcnh .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1087,7 +1083,7 @@ window.Quarto = {
   border-top-color: #D3D3D3;
 }
 
-#mxxxioudip .gt_last_grand_summary_row_top {
+#dxcugxlcnh .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1097,11 +1093,11 @@ window.Quarto = {
   border-bottom-color: #D3D3D3;
 }
 
-#mxxxioudip .gt_striped {
+#dxcugxlcnh .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#mxxxioudip .gt_table_body {
+#dxcugxlcnh .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1110,7 +1106,7 @@ window.Quarto = {
   border-bottom-color: #D3D3D3;
 }
 
-#mxxxioudip .gt_footnotes {
+#dxcugxlcnh .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1124,7 +1120,7 @@ window.Quarto = {
   border-right-color: #D3D3D3;
 }
 
-#mxxxioudip .gt_footnote {
+#dxcugxlcnh .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -1133,7 +1129,7 @@ window.Quarto = {
   padding-right: 5px;
 }
 
-#mxxxioudip .gt_sourcenotes {
+#dxcugxlcnh .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1147,7 +1143,7 @@ window.Quarto = {
   border-right-color: #D3D3D3;
 }
 
-#mxxxioudip .gt_sourcenote {
+#dxcugxlcnh .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1155,72 +1151,72 @@ window.Quarto = {
   padding-right: 5px;
 }
 
-#mxxxioudip .gt_left {
+#dxcugxlcnh .gt_left {
   text-align: left;
 }
 
-#mxxxioudip .gt_center {
+#dxcugxlcnh .gt_center {
   text-align: center;
 }
 
-#mxxxioudip .gt_right {
+#dxcugxlcnh .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#mxxxioudip .gt_font_normal {
+#dxcugxlcnh .gt_font_normal {
   font-weight: normal;
 }
 
-#mxxxioudip .gt_font_bold {
+#dxcugxlcnh .gt_font_bold {
   font-weight: bold;
 }
 
-#mxxxioudip .gt_font_italic {
+#dxcugxlcnh .gt_font_italic {
   font-style: italic;
 }
 
-#mxxxioudip .gt_super {
+#dxcugxlcnh .gt_super {
   font-size: 65%;
 }
 
-#mxxxioudip .gt_footnote_marks {
+#dxcugxlcnh .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#mxxxioudip .gt_asterisk {
+#dxcugxlcnh .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#mxxxioudip .gt_indent_1 {
+#dxcugxlcnh .gt_indent_1 {
   text-indent: 5px;
 }
 
-#mxxxioudip .gt_indent_2 {
+#dxcugxlcnh .gt_indent_2 {
   text-indent: 10px;
 }
 
-#mxxxioudip .gt_indent_3 {
+#dxcugxlcnh .gt_indent_3 {
   text-indent: 15px;
 }
 
-#mxxxioudip .gt_indent_4 {
+#dxcugxlcnh .gt_indent_4 {
   text-indent: 20px;
 }
 
-#mxxxioudip .gt_indent_5 {
+#dxcugxlcnh .gt_indent_5 {
   text-indent: 25px;
 }
 
-#mxxxioudip .katex-display {
+#dxcugxlcnh .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#mxxxioudip div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#dxcugxlcnh div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
