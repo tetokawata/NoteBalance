@@ -36,15 +36,15 @@ Data = arrow::read_parquet("Data/Data.parquet") |>
 
 1. すべての$X_l$ について、以下を満たす $\omega(x,d)$ を探す。
 
-$$D=1における(\omega(x,1)\times X_l)の平均値$$
+$$(D=1)における(\omega(x,1)\times X_l)の平均値$$
 
-$$=D=0における(\omega(x,0)\times X_l)の平均値$$
+$$=(D=0)における(\omega(x,0)\times X_l)の平均値$$
 
 2. 1.を満たす$\omega(x,d)$ の中で、最小の分散を持つ $\omega(x,d)$ をBalancing Weightsとする
 
-3. $\beta_D$ を以下のように計算する。 $$\beta_D=D=1における(\omega(x,1)\times Y)の平均値$$
+3. $\beta_D$ を以下のように計算する。 $$\beta_D=(D=1)における(\omega(x,1)\times Y)の平均値$$
 
-$$-D=0における(\omega(x,0)\times Y)の平均値$$
+$$-(D=0)における(\omega(x,0)\times Y)の平均値$$
 
 :::
 
@@ -192,21 +192,26 @@ dotwhisker::dwplot(
 バランスさせたい変数 $X$ の数が多い場合、二乗項や交差項を導入するとモデルが爆発的に複雑化し、OLSでは推定できなくなります。
 このような場合は、@sec-RLeaner で議論する通り、機械学習を応用が有力です。
 
-## 応用上の課題
+## 実践上の課題
 
 OLSにより暗黙のうちに計算されるWeightは、平均値をバランスします。
 しかしながら、Balancing weightsに求められる他の性質は必ずしも満たされません。
+以下、OLSの抱える問題点を列挙します。
 
-### Researcher degrees of freedom
+以降の章で紹介する手法の利点は、このOLSが抱える問題点を改善することにあります。
+このため発展的な手法を理解し、活用するためにも、OLSの問題点をしっかり認識する必要があります。
+
+### 定式化
 
 OLSにおいては、分布の特徴をどこまでバランスさせるのかが問題となります。
-事例数が十分あれば、3乗項などの特徴もバランスさせることが可能です。
+事例数が十分あれば、3乗項などの多くの特徴をバランスさせることが可能です。
 しかしながら事例数が少ない場合、大量のモーメントをバランスさせると、推定誤差が大きくなってしまいます。
-このため十分な根拠を持った推定モデルの定式化が困難になります。
+このため事例数に応じて、バランスの対象とする特徴の数を選択する必要があります。
+しかしながら実際の応用において、このような選択を適切に行うことは困難です。
 
 この問題に対して、@sec-RLeaner では機械学習を用いた改善方法を紹介します。
 
-### ターゲットの解釈の難しさ
+### ターゲット割合
 
 バランス後の$X$ の平均値がどのような水準になるのか、一般に不透明です。
 結果を解釈するためには、$X$ の平均値は明確な水準、例えばデータ全体での平均値と一致させることが望まれます。
@@ -230,7 +235,7 @@ Control groupは、$D=0$ (2021年)、Treatment groupは、$D=1$ (2022年)の値�
 
 この問題の解決としては、サンプル平均にバランスさせることを明示的に要求したBalancing Weightの算出 (@sec-Entropy) が有力です。
 
-### 負の荷重
+### 負のウェイト
 
 Balancing weightsは、正の値を取ることが望まれます。
 しかしながらOLSが生成するWeightは、負の値を取る可能性があり、ミスリードな推定結果をもたらす可能性があります。
@@ -292,21 +297,28 @@ Data = dplyr::mutate(
 ### OLSによるバランス
 
 $D$ 間でSize,Tenure,StationDistanceの平均値をバランスさせ、Priceの平均値を比較します。
+また比較のために、一才のバランスを行わない比較結果も併記します。
 
 ```{r, dev='ragg_png'}
 #| echo: true
 #| 
+
+Model_NoBalance = estimatr::lm_robust(
+  Price ~ D,
+  Data) # OLS推定
+
 Model = estimatr::lm_robust(
   Price ~ D + Size + Tenure + StationDistance,
   Data) # OLS推定
 
 dotwhisker::dwplot(
-  list(平均値のみ = Model),
+  list(バランスなし = Model_NoBalance, 平均値のみ = Model),
   vars_order = "D") + # 信頼区間の可視化
   ggplot2::theme_bw() # 背景を白地化
 ```
 
-$D$ の係数値は3.29であり、20.06ほど中心6区の物件の方が平均取引価格が高いことがわかります。
+$D$ の係数値は3.29であり、バランス後も中心6区の物件の方が平均取引価格が高いことがわかります。
+また信頼区間を考慮することで、母集団においても、中心6区の物件の方が平均取引価格が高い傾向があることがわかります。
 
 次に各変数の分散と共分散もバランスさせます
 
@@ -325,13 +337,10 @@ ModelLong = estimatr::lm_robust(
 ```{r, dev='ragg_png'}
 #| echo: true
 #| 
-ModelSimple = estimatr::lm_robust(
-  Price ~ D,
-  Data) # バランスなし
 
 dotwhisker::dwplot(
   list(
-    バランスなし = ModelSimple,
+    バランスなし = Model_NoBalance,
     平均のみ = Model,
     `平均/分散/共分散` = ModelLong
     ),
@@ -355,7 +364,7 @@ Match = lmw::lmw(
   Data
 ) # Weightの算出
 
-hist(Match$weights) # Weightのヒストグラムを算出
+summary(Match$weights) # Weightの記述統計量を図示
 ```
 
 負のWeightが発生していないことが確認できます。

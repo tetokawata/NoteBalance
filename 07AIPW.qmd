@@ -1,0 +1,187 @@
+# 機械学習の活用: AIPW {#sec-AIPW}
+
+```{r}
+library(tidyverse)
+
+Def_CBD = c("千代田区","港区","中央区","新宿区","渋谷区","本郷区")
+
+Data = arrow::read_parquet("Data/Data.parquet") |> 
+  filter(TradeYear %in% c(2021,2022)) |> 
+  mutate(
+    CBD = case_when(
+            District %in% Def_CBD ~ "1",
+            .default = "0"
+        ),
+    Tenure = TradeYear - BuildYear,
+    Tenure2 = Tenure*Tenure,
+    Size2 = Size*Size,
+    Tenure_Size = Tenure*Size
+  )
+
+```
+
+$D$間での$X$の分布を近似的にバランスする手法としては、Inverse Probability Weight (IWP) も有力です。
+本手法は、($X$内での)$D$の分布を推定し、その逆数をウェイトとして使用する方法です。
+この$D$の分布は、傾向スコア(Propensity Score)と呼ばれています。
+特に $Y$ の推定されたモデルと組みわせるAugmented Inverse Probability Weightは、機械学習などを用いた柔軟な推定と信頼区間の近似計算などの統計的推論と両立できます。
+
+## Inverse probability weight
+
+傾向スコアを活用した代表的な推定手法は、Inverse probability weightです。
+この手法は、ベイズルールによるBalancing weightsの書き換えに基づいています。
+ただしこの手法は、傾向スコアの推定精度に強く依存します。
+また一般に推定精度が悪い傾向があります^[詳細は、@wager2024causal の第２章などを参照ください。]。
+このため本ノートでは、@sec-sub_AIPW で紹介するArgumented inverse probability weight (AIPW)の活用を推奨します。
+
+Balancing Weight $\omega(d,x)$ は以下のように定義されました。 $$\omega(d,x)=\frac{ターゲット割合}{D=dにおけるX=xの事例割合}$$
+
+ベイズルールを適用すると $\omega(d,x)$ は以下のように書き換えられます。
+
+::: {.callout-important}
+### Balancing Weightの書き換え
+
+$$\omega(d,x)=\underbrace{\frac{1}{X=xにおけるD=dの割合}}_{傾向スコアの逆数}$$ $$\times (D=dの割合)$$ $$\times \frac{ターゲット割合}{X=xの割合}$$
+
+ターゲット割合を$X=xの割合$とするのであれば、以下のように単純化できる。
+
+$$\omega(d,x)=傾向スコアの逆数\times D=dの割合$$
+
+:::
+
+$D=d$の割合は、データ内での$D=d$の割合などを用いて、容易に推定できます。
+よって傾向スコアが推定できれば、Balancing Weightの計算が可能です。
+推定された傾向スコアを用いたBalanced comparisonはInverse probability weightと呼ばれ、以下の手順としてまとめられます。
+
+::: {.callout-important}
+### Inverse probability weight
+
+1. 傾向スコアを何らかの手法で推定する
+
+2. Balancing weights $\omega(d,x)$を計算する
+
+3. Balancing weightsで荷重した平均差を計算する $$D=1における(\omega(x,1)\times Y)の平均値$$ $$-D=0における(\omega(x,0)\times Y)の平均値$$
+
+:::
+
+この手法は
+傾向スコアの推定には、$D$を$X$で回帰する標準的な方法を用いることができます。
+例えばLogitやProbitなどのパラメトリックな手法やRandom ForestやBoosting、Deep Learningなどの機械学習の手法も活用可能です。
+
+しかしながらどちらの手法を用いたとしても、推定上の問題があります。
+IPWによる推定結果は、傾向スコアの推定精度に強く依存します。
+このためLogitやProbitを用いた場合、推定モデルの定式化を正しく行う必要がありますが、多くの応用で困難です。
+対して機械学習の手法を用いた場合、推定結果の収束の遅さが問題となり、信頼区間の近似計算などが難しくなります。
+
+この問題に対して、$Y$ の平均値の推定値 $f_Y(D,X)$ を併用するAugmented Inverse Probability Weightが有力です。
+
+## Augmented Inverse Probability Weight  {#sec-sub_AIPW}
+
+Augmented Inverse Probability Weightの手順は以下のようにまとめられます。
+
+::: {.callout-important}
+### Augmented Inverse Probability Weight
+
+1. 交差推定を用いて、Y,Dを予測するモデル $f_Y(D,X)$ と $f_D(X)$ を推定する
+
+2. AIPWの推定値を以下のように補正し、AIPWの推定値を計算する $$+ f_{Y}(1,X_i)\frac{D - f_D(X)}{f_D(X)}の平均値$$ $$-f_{Y}(0,X_i)\frac{(1 - D) - (1 - f_D(X))}{1-f_D(X)}の平均値$$
+:::
+
+## 母集団の推定方法
+
+母集団上でのAIPWとデータ上でのAIPWは、残差回帰とよく似た性質を持ちます。
+交差推定とStackingなどの柔軟な方法を組み合わせて予測モデルを推定すれば、緩やかな仮定のみで、「母集団上で計算したAugmented Inverse Probability Weight」の結果について、信頼区間の近似計算が可能です。
+AIPWは、データ全体での$X$の分布をターゲット割合としたバランス後の比較です。
+このため「母集団上での$X$の分布をターゲットとした、バランス後の比較」について、信頼区間計算ができます。
+
+## 残差回帰との比較
+
+残差回帰とAIPWは、よく似た性質を持ち、同じような動機に基づいています^[どちらもEfficient influence functionを用いて、推定式を導出できます [@ichimura2022influence; @fisher2021visually; @hines2022demystifying; @renson2025pulling]。]。
+
+大きな違いは、ターゲット割合です。
+残差回帰におけるターゲット割合は、Overlap Weightであり (@sec-RLeaner)、その解釈は困難でした。
+対してAIPWでは、$X$ の分布であり、解釈が容易です。
+すなわち「もし$X$の分布がデータ全体のものと一致していた場合、平均差はどのようなものになるか？」という疑問に答えることができます。
+このような解釈が容易さが、AIPWの大きな魅力です。
+
+対してAIPWの弱点は、傾向スコアの値が0や1に近い事例がある場合、推定結果が不安定になりやすい点です。
+これは傾向スコアの逆数が推定式に含まれているために生じます。
+弊害の具体例としては、計算された信頼区間の拡大や信頼区間の近似計算そのものの信頼性低下、などです。
+
+## Rによる実践例
+
+引き続きddmlパッケージを使用し、AIPW推定は実装できます。
+
+- 以下のパッケージを使用
+
+    - readr (tidyverseに同梱): データの読み込み
+    
+    - ddml: AIPWの実施
+    
+        - [mannual](https://kosukeimai.github.io/MatchIt/)
+
+### 準備
+
+$Y$と$D$はベクトル、$X$は行列として定義します。
+
+```{r}
+#| echo: true
+set.seed(111) # シード値を固定
+
+Data = readr::read_csv("Public.csv")
+
+Data = dplyr::mutate(
+  Data,
+  D = dplyr::if_else(
+    TradeYear == 2022,1,0
+  ) # 2022年に取引されれば1、2021年に取引されていれば0
+)
+
+Y = Data$Price
+D = Data$D
+X = Data |> 
+  dplyr::select(
+    District,
+    Size,
+    Tenure,
+    StationDistance
+  )
+```
+
+### ATE
+
+Stackingを用いたAIPW推定は、ddml_ate関数を用いて、以下のように実装できます。
+
+```{r}
+#| echo: true
+#| eval: true
+Model = ddml::ddml_ate(
+  y = Y,
+  D = D,
+  X = data.matrix(X),
+  learners = list(
+    list(fun = ddml::ols),
+    list(fun = ddml::mdl_ranger)
+  ),
+  shortstack = TRUE, # 簡略化したStacking法を利用
+  silent = TRUE # Messageを非表示
+  )
+
+Model |> summary()
+```
+
+
+summary関数は、推定値 (Estimate)、標準誤差 (Std. Error)、t値 (t value)、 p値 (Pr(>|t|)) を報告しています。
+バランス後の平均差は、nnlsです。
+
+95$\%$信頼区間は以下のように計算できます。
+
+```{r}
+#| echo: true
+#| 
+Sum = summary(Model)
+
+Est = Sum[1,1] # 推定値
+SD = Sum[1,2] # 標準誤差
+
+c(Est - 1.96*SD, Est + 1.96*SD) # 信頼区間の下限、上限
+```

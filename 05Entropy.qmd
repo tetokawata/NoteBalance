@@ -8,7 +8,7 @@
 
 Balancing Weightについて、以下のような制約を課します。
 
-1. 全ての$X_l$について、その加重平均をデータ全体の平均値に一致させる: $$D=1における(\omega(x,1)\times X_l)の平均値$$ $$= D=0における(\omega(x,1)\times X_l)の平均値$$ $$= X_lのデータ全体での平均値$$ 
+1. 全ての$X_l$について、その加重平均をデータ全体の平均値に一致させる: $$(D=1)における(\omega(x,1)\times X_l)の平均値$$ $$= (D=0)における(\omega(x,0)\times X_l)の平均値$$ $$= X_lのデータ全体での平均値$$ 
 
 2. 全てのWeightは非負の値をとる: $$\omega(x,d)\ge 0$$
 
@@ -17,7 +17,7 @@ Balancing Weightについて、以下のような制約を課します。
 
 - @hainmueller2012entropy : $\omega(x,d)$ のentropy divergence $\omega(x,d)\log(\omega(x,d)/q)$
 
-    - $q$ はbase weightであり、例えば $q=1/事例数$ が用いられる
+    - $q$ はbase weightと呼ばれ、例えば $q=1/事例数$ が用いられます。
 
 - @zubizarreta2015stable : $\omega(x,d)$ の分散
 
@@ -53,17 +53,20 @@ Data = dplyr::mutate(
   Data,
   D = dplyr::if_else(
     LargeDistrict == "中心6区",1,0
-  ) # 2022年に取引されれば1、2021年に取引されていれば0
+  ) # 中心6区に立地していれば1、それ以外は0
 )
 ```
 
 ベンチマークとして、一切のバランスを行わない単純差、およびOLSによるバランスを行った結果を示します。
 
 ```{r}
+#| echo: true
 Model_No = estimatr::lm_robust(Price ~ D, Data)
 
-Model_OLS = estimatr::lm_robust(Price ~ D + (Size + Tenure + StationDistance)**2 +
-    I(Size^2) + I(Tenure^2) + I(StationDistance^2), Data)
+Model_OLS = estimatr::lm_robust(
+  Price ~ D + (Size + Tenure + StationDistance)**2 +
+    I(Size^2) + I(Tenure^2) + I(StationDistance^2), 
+  Data)
 
 Model_No |> 
   generics::tidy() |> 
@@ -114,22 +117,23 @@ Entropy = WeightIt::weightit(
   estimand = "ATE") 
 
 OLS = lmw::lmw(
-  ~ D + I(Size^2) + I(Tenure^2) + I(StationDistance^2) +
-    (Size + Tenure + StationDistance)**2,
+  ~ D + (Size + Tenure + StationDistance)**2 +
+    I(Size^2) + I(Tenure^2) + I(StationDistance^2),
   Data
 )
-boxplot(Entropy$weights,OLS$weights)
+```
+
+summary関数を用いて、Weightの分布を確認します。
+
+```{r}
+#| echo: true
+summary(Entropy$weights)
+
+summary(OLS$weights)
 ```
 
 OLSを用いると負のBalancing weightが発生していることが確認できます。
 対してEntropy weightでは、そのようなweightは生じません。
-
-```{r}
-#| echo: true
-OLS$weights |> summary()
-
-Entropy$weights |> summary()
-```
 
 Entropy Weightを用いたバランス後の平均差は、marginaleffectsパッケージのavg_comparison関数を用いて、以下のように計算できます。
 
@@ -146,7 +150,10 @@ WeightIt::lm_weightit(
 
 引き続き20前後の平均価格差が算出されました。
 
+最後にバランスなし、OLSによるバランス、Entropy Weightによるバランス、の結果を図示します。
+
 ```{r}
+#| echo: true
 Model_Ent = WeightIt::lm_weightit(
   Price ~ D*(I(Size^2) + I(Tenure^2) + I(StationDistance^2) +
     (Size + Tenure + StationDistance)**2),
@@ -197,7 +204,7 @@ Model_No |>
 ## 発展
 
 Balancing Weightを直接算出する方法は、近年改めて注目を集めており、さまざまな提案がなされています。
-例えばAuto debiased machine learning [@chernozhukov2022automatic; @chernozhukov2022debiased; @chernozhukov2022riesznet] と呼ばれる手法も、分布をバランスするWeightを機械学習などを用いて直接算出する手法であると解釈できることが知られています [@bruns2023augmented] 。
+例えばAuto debiased machine learning [@chernozhukov2022automatic; @chernozhukov2022debiased; @chernozhukov2022riesznet] と呼ばれる手法も、分布をバランスするWeightを機械学習などを用いて直接算出する手法であるとの解釈も提案されています [@bruns2023augmented] 。
 Energy Weight [@huling2024energy] も、特徴ではなく分布そのものをバランスするWeightの推定を行なっています。
 
-直接計算する手法は、AIPWなどの間接的な方法に比べて、推定結果が安定しやすいことが利点として挙げられます。
+直接計算する手法は、AIPWなどの間接的な方法 (@sec-AIPW) に比べて、推定結果が安定しやすいことが利点として挙げられます。

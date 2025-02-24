@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>1&nbsp; バランス後の比較 – 格差/因果/比較分析 (ver 0.2)</title>
+<title>1&nbsp; バランス後の比較 – 格差/因果/比較分析のためのデータ分析 (ver 0.2.1)</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -145,7 +145,7 @@ window.Quarto = {
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
-      <a href="./">格差/因果/比較分析 (ver 0.2)</a> 
+      <a href="./">格差/因果/比較分析のためのデータ分析 (ver 0.2.1)</a> 
     </div>
       </div>
         <div class="mt-2 flex-shrink-0 align-items-center">
@@ -199,6 +199,12 @@ window.Quarto = {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./07AIPW.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">機械学習の活用: AIPW</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./Referemce.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Reference</span></a>
   </div>
@@ -218,10 +224,13 @@ window.Quarto = {
   <ul class="collapse">
   <li><a href="#overlapの仮定" id="toc-overlapの仮定" class="nav-link" data-scroll-target="#overlapの仮定"><span class="header-section-number">1.2.1</span> Overlapの仮定</a></li>
   </ul></li>
-  <li><a href="#他の実例" id="toc-他の実例" class="nav-link" data-scroll-target="#他の実例"><span class="header-section-number">1.3</span> 他の実例</a>
+  <li><a href="#応用事例" id="toc-応用事例" class="nav-link" data-scroll-target="#応用事例"><span class="header-section-number">1.3</span> 応用事例</a>
   <ul class="collapse">
-  <li><a href="#合計特殊出生率" id="toc-合計特殊出生率" class="nav-link" data-scroll-target="#合計特殊出生率"><span class="header-section-number">1.3.1</span> 合計特殊出生率</a></li>
-  <li><a href="#既存店ベースの比較" id="toc-既存店ベースの比較" class="nav-link" data-scroll-target="#既存店ベースの比較"><span class="header-section-number">1.3.2</span> 既存店ベースの比較</a></li>
+  <li><a href="#既存店ベースの比較" id="toc-既存店ベースの比較" class="nav-link" data-scroll-target="#既存店ベースの比較"><span class="header-section-number">1.3.1</span> 既存店ベースの比較</a></li>
+  <li><a href="#合計特殊出生率の時点地域間比較" id="toc-合計特殊出生率の時点地域間比較" class="nav-link" data-scroll-target="#合計特殊出生率の時点地域間比較"><span class="header-section-number">1.3.2</span> 合計特殊出生率の時点/地域間比較</a></li>
+  <li><a href="#物価指数" id="toc-物価指数" class="nav-link" data-scroll-target="#物価指数"><span class="header-section-number">1.3.3</span> 物価指数</a></li>
+  <li><a href="#因果効果" id="toc-因果効果" class="nav-link" data-scroll-target="#因果効果"><span class="header-section-number">1.3.4</span> 因果効果</a></li>
+  <li><a href="#格差分析" id="toc-格差分析" class="nav-link" data-scroll-target="#格差分析"><span class="header-section-number">1.3.5</span> 格差分析</a></li>
   </ul></li>
   <li><a href="#応用上の課題" id="toc-応用上の課題" class="nav-link" data-scroll-target="#応用上の課題"><span class="header-section-number">1.4</span> 応用上の課題</a></li>
   </ul>
@@ -268,23 +277,23 @@ window.Quarto = {
 <p>以下では実際のデータを用いて、取引年と立地(中心6区 であれば1、それ以外であれば0)ごとに、平均取引価格を示しています。 また各取引年における取引事例の立地割合も算出しています。</p>
 <div class="cell">
 <div class="cell-output-display">
-<div id="cnxxboyddf" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#cnxxboyddf table {
+<div id="aujndyrtnd" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#aujndyrtnd table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#cnxxboyddf thead, #cnxxboyddf tbody, #cnxxboyddf tfoot, #cnxxboyddf tr, #cnxxboyddf td, #cnxxboyddf th {
+#aujndyrtnd thead, #aujndyrtnd tbody, #aujndyrtnd tfoot, #aujndyrtnd tr, #aujndyrtnd td, #aujndyrtnd th {
   border-style: none;
 }
 
-#cnxxboyddf p {
+#aujndyrtnd p {
   margin: 0;
   padding: 0;
 }
 
-#cnxxboyddf .gt_table {
+#aujndyrtnd .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -310,12 +319,12 @@ window.Quarto = {
   border-left-color: #D3D3D3;
 }
 
-#cnxxboyddf .gt_caption {
+#aujndyrtnd .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#cnxxboyddf .gt_title {
+#aujndyrtnd .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -327,7 +336,7 @@ window.Quarto = {
   border-bottom-width: 0;
 }
 
-#cnxxboyddf .gt_subtitle {
+#aujndyrtnd .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -339,7 +348,7 @@ window.Quarto = {
   border-top-width: 0;
 }
 
-#cnxxboyddf .gt_heading {
+#aujndyrtnd .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -351,13 +360,13 @@ window.Quarto = {
   border-right-color: #D3D3D3;
 }
 
-#cnxxboyddf .gt_bottom_border {
+#aujndyrtnd .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#cnxxboyddf .gt_col_headings {
+#aujndyrtnd .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -372,7 +381,7 @@ window.Quarto = {
   border-right-color: #D3D3D3;
 }
 
-#cnxxboyddf .gt_col_heading {
+#aujndyrtnd .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -392,7 +401,7 @@ window.Quarto = {
   overflow-x: hidden;
 }
 
-#cnxxboyddf .gt_column_spanner_outer {
+#aujndyrtnd .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -404,15 +413,15 @@ window.Quarto = {
   padding-right: 4px;
 }
 
-#cnxxboyddf .gt_column_spanner_outer:first-child {
+#aujndyrtnd .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#cnxxboyddf .gt_column_spanner_outer:last-child {
+#aujndyrtnd .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#cnxxboyddf .gt_column_spanner {
+#aujndyrtnd .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -424,11 +433,11 @@ window.Quarto = {
   width: 100%;
 }
 
-#cnxxboyddf .gt_spanner_row {
+#aujndyrtnd .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#cnxxboyddf .gt_group_heading {
+#aujndyrtnd .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -454,7 +463,7 @@ window.Quarto = {
   text-align: left;
 }
 
-#cnxxboyddf .gt_empty_group_heading {
+#aujndyrtnd .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -469,15 +478,15 @@ window.Quarto = {
   vertical-align: middle;
 }
 
-#cnxxboyddf .gt_from_md > :first-child {
+#aujndyrtnd .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#cnxxboyddf .gt_from_md > :last-child {
+#aujndyrtnd .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#cnxxboyddf .gt_row {
+#aujndyrtnd .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -496,7 +505,7 @@ window.Quarto = {
   overflow-x: hidden;
 }
 
-#cnxxboyddf .gt_stub {
+#aujndyrtnd .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -509,7 +518,7 @@ window.Quarto = {
   padding-right: 5px;
 }
 
-#cnxxboyddf .gt_stub_row_group {
+#aujndyrtnd .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -523,15 +532,15 @@ window.Quarto = {
   vertical-align: top;
 }
 
-#cnxxboyddf .gt_row_group_first td {
+#aujndyrtnd .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#cnxxboyddf .gt_row_group_first th {
+#aujndyrtnd .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#cnxxboyddf .gt_summary_row {
+#aujndyrtnd .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -541,16 +550,16 @@ window.Quarto = {
   padding-right: 5px;
 }
 
-#cnxxboyddf .gt_first_summary_row {
+#aujndyrtnd .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#cnxxboyddf .gt_first_summary_row.thick {
+#aujndyrtnd .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#cnxxboyddf .gt_last_summary_row {
+#aujndyrtnd .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -560,7 +569,7 @@ window.Quarto = {
   border-bottom-color: #D3D3D3;
 }
 
-#cnxxboyddf .gt_grand_summary_row {
+#aujndyrtnd .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -570,7 +579,7 @@ window.Quarto = {
   padding-right: 5px;
 }
 
-#cnxxboyddf .gt_first_grand_summary_row {
+#aujndyrtnd .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -580,7 +589,7 @@ window.Quarto = {
   border-top-color: #D3D3D3;
 }
 
-#cnxxboyddf .gt_last_grand_summary_row_top {
+#aujndyrtnd .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -590,11 +599,11 @@ window.Quarto = {
   border-bottom-color: #D3D3D3;
 }
 
-#cnxxboyddf .gt_striped {
+#aujndyrtnd .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#cnxxboyddf .gt_table_body {
+#aujndyrtnd .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -603,7 +612,7 @@ window.Quarto = {
   border-bottom-color: #D3D3D3;
 }
 
-#cnxxboyddf .gt_footnotes {
+#aujndyrtnd .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -617,7 +626,7 @@ window.Quarto = {
   border-right-color: #D3D3D3;
 }
 
-#cnxxboyddf .gt_footnote {
+#aujndyrtnd .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -626,7 +635,7 @@ window.Quarto = {
   padding-right: 5px;
 }
 
-#cnxxboyddf .gt_sourcenotes {
+#aujndyrtnd .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -640,7 +649,7 @@ window.Quarto = {
   border-right-color: #D3D3D3;
 }
 
-#cnxxboyddf .gt_sourcenote {
+#aujndyrtnd .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -648,72 +657,72 @@ window.Quarto = {
   padding-right: 5px;
 }
 
-#cnxxboyddf .gt_left {
+#aujndyrtnd .gt_left {
   text-align: left;
 }
 
-#cnxxboyddf .gt_center {
+#aujndyrtnd .gt_center {
   text-align: center;
 }
 
-#cnxxboyddf .gt_right {
+#aujndyrtnd .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#cnxxboyddf .gt_font_normal {
+#aujndyrtnd .gt_font_normal {
   font-weight: normal;
 }
 
-#cnxxboyddf .gt_font_bold {
+#aujndyrtnd .gt_font_bold {
   font-weight: bold;
 }
 
-#cnxxboyddf .gt_font_italic {
+#aujndyrtnd .gt_font_italic {
   font-style: italic;
 }
 
-#cnxxboyddf .gt_super {
+#aujndyrtnd .gt_super {
   font-size: 65%;
 }
 
-#cnxxboyddf .gt_footnote_marks {
+#aujndyrtnd .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#cnxxboyddf .gt_asterisk {
+#aujndyrtnd .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#cnxxboyddf .gt_indent_1 {
+#aujndyrtnd .gt_indent_1 {
   text-indent: 5px;
 }
 
-#cnxxboyddf .gt_indent_2 {
+#aujndyrtnd .gt_indent_2 {
   text-indent: 10px;
 }
 
-#cnxxboyddf .gt_indent_3 {
+#aujndyrtnd .gt_indent_3 {
   text-indent: 15px;
 }
 
-#cnxxboyddf .gt_indent_4 {
+#aujndyrtnd .gt_indent_4 {
   text-indent: 20px;
 }
 
-#cnxxboyddf .gt_indent_5 {
+#aujndyrtnd .gt_indent_5 {
   text-indent: 25px;
 }
 
-#cnxxboyddf .katex-display {
+#aujndyrtnd .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#cnxxboyddf div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#aujndyrtnd div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -819,23 +828,23 @@ window.Quarto = {
 <p>バランス後の平均値の計算例として、以下ではターゲットを取引年にかかわらず、「中心6区が0.25, その他が0.75」と設定し、Exampleに適用します。</p>
 <div class="cell">
 <div class="cell-output-display">
-<div id="olyxgqoxea" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#olyxgqoxea table {
+<div id="imgxiqkwfy" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#imgxiqkwfy table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#olyxgqoxea thead, #olyxgqoxea tbody, #olyxgqoxea tfoot, #olyxgqoxea tr, #olyxgqoxea td, #olyxgqoxea th {
+#imgxiqkwfy thead, #imgxiqkwfy tbody, #imgxiqkwfy tfoot, #imgxiqkwfy tr, #imgxiqkwfy td, #imgxiqkwfy th {
   border-style: none;
 }
 
-#olyxgqoxea p {
+#imgxiqkwfy p {
   margin: 0;
   padding: 0;
 }
 
-#olyxgqoxea .gt_table {
+#imgxiqkwfy .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -861,12 +870,12 @@ window.Quarto = {
   border-left-color: #D3D3D3;
 }
 
-#olyxgqoxea .gt_caption {
+#imgxiqkwfy .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#olyxgqoxea .gt_title {
+#imgxiqkwfy .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -878,7 +887,7 @@ window.Quarto = {
   border-bottom-width: 0;
 }
 
-#olyxgqoxea .gt_subtitle {
+#imgxiqkwfy .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -890,7 +899,7 @@ window.Quarto = {
   border-top-width: 0;
 }
 
-#olyxgqoxea .gt_heading {
+#imgxiqkwfy .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -902,13 +911,13 @@ window.Quarto = {
   border-right-color: #D3D3D3;
 }
 
-#olyxgqoxea .gt_bottom_border {
+#imgxiqkwfy .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#olyxgqoxea .gt_col_headings {
+#imgxiqkwfy .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -923,7 +932,7 @@ window.Quarto = {
   border-right-color: #D3D3D3;
 }
 
-#olyxgqoxea .gt_col_heading {
+#imgxiqkwfy .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -943,7 +952,7 @@ window.Quarto = {
   overflow-x: hidden;
 }
 
-#olyxgqoxea .gt_column_spanner_outer {
+#imgxiqkwfy .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -955,15 +964,15 @@ window.Quarto = {
   padding-right: 4px;
 }
 
-#olyxgqoxea .gt_column_spanner_outer:first-child {
+#imgxiqkwfy .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#olyxgqoxea .gt_column_spanner_outer:last-child {
+#imgxiqkwfy .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#olyxgqoxea .gt_column_spanner {
+#imgxiqkwfy .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -975,11 +984,11 @@ window.Quarto = {
   width: 100%;
 }
 
-#olyxgqoxea .gt_spanner_row {
+#imgxiqkwfy .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#olyxgqoxea .gt_group_heading {
+#imgxiqkwfy .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1005,7 +1014,7 @@ window.Quarto = {
   text-align: left;
 }
 
-#olyxgqoxea .gt_empty_group_heading {
+#imgxiqkwfy .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1020,15 +1029,15 @@ window.Quarto = {
   vertical-align: middle;
 }
 
-#olyxgqoxea .gt_from_md > :first-child {
+#imgxiqkwfy .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#olyxgqoxea .gt_from_md > :last-child {
+#imgxiqkwfy .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#olyxgqoxea .gt_row {
+#imgxiqkwfy .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1047,7 +1056,7 @@ window.Quarto = {
   overflow-x: hidden;
 }
 
-#olyxgqoxea .gt_stub {
+#imgxiqkwfy .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1060,7 +1069,7 @@ window.Quarto = {
   padding-right: 5px;
 }
 
-#olyxgqoxea .gt_stub_row_group {
+#imgxiqkwfy .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1074,15 +1083,15 @@ window.Quarto = {
   vertical-align: top;
 }
 
-#olyxgqoxea .gt_row_group_first td {
+#imgxiqkwfy .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#olyxgqoxea .gt_row_group_first th {
+#imgxiqkwfy .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#olyxgqoxea .gt_summary_row {
+#imgxiqkwfy .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1092,16 +1101,16 @@ window.Quarto = {
   padding-right: 5px;
 }
 
-#olyxgqoxea .gt_first_summary_row {
+#imgxiqkwfy .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#olyxgqoxea .gt_first_summary_row.thick {
+#imgxiqkwfy .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#olyxgqoxea .gt_last_summary_row {
+#imgxiqkwfy .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1111,7 +1120,7 @@ window.Quarto = {
   border-bottom-color: #D3D3D3;
 }
 
-#olyxgqoxea .gt_grand_summary_row {
+#imgxiqkwfy .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1121,7 +1130,7 @@ window.Quarto = {
   padding-right: 5px;
 }
 
-#olyxgqoxea .gt_first_grand_summary_row {
+#imgxiqkwfy .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1131,7 +1140,7 @@ window.Quarto = {
   border-top-color: #D3D3D3;
 }
 
-#olyxgqoxea .gt_last_grand_summary_row_top {
+#imgxiqkwfy .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1141,11 +1150,11 @@ window.Quarto = {
   border-bottom-color: #D3D3D3;
 }
 
-#olyxgqoxea .gt_striped {
+#imgxiqkwfy .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#olyxgqoxea .gt_table_body {
+#imgxiqkwfy .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1154,7 +1163,7 @@ window.Quarto = {
   border-bottom-color: #D3D3D3;
 }
 
-#olyxgqoxea .gt_footnotes {
+#imgxiqkwfy .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1168,7 +1177,7 @@ window.Quarto = {
   border-right-color: #D3D3D3;
 }
 
-#olyxgqoxea .gt_footnote {
+#imgxiqkwfy .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -1177,7 +1186,7 @@ window.Quarto = {
   padding-right: 5px;
 }
 
-#olyxgqoxea .gt_sourcenotes {
+#imgxiqkwfy .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1191,7 +1200,7 @@ window.Quarto = {
   border-right-color: #D3D3D3;
 }
 
-#olyxgqoxea .gt_sourcenote {
+#imgxiqkwfy .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1199,72 +1208,72 @@ window.Quarto = {
   padding-right: 5px;
 }
 
-#olyxgqoxea .gt_left {
+#imgxiqkwfy .gt_left {
   text-align: left;
 }
 
-#olyxgqoxea .gt_center {
+#imgxiqkwfy .gt_center {
   text-align: center;
 }
 
-#olyxgqoxea .gt_right {
+#imgxiqkwfy .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#olyxgqoxea .gt_font_normal {
+#imgxiqkwfy .gt_font_normal {
   font-weight: normal;
 }
 
-#olyxgqoxea .gt_font_bold {
+#imgxiqkwfy .gt_font_bold {
   font-weight: bold;
 }
 
-#olyxgqoxea .gt_font_italic {
+#imgxiqkwfy .gt_font_italic {
   font-style: italic;
 }
 
-#olyxgqoxea .gt_super {
+#imgxiqkwfy .gt_super {
   font-size: 65%;
 }
 
-#olyxgqoxea .gt_footnote_marks {
+#imgxiqkwfy .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#olyxgqoxea .gt_asterisk {
+#imgxiqkwfy .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#olyxgqoxea .gt_indent_1 {
+#imgxiqkwfy .gt_indent_1 {
   text-indent: 5px;
 }
 
-#olyxgqoxea .gt_indent_2 {
+#imgxiqkwfy .gt_indent_2 {
   text-indent: 10px;
 }
 
-#olyxgqoxea .gt_indent_3 {
+#imgxiqkwfy .gt_indent_3 {
   text-indent: 15px;
 }
 
-#olyxgqoxea .gt_indent_4 {
+#imgxiqkwfy .gt_indent_4 {
   text-indent: 20px;
 }
 
-#olyxgqoxea .gt_indent_5 {
+#imgxiqkwfy .gt_indent_5 {
   text-indent: 25px;
 }
 
-#olyxgqoxea .katex-display {
+#imgxiqkwfy .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#olyxgqoxea div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#imgxiqkwfy div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -1342,21 +1351,44 @@ Important&nbsp;1.1: Overlapの仮定
 <p>例えば、教育経験<span class="math inline">\((=X)\)</span>をバランスさせた男女間<span class="math inline">\((=D)\)</span>での賃金格差を推定したいとします。 もしデータにおける男女間での教育経験の分断が極めて大きい場合、大学卒以上の女性は存在しない可能性があります。 この場合、<span class="math inline">\(X=大学卒\)</span>の女性割合は<span class="math inline">\(0\)</span>であり、大学卒内で男女間比較は不可能です。 このため大学卒について、ターゲットとなる割合を”0”としない限り、バランス後の比較は不可能です。</p>
 </section>
 </section>
-<section id="他の実例" class="level2" data-number="1.3">
-<h2 data-number="1.3" class="anchored" data-anchor-id="他の実例"><span class="header-section-number">1.3</span> 他の実例</h2>
+<section id="応用事例" class="level2" data-number="1.3">
+<h2 data-number="1.3" class="anchored" data-anchor-id="応用事例"><span class="header-section-number">1.3</span> 応用事例</h2>
 <p>バランス後の比較分析の応用例は、大量に存在します。 以下では実務においてよく利用されている指標を紹介します。</p>
-<section id="合計特殊出生率" class="level3" data-number="1.3.1">
-<h3 data-number="1.3.1" class="anchored" data-anchor-id="合計特殊出生率"><span class="header-section-number">1.3.1</span> 合計特殊出生率</h3>
-<p>バランス後の比較分析は、社会/政策分析において幅広く利用されています。 代表例は、合計特殊出生率の国家間/時代間比較です。</p>
-<p>出生数の動向を把握する上で、新生児数を年次や国家間比較は、有益だとみなされてきました。 <a href="https://ja.wikipedia.org/wiki/%E5%90%88%E8%A8%88%E7%89%B9%E6%AE%8A%E5%87%BA%E7%94%9F%E7%8E%87#:~:text=%E5%90%88%E8%A8%88%E7%89%B9%E6%AE%8A%E5%87%BA%E7%94%9F%E7%8E%87%EF%BC%88%E3%81%94%E3%81%86%E3%81%91%E3%81%84,%E4%BA%BA%E5%8F%A3%E3%81%8C%E8%87%AA%E7%84%B6%E6%B8%9B%E3%81%99%E3%82%8B%E3%80%82">合計特殊出生率</a> は、成人の年齢構造の違いをバランスさせるために利用されている指標です。 単純な出生率（一年間に生まれた子供の数/女性の数）は、成人の年齢構造の影響を強く受ける可能性があります。 社会において高齢者の比率が高まれば、出生率は低下することが予想されるからです。 対して合計特殊出生率は、「仮に年齢構造が同じであった場合」の出生率を、以下の方法で推定しています <span class="math display">\[\frac{15歳の女性が産んだ子供の数}{15歳の女性の数} +..+ \frac{49歳の女性が産んだ子供の数}{49歳の女性の数}\]</span></p>
-<p>合計特殊出生率の計算においては、15歳から49歳の女性の年齢 (<span class="math inline">\(=X\)</span>)層が同じ割合になることを目指しています。 すなわちターゲットなる割合は、15歳から49歳までについて 1/34、それ以外の層については”0”となります。</p>
-</section>
-<section id="既存店ベースの比較" class="level3" data-number="1.3.2">
-<h3 data-number="1.3.2" class="anchored" data-anchor-id="既存店ベースの比較"><span class="header-section-number">1.3.2</span> 既存店ベースの比較</h3>
+<section id="既存店ベースの比較" class="level3" data-number="1.3.1">
+<h3 data-number="1.3.1" class="anchored" data-anchor-id="既存店ベースの比較"><span class="header-section-number">1.3.1</span> 既存店ベースの比較</h3>
 <p>バランス後の比較は、企業の経営戦略を考える上でも用いられます。</p>
 <p>小売や飲食/宿泊業などでは、しばしば既存店に絞った上での、売上比較がなされます。 例えば、あるコンビニチェーンで、店舗あたりの平均売り上げが1000万円増大したとします。 同時に去年から今年にかけて、新規出店も大きく増加したとします。 新規店の方が売上が高くなる傾向がある場合、新規店割合の違いが、平均売上の上昇をもたらした可能性があります。</p>
 <p>既存店割合をバランスさせるシンプルな方法として、既存店のみに絞った平均売上を比較がよく行われます。 このような分析では、既存店比率は全ての年について<span class="math inline">\(100 \%\)</span>となり、完全なバランスが達成されます。</p>
-<p>既存店ベースの比較におけるターゲットは、新規店については1、新規店以外については0となります。</p>
+<p>既存店ベースの比較におけるターゲット割合は、新規店については1、新規店以外については0となります。</p>
+</section>
+<section id="合計特殊出生率の時点地域間比較" class="level3" data-number="1.3.2">
+<h3 data-number="1.3.2" class="anchored" data-anchor-id="合計特殊出生率の時点地域間比較"><span class="header-section-number">1.3.2</span> 合計特殊出生率の時点/地域間比較</h3>
+<p>バランス後の比較分析は、社会/政策分析においても幅広く利用されています。 代表例は、合計特殊出生率の国家間/時代間比較です。</p>
+<p>出生数の動向を把握する上で、新生児数を年次や国家間比較は、有益だとみなされてきました。 <a href="https://ja.wikipedia.org/wiki/%E5%90%88%E8%A8%88%E7%89%B9%E6%AE%8A%E5%87%BA%E7%94%9F%E7%8E%87#:~:text=%E5%90%88%E8%A8%88%E7%89%B9%E6%AE%8A%E5%87%BA%E7%94%9F%E7%8E%87%EF%BC%88%E3%81%94%E3%81%86%E3%81%91%E3%81%84,%E4%BA%BA%E5%8F%A3%E3%81%8C%E8%87%AA%E7%84%B6%E6%B8%9B%E3%81%99%E3%82%8B%E3%80%82">合計特殊出生率</a> は、成人の年齢構造の違いをバランスさせるために利用されている指標です。 単純な出生率（一年間に生まれた子供の数/女性の数）は、成人の年齢構造の影響を強く受ける可能性があります。 社会において高齢者の比率が高まれば、出生率は低下することが予想されるからです。 対して合計特殊出生率は、「仮に年齢構造が同じであった場合」の出生率を、以下の方法で推定しています <span class="math display">\[\frac{15歳の女性が産んだ子供の数}{15歳の女性の数} +..+ \frac{49歳の女性が産んだ子供の数}{49歳の女性の数}\]</span></p>
+<p>合計特殊出生率の計算においては、15歳から49歳の女性の年齢 (<span class="math inline">\(=X\)</span>)層が同じ割合になることを目指しています。 すなわちターゲット割合は、15歳から49歳までについて 1/34、それ以外の層については”0”となります。</p>
+</section>
+<section id="物価指数" class="level3" data-number="1.3.3">
+<h3 data-number="1.3.3" class="anchored" data-anchor-id="物価指数"><span class="header-section-number">1.3.3</span> 物価指数</h3>
+<p>より複雑な比較が要求される指標の代表例は、物価指数です。 物価指数は、“同じような消費生活”を送るために必要な支出額を、比較するために算出されます (<a href="https://en.wikipedia.org/wiki/Consumer_price_index">wiki</a>)。 この際に問題となるのは、実際に消費する商品の組み合わせや量は、年毎に変化することです。 すなわち <span class="math inline">\(D=\)</span> 時点、<span class="math inline">\(Y=\)</span> 名目価格、<span class="math inline">\(X=\)</span> “品目”とし、消費する”品目”をバランスさせる必要があります。</p>
+<p><span class="citation" data-cites="bajari2023hedonic">Bajari et al. (<a href="Referemce.html#ref-bajari2023hedonic" role="doc-biblioref">2023</a>)</span> は、機械学習の手法と商品の画像やテキストデータも用いることで、”質”も含めてバランスする試みを行なっています。 このような分析によって、“ステレス値上げ”や”商品の質的改善”にも対応できる指標が作成できる可能性があります。</p>
+</section>
+<section id="因果効果" class="level3" data-number="1.3.4">
+<h3 data-number="1.3.4" class="anchored" data-anchor-id="因果効果"><span class="header-section-number">1.3.4</span> 因果効果</h3>
+<p>バランス後の比較は、因果効果を推定する際にも、中心的な役割を果たします。 因果効果を記述する枠組みは、多数提案されています (Pontial outcome/Structural Equation Model (DAG)/ 経済モデルなど)。 これらは共通して、<a href="https://en.wikipedia.org/wiki/Thought_experiment">思考実験</a>、(特に<a href="https://en.wikipedia.org/wiki/David_Lewis_(philosopher)#Counterfactuals_and_modal_realism">反実仮想実験</a>)の重要性を指摘しています。</p>
+<p>ここでは反実仮想を明らかにできる仮想的な実験 (Target trial) を想像します。 典型的には、「無限大の被験者を用意し、被験者間の相互作用がない環境で、ランダムに選ばれた一部の被験者に介入を行う」実験です。 このような実験結果をもし得ることができれば、介入を行った/行わなかった被験者を比較することで、介入の因果効果を明らかにできます。 介入は完全ランダムに決まっているため、介入を行った/行わなかった集団間で、背景属性について大きな差が生じないことを担保できます<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>。</p>
+<p>現実に、このような大規模な実験を行うことは不可能です。 このため現実のデータから、理想的な実験結果を可能な限り再現することを目指します。</p>
+<p><span class="citation" data-cites="egami2024causal">Egami et al. (<a href="Referemce.html#ref-egami2024causal" role="doc-biblioref">2024</a>)</span> は、TVゲームが精神的健康状態に与える因果効果について、実証的な証拠を提供しています。 同論文では、コロナ下で生じたゲーム機への過大需要と、それに対応するために実施された「ゲーム機購入権くじ」を利用しています。 同時期においては、ゲーム機購入希望者の中で、くじに当選した人だけゲームを購入することができました。 このため理想的な実験に近い状況が生じています。</p>
+<p>しかしながら、理想的な実験とは異なり、背景属性に幾つかの違いが生じる可能性があります。 例えば地域によってくじの当選確率が異なるのであれば、ゲーム機購入者と非購入者の間で、居住地に偏りが生じてしまいます。</p>
+<p>以上に対応するために、<span class="math inline">\(D=\)</span> くじに当選、<span class="math inline">\(Y=\)</span> 健康状態、 <span class="math inline">\(X=\)</span> 居住地等とし、当選/非当選者間で背景属性をバランスさせた推定を行なっています。</p>
+</section>
+<section id="格差分析" class="level3" data-number="1.3.5">
+<h3 data-number="1.3.5" class="anchored" data-anchor-id="格差分析"><span class="header-section-number">1.3.5</span> 格差分析</h3>
+<p>格差分析においても、バランス後の比較は重要です。 格差分析の出発点は、通常格差/差別/不平等の大きさの推定です。 このためには、研究対象とする格差を明確に定義する必要があります。</p>
+<p>因果効果と同様に、格差の定義についても、多様な議論があります (<a href="https://ja.wikipedia.org/wiki/%E3%83%92%E3%83%A5%E3%83%BC%E3%83%A0%E3%81%AE%E6%B3%95%E5%89%87">ヒュームの法則</a>; <span class="citation" data-cites="jackson2018decomposition">Jackson and VanderWeele (<a href="Referemce.html#ref-jackson2018decomposition" role="doc-biblioref">2018</a>)</span>; <span class="citation" data-cites="rose2023constructivist">Rose (<a href="Referemce.html#ref-rose2023constructivist" role="doc-biblioref">2023</a>)</span>; <span class="citation" data-cites="mosse2025modeling">Mossé et al. (<a href="Referemce.html#ref-mosse2025modeling" role="doc-biblioref">2025</a>)</span> )。 代表的なものとして、格差や差別を因果的に定義するのは難しく、あくまで規範的に定義する立場があります。 すなわち「本来であれば存在<strong>すべき</strong>ではない差」を格差として定義します。</p>
+<p>例えば、両親の教育経験間での、子供の所得格差に関心があるとします。 両親の属性に基づく差は、機会の不平等の代表的な例であり、多くの研究が行われてきました。</p>
+<p>実証上の論点は、両親の教育経験が異なれば、子供の年齢の分布も異なる可能性への対処です。 日本のような教育年数が急激に伸びた国においては、教育年数の長い両親の子供は、年齢が若い可能性があります。 また年功的賃金体系が残存していることを踏まえれば、年齢が若ければ賃金が低い傾向があります。 このため単純比較を行い、「教育年数の長い両親の子供の方が、短い両親の子供よりも所得が低い」、という結果を得たとしても、この差は年齢分布の違いを反映している可能性があります。</p>
+<p>もし研究関心が、「同じ世代なのに両親の教育経験によって生じる格差」にあるのであれば、子供の生まれ年を<span class="math inline">\(X\)</span>としてバランスする必要があります。</p>
+<p>またバランスは格差の要因分析にも応用できます。 このような分析は、分解分析 (Decomposition analysis)と呼ばれます <span class="citation" data-cites="opacic2023disparity">(<a href="Referemce.html#ref-opacic2023disparity" role="doc-biblioref">Opacic, Wei, and Zhou 2023</a>)</span>。 <span class="citation" data-cites="vafa2024estimating">Vafa, Athey, and Blei (<a href="Referemce.html#ref-vafa2024estimating" role="doc-biblioref">2024</a>)</span> では、男女間賃金格差の要因分析として、<span class="math inline">\(X=\)</span> 職歴、<span class="math inline">\(D=\)</span> 性別、<span class="math inline">\(Y=\)</span> 賃金、とするバランス後の比較を行なっています。 職歴のバランス後にも、賃金格差が残存しているのであれば、採用時や個別賃金交渉における男女間での異なる取り扱いが男女間格差の要因であると解釈できます。</p>
 </section>
 </section>
 <section id="応用上の課題" class="level2" data-number="1.4">
@@ -1367,8 +1399,29 @@ Important&nbsp;1.1: Overlapの仮定
 
 
 <div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
+<div id="ref-bajari2023hedonic" class="csl-entry" role="listitem">
+Bajari, Patrick, Zhihao Cen, Victor Chernozhukov, Manoj Manukonda, Suhas Vijaykumar, Jin Wang, Ramon Huerta, et al. 2023. <span>“Hedonic Prices and Quality Adjusted Price Indices Powered by AI.”</span> <em>arXiv Preprint arXiv:2305.00044</em>.
+</div>
+<div id="ref-egami2024causal" class="csl-entry" role="listitem">
+Egami, Hiroyuki, Md Shafiur Rahman, Tsuyoshi Yamamoto, Chihiro Egami, and Takahisa Wakabayashi. 2024. <span>“Causal Effect of Video Gaming on Mental Well-Being in Japan 2020–2022.”</span> <em>Nature Human Behaviour</em> 8 (10): 1943–56.
+</div>
 <div id="ref-gelman2024causal" class="csl-entry" role="listitem">
 Gelman, Andrew, Jessica Hullman, and Lauren Kennedy. 2024. <span>“Causal Quartets: Different Ways to Attain the Same Average Treatment Effect.”</span> <em>The American Statistician</em> 78 (3): 267–72.
+</div>
+<div id="ref-jackson2018decomposition" class="csl-entry" role="listitem">
+Jackson, John W, and Tyler J VanderWeele. 2018. <span>“Decomposition Analysis to Identify Intervention Targets for Reducing Disparities.”</span> <em>Epidemiology (Cambridge, Mass.)</em> 29 (6): 825.
+</div>
+<div id="ref-mosse2025modeling" class="csl-entry" role="listitem">
+Mossé, Milan, Kara Schechtman, Frederick Eberhardt, and Thomas Icard. 2025. <span>“Modeling Discrimination with Causal Abstraction.”</span> <em>arXiv Preprint arXiv:2501.08429</em>.
+</div>
+<div id="ref-opacic2023disparity" class="csl-entry" role="listitem">
+Opacic, Aleksei, Lai Wei, and Xiang Zhou. 2023. <span>“Disparity Analysis: A Tale of Two Approaches.”</span>
+</div>
+<div id="ref-rose2023constructivist" class="csl-entry" role="listitem">
+Rose, Evan K. 2023. <span>“A Constructivist Perspective on Empirical Discrimination Research.”</span> <em>Journal of Economic Literature</em> 61 (3): 906–23.
+</div>
+<div id="ref-vafa2024estimating" class="csl-entry" role="listitem">
+Vafa, Keyon, Susan Athey, and David M Blei. 2024. <span>“Estimating Wage Disparities Using Foundation Models.”</span> <em>arXiv Preprint arXiv:2409.09894</em>.
 </div>
 </div>
 </section>
@@ -1376,6 +1429,7 @@ Gelman, Andrew, Jessica Hullman, and Lauren Kennedy. 2024. <span>“Causal Quart
 <hr>
 <ol>
 <li id="fn1"><p><span class="citation" data-cites="gelman2024causal">Gelman, Hullman, and Kennedy (<a href="Referemce.html#ref-gelman2024causal" role="doc-biblioref">2024</a>)</span><a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>完全ランダムかつ無限大の被験者が存在すれば、格差は完全に消失します。現実の被験者数のもとでは、背景属性について偏りは生じますが、信頼区間などの統計的な手法でその影響を評価できます。<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
 

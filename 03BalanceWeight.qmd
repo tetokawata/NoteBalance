@@ -29,7 +29,7 @@ Balancing weightは、前章で導入したWeightの一種であり、$D$間で�
 ::: {.callout-important}
 ### Balancing Weight
 
-- Balancing weight $\omega(x,d)$は、$D$間での$X$の分布の乖離を調整するために導入され、以下のように定義する。 $$D=1における事例割合\times \omega(x,1)$$ $$= D=0における事例割合\times \omega(x,0)$$ $$=ターゲットとなる割合$$
+- Balancing weight $\omega(x,d)$は、$D$間での$X$の分布の乖離を調整するために導入され、以下のように定義する。 $$(D=1)における事例割合\times \omega(x,1)$$ $$= (D=0)における事例割合\times \omega(x,0)$$ $$=ターゲットとなる割合$$
 
 - 定義式を変形すると $$\omega(x,d)=\frac{ターゲットとなる割合}{(D=d)グループにおける割合}$$
 

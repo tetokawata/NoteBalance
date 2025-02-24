@@ -6,10 +6,8 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="川田恵介">
-<meta name="dcterms.date" content="2025-02-24">
 
-<title>格差/因果/比較分析のためのデータ分析 (ver 0.2.1)</title>
+<title>7&nbsp; 機械学習の活用: AIPW – 格差/因果/比較分析のためのデータ分析 (ver 0.2.1)</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -21,6 +19,40 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 /* CSS for citations */
 div.csl-bib-body { }
@@ -52,7 +84,8 @@ div.csl-indent {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./01Intro.html" rel="next">
+<link href="./Referemce.html" rel="next">
+<link href="./06R.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -131,7 +164,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./index.html">Preface</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./07AIPW.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">機械学習の活用: AIPW</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -158,7 +191,7 @@ window.Quarto = {
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link active">
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Preface</span></a>
   </div>
 </li>
@@ -200,7 +233,7 @@ window.Quarto = {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./07AIPW.html" class="sidebar-item-text sidebar-link">
+  <a href="./07AIPW.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">機械学習の活用: AIPW</span></span></a>
   </div>
 </li>
@@ -220,7 +253,15 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#preface" id="toc-preface" class="nav-link active" data-scroll-target="#preface">Preface</a></li>
+  <li><a href="#inverse-probability-weight" id="toc-inverse-probability-weight" class="nav-link active" data-scroll-target="#inverse-probability-weight"><span class="header-section-number">7.1</span> Inverse probability weight</a></li>
+  <li><a href="#sec-sub_AIPW" id="toc-sec-sub_AIPW" class="nav-link" data-scroll-target="#sec-sub_AIPW"><span class="header-section-number">7.2</span> Augmented Inverse Probability Weight</a></li>
+  <li><a href="#母集団の推定方法" id="toc-母集団の推定方法" class="nav-link" data-scroll-target="#母集団の推定方法"><span class="header-section-number">7.3</span> 母集団の推定方法</a></li>
+  <li><a href="#残差回帰との比較" id="toc-残差回帰との比較" class="nav-link" data-scroll-target="#残差回帰との比較"><span class="header-section-number">7.4</span> 残差回帰との比較</a></li>
+  <li><a href="#rによる実践例" id="toc-rによる実践例" class="nav-link" data-scroll-target="#rによる実践例"><span class="header-section-number">7.5</span> Rによる実践例</a>
+  <ul class="collapse">
+  <li><a href="#準備" id="toc-準備" class="nav-link" data-scroll-target="#準備"><span class="header-section-number">7.5.1</span> 準備</a></li>
+  <li><a href="#ate" id="toc-ate" class="nav-link" data-scroll-target="#ate"><span class="header-section-number">7.5.2</span> ATE</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -229,27 +270,14 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">格差/因果/比較分析のためのデータ分析 (ver 0.2.1)</h1>
-<p class="subtitle lead">Balancing weightsを軸とした手法整理と機械学習の活用</p>
+<h1 class="title"><span id="sec-AIPW" class="quarto-section-identifier"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">機械学習の活用: AIPW</span></span></h1>
 </div>
 
 
 
 <div class="quarto-title-meta">
 
-    <div>
-    <div class="quarto-title-meta-heading">Author</div>
-    <div class="quarto-title-meta-contents">
-             <p>川田恵介 </p>
-          </div>
-  </div>
     
-    <div>
-    <div class="quarto-title-meta-heading">Published</div>
-    <div class="quarto-title-meta-contents">
-      <p class="date">February 24, 2025</p>
-    </div>
-  </div>
   
     
   </div>
@@ -259,86 +287,182 @@ window.Quarto = {
 </header>
 
 
-<section id="preface" class="level1 unnumbered">
-<h1 class="unnumbered">Preface</h1>
-<p>定量的な比較分析の方法を、Rでの実装とともに紹介します。</p>
-<p>比較分析は、社会における「グループ間の違い」を明らかにすることを目標とします。 本ノートでは、データ上のある変数 <span class="math inline">\(D\)</span> 間での、別の変数 <span class="math inline">\(Y\)</span> の平均値の差を推定する方法を紹介します。 例えば性別 <span class="math inline">\((D)\)</span> 間での賃金 <span class="math inline">\((Y)\)</span> の平均格差を推定します。</p>
-<p>比較分析は、社会/市場を理解するための方法として、中核的な位置を占めています。 通常、これらの研究関心となる<span class="math inline">\(D\)</span>については、<span class="math inline">\(Y\)</span>以外の違いがあることが一般的です。 研究課題に応じて、これらの違いの一部を、データ分析上の処理として「解消(<strong>バランス</strong>)」することが必要です。</p>
-<p>例えば、性別<span class="math inline">\((D)\)</span>間で見られる職業経験の違い<span class="math inline">\(X\)</span>をバランスさせることで、職業経験以外の要因によって生じる男女間の賃金<span class="math inline">\((Y)\)</span>格差が推定できます <span class="citation" data-cites="vafa2024estimating">(<a href="Referemce.html#ref-vafa2024estimating" role="doc-biblioref">Vafa, Athey, and Blei 2024</a>)</span>。 あるいは、ある職業訓練プログラム <span class="math inline">\((D)\)</span> が就業確率や就業後の賃金 <span class="math inline">\((Y)\)</span>に与える因果的効果を推定を試みます。 このような研究課題では、異なる職業訓練プログラムへの参加者間で、背景属性をバランスさせた上での、就業状態や賃金の比較が求められます <span class="citation" data-cites="behaghel2014private kallus2023treatment">(<a href="Referemce.html#ref-behaghel2014private" role="doc-biblioref">Behaghel, Crépon, and Gurgand 2014</a>; <a href="Referemce.html#ref-kallus2023treatment" role="doc-biblioref">Kallus 2023</a>)</span>。</p>
-<p>本ノートの中心的なコンセプトは、Balancing Weightです。 Balancing Weightは、以下のアプローチを統合的整理できる極めて有益な概念です。</p>
+<p><span class="math inline">\(D\)</span>間での<span class="math inline">\(X\)</span>の分布を近似的にバランスする手法としては、Inverse Probability Weight (IWP) も有力です。 本手法は、(<span class="math inline">\(X\)</span>内での)<span class="math inline">\(D\)</span>の分布を推定し、その逆数をウェイトとして使用する方法です。 この<span class="math inline">\(D\)</span>の分布は、傾向スコア(Propensity Score)と呼ばれています。 特に <span class="math inline">\(Y\)</span> の推定されたモデルと組みわせるAugmented Inverse Probability Weightは、機械学習などを用いた柔軟な推定と信頼区間の近似計算などの統計的推論と両立できます。</p>
+<section id="inverse-probability-weight" class="level2" data-number="7.1">
+<h2 data-number="7.1" class="anchored" data-anchor-id="inverse-probability-weight"><span class="header-section-number">7.1</span> Inverse probability weight</h2>
+<p>傾向スコアを活用した代表的な推定手法は、Inverse probability weightです。 この手法は、ベイズルールによるBalancing weightsの書き換えに基づいています。 ただしこの手法は、傾向スコアの推定精度に強く依存します。 また一般に推定精度が悪い傾向があります<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>。 このため本ノートでは、<a href="#sec-sub_AIPW" class="quarto-xref"><span>Section 7.2</span></a> で紹介するArgumented inverse probability weight (AIPW)の活用を推奨します。</p>
+<p>Balancing Weight <span class="math inline">\(\omega(d,x)\)</span> は以下のように定義されました。 <span class="math display">\[\omega(d,x)=\frac{ターゲット割合}{D=dにおけるX=xの事例割合}\]</span></p>
+<p>ベイズルールを適用すると <span class="math inline">\(\omega(d,x)\)</span> は以下のように書き換えられます。</p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Balancing Weightの書き換え
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><span class="math display">\[\omega(d,x)=\underbrace{\frac{1}{X=xにおけるD=dの割合}}_{傾向スコアの逆数}\]</span> <span class="math display">\[\times (D=dの割合)\]</span> <span class="math display">\[\times \frac{ターゲット割合}{X=xの割合}\]</span></p>
+<p>ターゲット割合を<span class="math inline">\(X=xの割合\)</span>とするのであれば、以下のように単純化できる。</p>
+<p><span class="math display">\[\omega(d,x)=傾向スコアの逆数\times D=dの割合\]</span></p>
+</div>
+</div>
+<p><span class="math inline">\(D=d\)</span>の割合は、データ内での<span class="math inline">\(D=d\)</span>の割合などを用いて、容易に推定できます。 よって傾向スコアが推定できれば、Balancing Weightの計算が可能です。 推定された傾向スコアを用いたBalanced comparisonはInverse probability weightと呼ばれ、以下の手順としてまとめられます。</p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Inverse probability weight
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li><p>傾向スコアを何らかの手法で推定する</p></li>
+<li><p>Balancing weights <span class="math inline">\(\omega(d,x)\)</span>を計算する</p></li>
+<li><p>Balancing weightsで荷重した平均差を計算する <span class="math display">\[D=1における(\omega(x,1)\times Y)の平均値\]</span> <span class="math display">\[-D=0における(\omega(x,0)\times Y)の平均値\]</span></p></li>
+</ol>
+</div>
+</div>
+<p>この手法は 傾向スコアの推定には、<span class="math inline">\(D\)</span>を<span class="math inline">\(X\)</span>で回帰する標準的な方法を用いることができます。 例えばLogitやProbitなどのパラメトリックな手法やRandom ForestやBoosting、Deep Learningなどの機械学習の手法も活用可能です。</p>
+<p>しかしながらどちらの手法を用いたとしても、推定上の問題があります。 IPWによる推定結果は、傾向スコアの推定精度に強く依存します。 このためLogitやProbitを用いた場合、推定モデルの定式化を正しく行う必要がありますが、多くの応用で困難です。 対して機械学習の手法を用いた場合、推定結果の収束の遅さが問題となり、信頼区間の近似計算などが難しくなります。</p>
+<p>この問題に対して、<span class="math inline">\(Y\)</span> の平均値の推定値 <span class="math inline">\(f_Y(D,X)\)</span> を併用するAugmented Inverse Probability Weightが有力です。</p>
+</section>
+<section id="sec-sub_AIPW" class="level2" data-number="7.2">
+<h2 data-number="7.2" class="anchored" data-anchor-id="sec-sub_AIPW"><span class="header-section-number">7.2</span> Augmented Inverse Probability Weight</h2>
+<p>Augmented Inverse Probability Weightの手順は以下のようにまとめられます。</p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Augmented Inverse Probability Weight
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li><p>交差推定を用いて、Y,Dを予測するモデル <span class="math inline">\(f_Y(D,X)\)</span> と <span class="math inline">\(f_D(X)\)</span> を推定する</p></li>
+<li><p>AIPWの推定値を以下のように補正し、AIPWの推定値を計算する <span class="math display">\[+ f_{Y}(1,X_i)\frac{D - f_D(X)}{f_D(X)}の平均値\]</span> <span class="math display">\[-f_{Y}(0,X_i)\frac{(1 - D) - (1 - f_D(X))}{1-f_D(X)}の平均値\]</span></p></li>
+</ol>
+</div>
+</div>
+</section>
+<section id="母集団の推定方法" class="level2" data-number="7.3">
+<h2 data-number="7.3" class="anchored" data-anchor-id="母集団の推定方法"><span class="header-section-number">7.3</span> 母集団の推定方法</h2>
+<p>母集団上でのAIPWとデータ上でのAIPWは、残差回帰とよく似た性質を持ちます。 交差推定とStackingなどの柔軟な方法を組み合わせて予測モデルを推定すれば、緩やかな仮定のみで、「母集団上で計算したAugmented Inverse Probability Weight」の結果について、信頼区間の近似計算が可能です。 AIPWは、データ全体での<span class="math inline">\(X\)</span>の分布をターゲット割合としたバランス後の比較です。 このため「母集団上での<span class="math inline">\(X\)</span>の分布をターゲットとした、バランス後の比較」について、信頼区間計算ができます。</p>
+</section>
+<section id="残差回帰との比較" class="level2" data-number="7.4">
+<h2 data-number="7.4" class="anchored" data-anchor-id="残差回帰との比較"><span class="header-section-number">7.4</span> 残差回帰との比較</h2>
+<p>残差回帰とAIPWは、よく似た性質を持ち、同じような動機に基づいています<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>。</p>
+<p>大きな違いは、ターゲット割合です。 残差回帰におけるターゲット割合は、Overlap Weightであり (<a href="06R.html" class="quarto-xref"><span>Chapter 6</span></a>)、その解釈は困難でした。 対してAIPWでは、<span class="math inline">\(X\)</span> の分布であり、解釈が容易です。 すなわち「もし<span class="math inline">\(X\)</span>の分布がデータ全体のものと一致していた場合、平均差はどのようなものになるか？」という疑問に答えることができます。 このような解釈が容易さが、AIPWの大きな魅力です。</p>
+<p>対してAIPWの弱点は、傾向スコアの値が0や1に近い事例がある場合、推定結果が不安定になりやすい点です。 これは傾向スコアの逆数が推定式に含まれているために生じます。 弊害の具体例としては、計算された信頼区間の拡大や信頼区間の近似計算そのものの信頼性低下、などです。</p>
+</section>
+<section id="rによる実践例" class="level2" data-number="7.5">
+<h2 data-number="7.5" class="anchored" data-anchor-id="rによる実践例"><span class="header-section-number">7.5</span> Rによる実践例</h2>
+<p>引き続きddmlパッケージを使用し、AIPW推定は実装できます。</p>
 <ul>
-<li><p>重回帰(OLS)やPenalized Regressionによる調整<span class="citation" data-cites="chattopadhyay2023implied bruns2023augmented">(<a href="Referemce.html#ref-chattopadhyay2023implied" role="doc-biblioref">Chattopadhyay and Zubizarreta 2023</a>; <a href="Referemce.html#ref-bruns2023augmented" role="doc-biblioref">Bruns-Smith et al. 2023</a>)</span></p></li>
-<li><p>傾向スコア(Propensity Score)の活用 <span class="citation" data-cites="imai2014covariate">(<a href="Referemce.html#ref-imai2014covariate" role="doc-biblioref">Imai and Ratkovic 2014</a>)</span></p></li>
-<li><p>機械学習などを用いたDebiased Machine Learning <span class="citation" data-cites="chernozhukov2018double chernozhukov2022locally">(<a href="Referemce.html#ref-chernozhukov2018double" role="doc-biblioref">Chernozhukov et al. 2018</a>; <a href="Referemce.html#ref-chernozhukov2022locally" role="doc-biblioref">Chernozhukov, Escanciano, et al. 2022</a>)</span></p></li>
-<li><p>Entropy Weight <span class="citation" data-cites="hainmueller2012entropy">(<a href="Referemce.html#ref-hainmueller2012entropy" role="doc-biblioref">Hainmueller 2012</a>)</span> やStable Weight <span class="citation" data-cites="zubizarreta2015stable">(<a href="Referemce.html#ref-zubizarreta2015stable" role="doc-biblioref">Zubizarreta 2015</a>)</span>、 Energy Weight <span class="citation" data-cites="huling2024energy">(<a href="Referemce.html#ref-huling2024energy" role="doc-biblioref">Huling and Mak 2024</a>)</span> による調整</p></li>
-<li><p>機械学習などを用いたAuto Debiased Machine Learning/Augmented Balancing Weights <span class="citation" data-cites="chernozhukov2022automatic chernozhukov2022debiased chernozhukov2022riesznet bruns2023augmented">(<a href="Referemce.html#ref-chernozhukov2022automatic" role="doc-biblioref">Chernozhukov, Newey, and Singh 2022a</a>, <a href="Referemce.html#ref-chernozhukov2022debiased" role="doc-biblioref">2022b</a>; <a href="Referemce.html#ref-chernozhukov2022riesznet" role="doc-biblioref">Chernozhukov, Newey, et al. 2022</a>; <a href="Referemce.html#ref-bruns2023augmented" role="doc-biblioref">Bruns-Smith et al. 2023</a>)</span></p></li>
-</ul>
-<p>簡易な入門としては <a href="https://hdsr.mitpress.mit.edu/pub/1ybwbmlw/release/2"><span class="citation" data-cites="Chattopadhyay2024Causation">Chattopadhyay and Zubizarreta (<span>2024</span>)</span></a> 、詳細な入門としては <span class="citation" data-cites="chattopadhyay2020balancing">Chattopadhyay, Hase, and Zubizarreta (<a href="Referemce.html#ref-chattopadhyay2020balancing" role="doc-biblioref">2020</a>)</span> , <span class="citation" data-cites="ben2021balancing">Ben-Michael et al. (<a href="Referemce.html#ref-ben2021balancing" role="doc-biblioref">2021</a>)</span> などを参考にしてください。</p>
-<p>本ノートの構成は以下のとおりです。</p>
+<li><p>以下のパッケージを使用</p>
 <ul>
-<li><p><a href="01Intro.html" class="quarto-xref"><span>1&nbsp; バランス後の比較</span></a> : 本ノートのEstimandである「バランス後の比較」を定義します。</p></li>
-<li><p><a href="02Weight.html" class="quarto-xref"><span>2&nbsp; Weight</span></a> : 本ノートの中核概念であるBalancing Weightを紹介する準備として、荷重(Weight)を定義します。</p></li>
-<li><p><a href="03BalanceWeight.html" class="quarto-xref"><span>3&nbsp; Balancing Weight</span></a> : Balancing Weightを定義します。またBalancing Weightの直感的な算出方法が、利用できない状況が多いことを指摘します。</p></li>
-<li><p><a href="04OLS.html" class="quarto-xref"><span>4&nbsp; OLSによる特徴のバランス</span></a> : より幅広い状況で算出できる近似的なBalancing Weightを紹介します。また標準的なOLS推定が、暗黙のうちに近似的なBalancing Weightを算出した、バランス後の比較と解釈できることを示します。</p></li>
-<li><p><a href="05Entropy.html" class="quarto-xref"><span>5&nbsp; 直接的なBalancing Weightの算出</span></a> : 近似的なBalancing Weightを、明示的な最適化問題として算出する方法を紹介します。 代表的な方法の一つであるEntropy weight <span class="citation" data-cites="hainmueller2012entropy">(<a href="Referemce.html#ref-hainmueller2012entropy" role="doc-biblioref">Hainmueller 2012</a>)</span> は、その計算効率や分析の透明性の高さから、幅広く用いられています。</p></li>
-<li><p><a href="06R.html" class="quarto-xref"><span>6&nbsp; 機械学習の活用: 残差回帰</span></a> : 機械学習を用いた、よりデータ主導のアプローチを紹介します。残差回帰に機械学習を補助的に用いることで、近似的なBalancing Weightを算出した、バランス後の比較を行うことができます。OLSとは異なり、事例数が十分大きければ、「母集団上で、完全なBalanceを達成した後の比較分析」、の優れた推定値と見做せることを紹介します。</p></li>
-<li><p><a href="07AIPW.html" class="quarto-xref"><span>7&nbsp; 機械学習の活用: AIPW</span></a> : 機械学習を用いたBalanced comparisonの代替的な方法である、Augmented inverse probability weighting への活用を紹介します。残差回帰よりもEstimandの解釈が容易な一方で、<span class="math inline">\(X\)</span>の分断が激しいケースでは推定結果が不安定になりやすいという問題点があります。</p></li>
+<li><p>readr (tidyverseに同梱): データの読み込み</p></li>
+<li><p>ddml: AIPWの実施</p>
+<ul>
+<li><a href="https://kosukeimai.github.io/MatchIt/">mannual</a></li>
+</ul></li>
+</ul></li>
 </ul>
+<section id="準備" class="level3" data-number="7.5.1">
+<h3 data-number="7.5.1" class="anchored" data-anchor-id="準備"><span class="header-section-number">7.5.1</span> 準備</h3>
+<p><span class="math inline">\(Y\)</span>と<span class="math inline">\(D\)</span>はベクトル、<span class="math inline">\(X\)</span>は行列として定義します。</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">111</span>) <span class="co"># シード値を固定</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>Data <span class="ot">=</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(<span class="st">"Public.csv"</span>)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>Data <span class="ot">=</span> dplyr<span class="sc">::</span><span class="fu">mutate</span>(</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  Data,</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">D =</span> dplyr<span class="sc">::</span><span class="fu">if_else</span>(</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    TradeYear <span class="sc">==</span> <span class="dv">2022</span>,<span class="dv">1</span>,<span class="dv">0</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  ) <span class="co"># 2022年に取引されれば1、2021年に取引されていれば0</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>Y <span class="ot">=</span> Data<span class="sc">$</span>Price</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>D <span class="ot">=</span> Data<span class="sc">$</span>D</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>X <span class="ot">=</span> Data <span class="sc">|&gt;</span> </span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>    District,</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>    Size,</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>    Tenure,</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>    StationDistance</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="ate" class="level3" data-number="7.5.2">
+<h3 data-number="7.5.2" class="anchored" data-anchor-id="ate"><span class="header-section-number">7.5.2</span> ATE</h3>
+<p>Stackingを用いたAIPW推定は、ddml_ate関数を用いて、以下のように実装できます。</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>Model <span class="ot">=</span> ddml<span class="sc">::</span><span class="fu">ddml_ate</span>(</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">y =</span> Y,</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">D =</span> D,</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">X =</span> <span class="fu">data.matrix</span>(X),</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">learners =</span> <span class="fu">list</span>(</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">list</span>(<span class="at">fun =</span> ddml<span class="sc">::</span>ols),</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">list</span>(<span class="at">fun =</span> ddml<span class="sc">::</span>mdl_ranger)</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  ),</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">shortstack =</span> <span class="cn">TRUE</span>, <span class="co"># 簡略化したStacking法を利用</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">silent =</span> <span class="cn">TRUE</span> <span class="co"># Messageを非表示</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>Model <span class="sc">|&gt;</span> <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>ATE estimation results: 
+ 
+     Estimate Std. Error t value Pr(&gt;|t|)
+nnls     3.68      0.339    10.8 2.52e-27</code></pre>
+</div>
+</div>
+<p>summary関数は、推定値 (Estimate)、標準誤差 (Std. Error)、t値 (t value)、 p値 (Pr(&gt;|t|)) を報告しています。 バランス後の平均差は、nnlsです。</p>
+<p>95<span class="math inline">\(\%\)</span>信頼区間は以下のように計算できます。</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>Sum <span class="ot">=</span> <span class="fu">summary</span>(Model)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>Est <span class="ot">=</span> Sum[<span class="dv">1</span>,<span class="dv">1</span>] <span class="co"># 推定値</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>SD <span class="ot">=</span> Sum[<span class="dv">1</span>,<span class="dv">2</span>] <span class="co"># 標準誤差</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(Est <span class="sc">-</span> <span class="fl">1.96</span><span class="sc">*</span>SD, Est <span class="sc">+</span> <span class="fl">1.96</span><span class="sc">*</span>SD) <span class="co"># 信頼区間の下限、上限</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 3.010346 4.340967</code></pre>
+</div>
+</div>
 
 
 <div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
-<div id="ref-behaghel2014private" class="csl-entry" role="listitem">
-Behaghel, Luc, Bruno Crépon, and Marc Gurgand. 2014. <span>“Private and Public Provision of Counseling to Job Seekers: Evidence from a Large Controlled Experiment.”</span> <em>American Economic Journal: Applied Economics</em> 6 (4): 142–74.
+<div id="ref-fisher2021visually" class="csl-entry" role="listitem">
+Fisher, Aaron, and Edward H Kennedy. 2021. <span>“Visually Communicating and Teaching Intuition for Influence Functions.”</span> <em>The American Statistician</em> 75 (2): 162–72.
 </div>
-<div id="ref-ben2021balancing" class="csl-entry" role="listitem">
-Ben-Michael, Eli, Avi Feller, David A Hirshberg, and José R Zubizarreta. 2021. <span>“The Balancing Act in Causal Inference.”</span> <em>arXiv Preprint arXiv:2110.14831</em>.
+<div id="ref-hines2022demystifying" class="csl-entry" role="listitem">
+Hines, Oliver, Oliver Dukes, Karla Diaz-Ordaz, and Stijn Vansteelandt. 2022. <span>“Demystifying Statistical Learning Based on Efficient Influence Functions.”</span> <em>The American Statistician</em> 76 (3): 292–304.
 </div>
-<div id="ref-bruns2023augmented" class="csl-entry" role="listitem">
-Bruns-Smith, David, Oliver Dukes, Avi Feller, and Elizabeth L Ogburn. 2023. <span>“Augmented Balancing Weights as Linear Regression.”</span> <em>arXiv Preprint arXiv:2304.14545</em>.
+<div id="ref-ichimura2022influence" class="csl-entry" role="listitem">
+Ichimura, Hidehiko, and Whitney K Newey. 2022. <span>“The Influence Function of Semiparametric Estimators.”</span> <em>Quantitative Economics</em> 13 (1): 29–61.
 </div>
-<div id="ref-chattopadhyay2020balancing" class="csl-entry" role="listitem">
-Chattopadhyay, Ambarish, Christopher H Hase, and José R Zubizarreta. 2020. <span>“Balancing Vs Modeling Approaches to Weighting in Practice.”</span> <em>Statistics in Medicine</em> 39 (24): 3227–54.
+<div id="ref-renson2025pulling" class="csl-entry" role="listitem">
+Renson, Audrey, Lina Montoya, Dana E Goin, Iván Dı́az, and Rachael K Ross. 2025. <span>“Pulling Back the Curtain: The Road from Statistical Estimand to Machine-Learning Based Estimator for Epidemiologists (No Wizard Required).”</span> <em>arXiv Preprint arXiv:2502.05363</em>.
 </div>
-<div id="ref-chattopadhyay2023implied" class="csl-entry" role="listitem">
-Chattopadhyay, Ambarish, and José R Zubizarreta. 2023. <span>“On the Implied Weights of Linear Regression for Causal Inference.”</span> <em>Biometrika</em> 110 (3): 615–29.
-</div>
-<div id="ref-Chattopadhyay2024Causation" class="csl-entry" role="listitem">
-Chattopadhyay, Ambarish, and José R. Zubizarreta. 2024. <em>Harvard Data Science Review</em> 6 (1).
-</div>
-<div id="ref-chernozhukov2018double" class="csl-entry" role="listitem">
-Chernozhukov, Victor, Denis Chetverikov, Mert Demirer, Esther Duflo, Christian Hansen, Whitney Newey, and James Robins. 2018. <span>“Double/Debiased Machine Learning for Treatment and Structural Parameters.”</span> <em>The Econometrics Journal</em> 21 (1): C1–68.
-</div>
-<div id="ref-chernozhukov2022locally" class="csl-entry" role="listitem">
-Chernozhukov, Victor, Juan Carlos Escanciano, Hidehiko Ichimura, Whitney K Newey, and James M Robins. 2022. <span>“Locally Robust Semiparametric Estimation.”</span> <em>Econometrica</em> 90 (4): 1501–35.
-</div>
-<div id="ref-chernozhukov2022automatic" class="csl-entry" role="listitem">
-Chernozhukov, Victor, Whitney K Newey, and Rahul Singh. 2022a. <span>“Automatic Debiased Machine Learning of Causal and Structural Effects.”</span> <em>Econometrica</em> 90 (3): 967–1027.
-</div>
-<div id="ref-chernozhukov2022debiased" class="csl-entry" role="listitem">
-———. 2022b. <span>“Debiased Machine Learning of Global and Local Parameters Using Regularized Riesz Representers.”</span> <em>The Econometrics Journal</em> 25 (3): 576–601.
-</div>
-<div id="ref-chernozhukov2022riesznet" class="csl-entry" role="listitem">
-Chernozhukov, Victor, Whitney Newey, Vıctor M Quintas-Martınez, and Vasilis Syrgkanis. 2022. <span>“Riesznet and Forestriesz: Automatic Debiased Machine Learning with Neural Nets and Random Forests.”</span> In <em>International Conference on Machine Learning</em>, 3901–14. PMLR.
-</div>
-<div id="ref-hainmueller2012entropy" class="csl-entry" role="listitem">
-Hainmueller, Jens. 2012. <span>“Entropy Balancing for Causal Effects: A Multivariate Reweighting Method to Produce Balanced Samples in Observational Studies.”</span> <em>Political Analysis</em> 20 (1): 25–46.
-</div>
-<div id="ref-huling2024energy" class="csl-entry" role="listitem">
-Huling, Jared D, and Simon Mak. 2024. <span>“Energy Balancing of Covariate Distributions.”</span> <em>Journal of Causal Inference</em> 12 (1): 20220029.
-</div>
-<div id="ref-imai2014covariate" class="csl-entry" role="listitem">
-Imai, Kosuke, and Marc Ratkovic. 2014. <span>“Covariate Balancing Propensity Score.”</span> <em>Journal of the Royal Statistical Society Series B: Statistical Methodology</em> 76 (1): 243–63.
-</div>
-<div id="ref-kallus2023treatment" class="csl-entry" role="listitem">
-Kallus, Nathan. 2023. <span>“Treatment Effect Risk: Bounds and Inference.”</span> <em>Management Science</em> 69 (8): 4579–90.
-</div>
-<div id="ref-vafa2024estimating" class="csl-entry" role="listitem">
-Vafa, Keyon, Susan Athey, and David M Blei. 2024. <span>“Estimating Wage Disparities Using Foundation Models.”</span> <em>arXiv Preprint arXiv:2409.09894</em>.
-</div>
-<div id="ref-zubizarreta2015stable" class="csl-entry" role="listitem">
-Zubizarreta, José R. 2015. <span>“Stable Weights That Balance Covariates for Estimation with Incomplete Outcome Data.”</span> <em>Journal of the American Statistical Association</em> 110 (511): 910–22.
+<div id="ref-wager2024causal" class="csl-entry" role="listitem">
+Wager, Stefan. 2024. <span>“Causal Inference: A Statistical Learning Approach.”</span> preparation.
 </div>
 </div>
+</section>
+</section>
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn1"><p>詳細は、<span class="citation" data-cites="wager2024causal">Wager (<a href="Referemce.html#ref-wager2024causal" role="doc-biblioref">2024</a>)</span> の第２章などを参照ください。<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>どちらもEfficient influence functionを用いて、推定式を導出できます <span class="citation" data-cites="ichimura2022influence fisher2021visually hines2022demystifying renson2025pulling">(<a href="Referemce.html#ref-ichimura2022influence" role="doc-biblioref">Ichimura and Newey 2022</a>; <a href="Referemce.html#ref-fisher2021visually" role="doc-biblioref">Fisher and Kennedy 2021</a>; <a href="Referemce.html#ref-hines2022demystifying" role="doc-biblioref">Hines et al. 2022</a>; <a href="Referemce.html#ref-renson2025pulling" role="doc-biblioref">Renson et al. 2025</a>)</span>。<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
 </section>
 
 </main> <!-- /main -->
@@ -761,10 +885,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
+      <a href="./06R.html" class="pagination-link" aria-label="機械学習の活用: 残差回帰">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">機械学習の活用: 残差回帰</span></span>
+      </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./01Intro.html" class="pagination-link" aria-label="バランス後の比較">
-        <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">バランス後の比較</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./Referemce.html" class="pagination-link" aria-label="Reference">
+        <span class="nav-page-text">Reference</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

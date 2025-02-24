@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>5&nbsp; 直接的なBalancing Weightの算出 – 格差/因果/比較分析 (ver 0.2)</title>
+<title>5&nbsp; 直接的なBalancing Weightの算出 – 格差/因果/比較分析のためのデータ分析 (ver 0.2.1)</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -179,7 +179,7 @@ window.Quarto = {
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
-      <a href="./">格差/因果/比較分析 (ver 0.2)</a> 
+      <a href="./">格差/因果/比較分析のためのデータ分析 (ver 0.2.1)</a> 
     </div>
       </div>
         <div class="mt-2 flex-shrink-0 align-items-center">
@@ -229,6 +229,12 @@ window.Quarto = {
   <div class="sidebar-item-container"> 
   <a href="./06R.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">機械学習の活用: 残差回帰</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./07AIPW.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">機械学習の活用: AIPW</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -284,14 +290,14 @@ window.Quarto = {
 <h2 data-number="5.1" class="anchored" data-anchor-id="算出方法"><span class="header-section-number">5.1</span> 算出方法</h2>
 <p>Balancing Weightについて、以下のような制約を課します。</p>
 <ol type="1">
-<li><p>全ての<span class="math inline">\(X_l\)</span>について、その加重平均をデータ全体の平均値に一致させる: <span class="math display">\[D=1における(\omega(x,1)\times X_l)の平均値\]</span> <span class="math display">\[= D=0における(\omega(x,1)\times X_l)の平均値\]</span> <span class="math display">\[= X_lのデータ全体での平均値\]</span></p></li>
+<li><p>全ての<span class="math inline">\(X_l\)</span>について、その加重平均をデータ全体の平均値に一致させる: <span class="math display">\[(D=1)における(\omega(x,1)\times X_l)の平均値\]</span> <span class="math display">\[= (D=0)における(\omega(x,0)\times X_l)の平均値\]</span> <span class="math display">\[= X_lのデータ全体での平均値\]</span></p></li>
 <li><p>全てのWeightは非負の値をとる: <span class="math display">\[\omega(x,d)\ge 0\]</span></p></li>
 </ol>
 <p>上記の制約を満たす<span class="math inline">\(\omega(d,x)\)</span> のなかで、最もばらつきが小さいものをBalancing Weightとします。 ばらつきの測定方法は、いくつかの提案があります。</p>
 <ul>
 <li><p><span class="citation" data-cites="hainmueller2012entropy">Hainmueller (<a href="Referemce.html#ref-hainmueller2012entropy" role="doc-biblioref">2012</a>)</span> : <span class="math inline">\(\omega(x,d)\)</span> のentropy divergence <span class="math inline">\(\omega(x,d)\log(\omega(x,d)/q)\)</span></p>
 <ul>
-<li><span class="math inline">\(q\)</span> はbase weightであり、例えば <span class="math inline">\(q=1/事例数\)</span> が用いられる</li>
+<li><span class="math inline">\(q\)</span> はbase weightと呼ばれ、例えば <span class="math inline">\(q=1/事例数\)</span> が用いられます。</li>
 </ul></li>
 <li><p><span class="citation" data-cites="zubizarreta2015stable">Zubizarreta (<a href="Referemce.html#ref-zubizarreta2015stable" role="doc-biblioref">2015</a>)</span> : <span class="math inline">\(\omega(x,d)\)</span> の分散</p></li>
 </ul>
@@ -323,11 +329,46 @@ window.Quarto = {
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  Data,</span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">D =</span> dplyr<span class="sc">::</span><span class="fu">if_else</span>(</span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    LargeDistrict <span class="sc">==</span> <span class="st">"中心6区"</span>,<span class="dv">1</span>,<span class="dv">0</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  ) <span class="co"># 2022年に取引されれば1、2021年に取引されていれば0</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  ) <span class="co"># 中心6区に立地していれば1、それ以外は0</span></span>
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>ベンチマークとして、一切のバランスを行わない単純差、およびOLSによるバランスを行った結果を示します。</p>
 <div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>Model_No <span class="ot">=</span> estimatr<span class="sc">::</span><span class="fu">lm_robust</span>(Price <span class="sc">~</span> D, Data)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>Model_OLS <span class="ot">=</span> estimatr<span class="sc">::</span><span class="fu">lm_robust</span>(</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  Price <span class="sc">~</span> D <span class="sc">+</span> (Size <span class="sc">+</span> Tenure <span class="sc">+</span> StationDistance)<span class="sc">**</span><span class="dv">2</span> <span class="sc">+</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">I</span>(Size<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> <span class="fu">I</span>(Tenure<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> <span class="fu">I</span>(StationDistance<span class="sc">^</span><span class="dv">2</span>), </span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  Data)</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>Model_No <span class="sc">|&gt;</span> </span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>  generics<span class="sc">::</span><span class="fu">tidy</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">Method =</span> <span class="st">"No Balance"</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span> </span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">bind_rows</span>(</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>    Model_OLS <span class="sc">|&gt;</span> </span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>  generics<span class="sc">::</span><span class="fu">tidy</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">Method =</span> <span class="st">"Balance by OLS"</span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span> </span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(</span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>    term <span class="sc">==</span> <span class="st">"D"</span></span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span> </span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">ggplot</span>(</span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>    ggplot2<span class="sc">::</span><span class="fu">aes</span>(</span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>      <span class="at">y =</span> Method,</span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>      <span class="at">x =</span> estimate,</span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>      <span class="at">xmin =</span> conf.low,</span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>      <span class="at">xmax =</span> conf.high</span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">geom_pointrange</span>() <span class="sc">+</span></span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">geom_vline</span>(</span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a>    <span class="at">xintercept =</span> <span class="dv">0</span></span>
+<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -341,49 +382,42 @@ window.Quarto = {
 <h3 data-number="5.2.2" class="anchored" data-anchor-id="entropy-weightによるバランス"><span class="header-section-number">5.2.2</span> Entropy Weightによるバランス</h3>
 <p><span class="math inline">\(D\)</span> 間でSize,Tenure,StationDistanceの平均値をバランスさせ、Priceの平均値を比較します。 まずWeightItパッケージを用いて、Entropy Weightを計算します。 また比較のためにlmwパッケージを用いて、OLS Weightも計算します。</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>Entropy <span class="ot">=</span> WeightIt<span class="sc">::</span><span class="fu">weightit</span>(</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  D <span class="sc">~</span> (Size <span class="sc">+</span> Tenure <span class="sc">+</span> StationDistance)<span class="sc">**</span><span class="dv">2</span> <span class="sc">+</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">I</span>(Size<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> <span class="fu">I</span>(Tenure<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> <span class="fu">I</span>(StationDistance<span class="sc">^</span><span class="dv">2</span>),  <span class="co"># 平均、分散、共分散をバランス</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> Data,</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">method =</span> <span class="st">"ebal"</span>, <span class="co"># Entropy Weightを計算</span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">estimand =</span> <span class="st">"ATE"</span>) </span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>OLS <span class="ot">=</span> lmw<span class="sc">::</span><span class="fu">lmw</span>(</span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>  <span class="sc">~</span> D <span class="sc">+</span> <span class="fu">I</span>(Size<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> <span class="fu">I</span>(Tenure<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> <span class="fu">I</span>(StationDistance<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span></span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    (Size <span class="sc">+</span> Tenure <span class="sc">+</span> StationDistance)<span class="sc">**</span><span class="dv">2</span>,</span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>  Data</span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(Entropy<span class="sc">$</span>weights,OLS<span class="sc">$</span>weights)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="05Entropy_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>Entropy <span class="ot">=</span> WeightIt<span class="sc">::</span><span class="fu">weightit</span>(</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  D <span class="sc">~</span> (Size <span class="sc">+</span> Tenure <span class="sc">+</span> StationDistance)<span class="sc">**</span><span class="dv">2</span> <span class="sc">+</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">I</span>(Size<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> <span class="fu">I</span>(Tenure<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> <span class="fu">I</span>(StationDistance<span class="sc">^</span><span class="dv">2</span>),  <span class="co"># 平均、分散、共分散をバランス</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> Data,</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">method =</span> <span class="st">"ebal"</span>, <span class="co"># Entropy Weightを計算</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">estimand =</span> <span class="st">"ATE"</span>) </span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>OLS <span class="ot">=</span> lmw<span class="sc">::</span><span class="fu">lmw</span>(</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>  <span class="sc">~</span> D <span class="sc">+</span> (Size <span class="sc">+</span> Tenure <span class="sc">+</span> StationDistance)<span class="sc">**</span><span class="dv">2</span> <span class="sc">+</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">I</span>(Size<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> <span class="fu">I</span>(Tenure<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> <span class="fu">I</span>(StationDistance<span class="sc">^</span><span class="dv">2</span>),</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>  Data</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</div>
-</div>
-<p>OLSを用いると負のBalancing weightが発生していることが確認できます。 対してEntropy weightでは、そのようなweightは生じません。</p>
+<p>summary関数を用いて、Weightの分布を確認します。</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>OLS<span class="sc">$</span>weights <span class="sc">|&gt;</span> <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
--0.2343  0.7615  1.0007  1.0000  1.2484  2.7393 </code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>Entropy<span class="sc">$</span>weights <span class="sc">|&gt;</span> <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(Entropy<span class="sc">$</span>weights)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
  0.2533  0.8622  0.9706  1.0000  1.0877 16.5677 </code></pre>
 </div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(OLS<span class="sc">$</span>weights)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+-0.2343  0.7615  1.0007  1.0000  1.2484  2.7393 </code></pre>
 </div>
+</div>
+<p>OLSを用いると負のBalancing weightが発生していることが確認できます。 対してEntropy weightでは、そのようなweightは生じません。</p>
 <p>Entropy Weightを用いたバランス後の平均差は、marginaleffectsパッケージのavg_comparison関数を用いて、以下のように計算できます。</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>WeightIt<span class="sc">::</span><span class="fu">lm_weightit</span>(</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  Price <span class="sc">~</span> D<span class="sc">*</span>(<span class="fu">I</span>(Size<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> <span class="fu">I</span>(Tenure<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> <span class="fu">I</span>(StationDistance<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    (Size <span class="sc">+</span> Tenure <span class="sc">+</span> StationDistance)<span class="sc">**</span><span class="dv">2</span>),</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> Data,</span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">weightit =</span> Entropy</span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span> </span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>  marginaleffects<span class="sc">::</span><span class="fu">avg_comparisons</span>(<span class="at">variables =</span> <span class="st">"D"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>WeightIt<span class="sc">::</span><span class="fu">lm_weightit</span>(</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  Price <span class="sc">~</span> D<span class="sc">*</span>(<span class="fu">I</span>(Size<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> <span class="fu">I</span>(Tenure<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> <span class="fu">I</span>(StationDistance<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    (Size <span class="sc">+</span> Tenure <span class="sc">+</span> StationDistance)<span class="sc">**</span><span class="dv">2</span>),</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> Data,</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">weightit =</span> Entropy</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span> </span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>  marginaleffects<span class="sc">::</span><span class="fu">avg_comparisons</span>(<span class="at">variables =</span> <span class="st">"D"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
  Estimate Std. Error    z Pr(&gt;|z|)     S 2.5 % 97.5 %
@@ -395,7 +429,53 @@ Comparison: 1 - 0</code></pre>
 </div>
 </div>
 <p>引き続き20前後の平均価格差が算出されました。</p>
+<p>最後にバランスなし、OLSによるバランス、Entropy Weightによるバランス、の結果を図示します。</p>
 <div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>Model_Ent <span class="ot">=</span> WeightIt<span class="sc">::</span><span class="fu">lm_weightit</span>(</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  Price <span class="sc">~</span> D<span class="sc">*</span>(<span class="fu">I</span>(Size<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> <span class="fu">I</span>(Tenure<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> <span class="fu">I</span>(StationDistance<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    (Size <span class="sc">+</span> Tenure <span class="sc">+</span> StationDistance)<span class="sc">**</span><span class="dv">2</span>),</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> Data,</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">weightit =</span> Entropy</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span> </span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>  marginaleffects<span class="sc">::</span><span class="fu">avg_comparisons</span>(<span class="at">variables =</span> <span class="st">"D"</span>)</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>Model_No <span class="sc">|&gt;</span> </span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>  generics<span class="sc">::</span><span class="fu">tidy</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(</span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">Method =</span> <span class="st">"No Balance"</span></span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span> </span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">bind_rows</span>(</span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>    Model_OLS <span class="sc">|&gt;</span> </span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>  generics<span class="sc">::</span><span class="fu">tidy</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(</span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">Method =</span> <span class="st">"Balance by OLS"</span></span>
+<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span> </span>
+<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(</span>
+<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a>    term <span class="sc">==</span> <span class="st">"D"</span></span>
+<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a>  )<span class="sc">|&gt;</span> </span>
+<span id="cb10-25"><a href="#cb10-25" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">bind_rows</span>(</span>
+<span id="cb10-26"><a href="#cb10-26" aria-hidden="true" tabindex="-1"></a>    tibble<span class="sc">::</span><span class="fu">tibble</span>(</span>
+<span id="cb10-27"><a href="#cb10-27" aria-hidden="true" tabindex="-1"></a>      <span class="at">Method =</span> <span class="st">"Entropy"</span>,</span>
+<span id="cb10-28"><a href="#cb10-28" aria-hidden="true" tabindex="-1"></a>      <span class="at">estimate =</span> Model_Ent<span class="sc">$</span>estimate,</span>
+<span id="cb10-29"><a href="#cb10-29" aria-hidden="true" tabindex="-1"></a>      <span class="at">conf.low =</span> Model_Ent<span class="sc">$</span>conf.low,</span>
+<span id="cb10-30"><a href="#cb10-30" aria-hidden="true" tabindex="-1"></a>      <span class="at">conf.high =</span> Model_Ent<span class="sc">$</span>conf.high</span>
+<span id="cb10-31"><a href="#cb10-31" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb10-32"><a href="#cb10-32" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span> </span>
+<span id="cb10-33"><a href="#cb10-33" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">ggplot</span>(</span>
+<span id="cb10-34"><a href="#cb10-34" aria-hidden="true" tabindex="-1"></a>    ggplot2<span class="sc">::</span><span class="fu">aes</span>(</span>
+<span id="cb10-35"><a href="#cb10-35" aria-hidden="true" tabindex="-1"></a>      <span class="at">y =</span> Method,</span>
+<span id="cb10-36"><a href="#cb10-36" aria-hidden="true" tabindex="-1"></a>      <span class="at">x =</span> estimate,</span>
+<span id="cb10-37"><a href="#cb10-37" aria-hidden="true" tabindex="-1"></a>      <span class="at">xmin =</span> conf.low,</span>
+<span id="cb10-38"><a href="#cb10-38" aria-hidden="true" tabindex="-1"></a>      <span class="at">xmax =</span> conf.high</span>
+<span id="cb10-39"><a href="#cb10-39" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb10-40"><a href="#cb10-40" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb10-41"><a href="#cb10-41" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">geom_pointrange</span>() <span class="sc">+</span></span>
+<span id="cb10-42"><a href="#cb10-42" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb10-43"><a href="#cb10-43" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">geom_vline</span>(</span>
+<span id="cb10-44"><a href="#cb10-44" aria-hidden="true" tabindex="-1"></a>    <span class="at">xintercept =</span> <span class="dv">0</span></span>
+<span id="cb10-45"><a href="#cb10-45" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -408,8 +488,8 @@ Comparison: 1 - 0</code></pre>
 </section>
 <section id="発展" class="level2" data-number="5.3">
 <h2 data-number="5.3" class="anchored" data-anchor-id="発展"><span class="header-section-number">5.3</span> 発展</h2>
-<p>Balancing Weightを直接算出する方法は、近年改めて注目を集めており、さまざまな提案がなされています。 例えばAuto debiased machine learning <span class="citation" data-cites="chernozhukov2022automatic chernozhukov2022debiased chernozhukov2022riesznet">(<a href="Referemce.html#ref-chernozhukov2022automatic" role="doc-biblioref">Chernozhukov, Newey, and Singh 2022a</a>, <a href="Referemce.html#ref-chernozhukov2022debiased" role="doc-biblioref">2022b</a>; <a href="Referemce.html#ref-chernozhukov2022riesznet" role="doc-biblioref">Chernozhukov et al. 2022</a>)</span> と呼ばれる手法も、分布をバランスするWeightを機械学習などを用いて直接算出する手法であると解釈できることが知られています <span class="citation" data-cites="bruns2023augmented">(<a href="Referemce.html#ref-bruns2023augmented" role="doc-biblioref">Bruns-Smith et al. 2023</a>)</span> 。 Energy Weight <span class="citation" data-cites="huling2024energy">(<a href="Referemce.html#ref-huling2024energy" role="doc-biblioref">Huling and Mak 2024</a>)</span> も、特徴ではなく分布そのものをバランスするWeightの推定を行なっています。</p>
-<p>直接計算する手法は、AIPWなどの間接的な方法に比べて、推定結果が安定しやすいことが利点として挙げられます。</p>
+<p>Balancing Weightを直接算出する方法は、近年改めて注目を集めており、さまざまな提案がなされています。 例えばAuto debiased machine learning <span class="citation" data-cites="chernozhukov2022automatic chernozhukov2022debiased chernozhukov2022riesznet">(<a href="Referemce.html#ref-chernozhukov2022automatic" role="doc-biblioref">Chernozhukov, Newey, and Singh 2022a</a>, <a href="Referemce.html#ref-chernozhukov2022debiased" role="doc-biblioref">2022b</a>; <a href="Referemce.html#ref-chernozhukov2022riesznet" role="doc-biblioref">Chernozhukov et al. 2022</a>)</span> と呼ばれる手法も、分布をバランスするWeightを機械学習などを用いて直接算出する手法であるとの解釈も提案されています <span class="citation" data-cites="bruns2023augmented">(<a href="Referemce.html#ref-bruns2023augmented" role="doc-biblioref">Bruns-Smith et al. 2023</a>)</span> 。 Energy Weight <span class="citation" data-cites="huling2024energy">(<a href="Referemce.html#ref-huling2024energy" role="doc-biblioref">Huling and Mak 2024</a>)</span> も、特徴ではなく分布そのものをバランスするWeightの推定を行なっています。</p>
+<p>直接計算する手法は、AIPWなどの間接的な方法 (<a href="07AIPW.html" class="quarto-xref"><span>Chapter 7</span></a>) に比べて、推定結果が安定しやすいことが利点として挙げられます。</p>
 
 
 <div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
