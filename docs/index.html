@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="川田恵介">
-<meta name="dcterms.date" content="2025-02-24">
+<meta name="dcterms.date" content="2025-03-03">
 
 <title>格差/因果/比較分析のためのデータ分析 (ver 0.2.1)</title>
 <style>
@@ -247,7 +247,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">February 24, 2025</p>
+      <p class="date">March 3, 2025</p>
     </div>
   </div>
   
@@ -265,7 +265,7 @@ window.Quarto = {
 <p>比較分析は、社会における「グループ間の違い」を明らかにすることを目標とします。 本ノートでは、データ上のある変数 <span class="math inline">\(D\)</span> 間での、別の変数 <span class="math inline">\(Y\)</span> の平均値の差を推定する方法を紹介します。 例えば性別 <span class="math inline">\((D)\)</span> 間での賃金 <span class="math inline">\((Y)\)</span> の平均格差を推定します。</p>
 <p>比較分析は、社会/市場を理解するための方法として、中核的な位置を占めています。 通常、これらの研究関心となる<span class="math inline">\(D\)</span>については、<span class="math inline">\(Y\)</span>以外の違いがあることが一般的です。 研究課題に応じて、これらの違いの一部を、データ分析上の処理として「解消(<strong>バランス</strong>)」することが必要です。</p>
 <p>例えば、性別<span class="math inline">\((D)\)</span>間で見られる職業経験の違い<span class="math inline">\(X\)</span>をバランスさせることで、職業経験以外の要因によって生じる男女間の賃金<span class="math inline">\((Y)\)</span>格差が推定できます <span class="citation" data-cites="vafa2024estimating">(<a href="Referemce.html#ref-vafa2024estimating" role="doc-biblioref">Vafa, Athey, and Blei 2024</a>)</span>。 あるいは、ある職業訓練プログラム <span class="math inline">\((D)\)</span> が就業確率や就業後の賃金 <span class="math inline">\((Y)\)</span>に与える因果的効果を推定を試みます。 このような研究課題では、異なる職業訓練プログラムへの参加者間で、背景属性をバランスさせた上での、就業状態や賃金の比較が求められます <span class="citation" data-cites="behaghel2014private kallus2023treatment">(<a href="Referemce.html#ref-behaghel2014private" role="doc-biblioref">Behaghel, Crépon, and Gurgand 2014</a>; <a href="Referemce.html#ref-kallus2023treatment" role="doc-biblioref">Kallus 2023</a>)</span>。</p>
-<p>本ノートの中心的なコンセプトは、Balancing Weightです。 Balancing Weightは、以下のアプローチを統合的整理できる極めて有益な概念です。</p>
+<p>比較分析を行う上での、本ノートの中心的なコンセプトは、Balancing Weightです。 Balancing Weightは、以下のアプローチを統合的に整理できる極めて有益な概念です。</p>
 <ul>
 <li><p>重回帰(OLS)やPenalized Regressionによる調整<span class="citation" data-cites="chattopadhyay2023implied bruns2023augmented">(<a href="Referemce.html#ref-chattopadhyay2023implied" role="doc-biblioref">Chattopadhyay and Zubizarreta 2023</a>; <a href="Referemce.html#ref-bruns2023augmented" role="doc-biblioref">Bruns-Smith et al. 2023</a>)</span></p></li>
 <li><p>傾向スコア(Propensity Score)の活用 <span class="citation" data-cites="imai2014covariate">(<a href="Referemce.html#ref-imai2014covariate" role="doc-biblioref">Imai and Ratkovic 2014</a>)</span></p></li>
