@@ -1,6 +1,6 @@
 # バランス後の比較 {#sec-Intro}
 
-```{r}
+```{r,dev='ragg_png'}
 library(tidyverse)
 
 Data = arrow::read_parquet("Data/Data.parquet") |> 
@@ -27,7 +27,7 @@ Data = arrow::read_parquet("Data/Data.parquet") |>
 
 東京23区の中古マンション市場において、2022年と2021年の取引価格と立地(中心6区(港区、中央区、文京区、千代田区、渋谷区、新宿区)、かそれ以外か)について、平均的な差を図示します。
 
-```{r}
+```{r,dev='ragg_png'}
 Data |> 
   select(
     Price,
